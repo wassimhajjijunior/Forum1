@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import Background from './components/Background'
+import React from 'react'
+import Test from './components/Test.jsx'
 
-function App() {
-
+const App = () => {
   return (
-    <div className="w-full h-full relative">
-      <Background />
-    </div>
+    
+      
+    <Test/>
   )
 }
 
