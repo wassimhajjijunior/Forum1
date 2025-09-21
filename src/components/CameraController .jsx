@@ -2,12 +2,14 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 
 const CameraController = ({ onSectionChange }) => {
+  
   const { camera } = useThree();
   const [sectionIndex, setSectionIndex] = useState(0);
   const targetZ = useRef(0);
   const isInitialized = useRef(false);
+  const [isAnimating, setIsAnimating] = useState(false); // NEW: scroll lock
   const depth = 5;
-  const maxSections = 6;
+  const maxSections = 9;
 
   // Initialize camera position without animation
   useEffect(() => {
@@ -30,65 +32,68 @@ const CameraController = ({ onSectionChange }) => {
   useEffect(() => {
     const handleWheel = (event) => {
       event.preventDefault();
+      if (isAnimating) return; // ignore scroll if animation is running
       
       setSectionIndex(prevIndex => {
-        if (event.deltaY > 0) {
-          // Scroll down - move forward (increase section)
-          return Math.min(prevIndex + 1, maxSections - 1);
-        } else {
-          // Scroll up - move backward (decrease section)
-          return Math.max(prevIndex - 1, 0);
-        }
+        const newIndex = event.deltaY > 0
+          ? Math.min(prevIndex + 1, maxSections - 1)
+          : Math.max(prevIndex - 1, 0);
+        if (newIndex !== prevIndex) setIsAnimating(true); // lock scroll
+        return newIndex;
       });
     };
 
     const handleKeyDown = (event) => {
+      if (isAnimating) return; // ignore keys while animating
+
+      let newIndex = sectionIndex;
       switch (event.code) {
         case 'ArrowDown':
         case 'ArrowRight':
         case 'PageDown':
         case 'Space':
-          event.preventDefault();
-          setSectionIndex(prevIndex => Math.min(prevIndex + 1, maxSections - 1));
+          newIndex = Math.min(sectionIndex + 1, maxSections - 1);
           break;
         case 'ArrowUp':
         case 'ArrowLeft':
         case 'PageUp':
-          event.preventDefault();
-          setSectionIndex(prevIndex => Math.max(prevIndex - 1, 0));
+          newIndex = Math.max(sectionIndex - 1, 0);
           break;
         case 'Home':
-          event.preventDefault();
-          setSectionIndex(0);
+          newIndex = 0;
           break;
         case 'End':
-          event.preventDefault();
-          setSectionIndex(maxSections - 1);
+          newIndex = maxSections - 1;
           break;
         default:
-          break;
+          return;
+      }
+      event.preventDefault();
+      if (newIndex !== sectionIndex) {
+        setSectionIndex(newIndex);
+        setIsAnimating(true); // lock scroll
       }
     };
 
     window.addEventListener('wheel', handleWheel, { passive: false });
     window.addEventListener('keydown', handleKeyDown);
-    
+
     return () => {
       window.removeEventListener('wheel', handleWheel);
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [sectionIndex, isAnimating]);
 
   // Smoothly animate camera to target position
   useFrame((state, delta) => {
     if (!isInitialized.current) return;
-    
-    // Only animate if camera is not at target position
+
     const distance = Math.abs(targetZ.current - camera.position.z);
     if (distance > 0.01) {
-      // Lerp camera position towards target
       const lerpFactor = 1 - Math.exp(-5 * delta);
       camera.position.z += (targetZ.current - camera.position.z) * lerpFactor;
+    } else if (isAnimating) {
+      setIsAnimating(false); // unlock scroll when animation finishes
     }
   });
 

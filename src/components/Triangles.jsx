@@ -20,7 +20,7 @@ const Triangles = () => {
   return (
     <group ref={groupRef}>
       {/* 6 triangles stacked behind each other */}
-      {Array.from({ length: 6 }, (_, index) => (
+      {Array.from({ length: 9 }, (_, index) => (
         <mesh
           key={index}
           position={[0, 0, -index * 5]} // Stack them behind each other
