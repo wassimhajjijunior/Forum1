@@ -15,17 +15,6 @@ const Home = () => {
       <p style={{ fontSize: '1.2rem', marginTop: '1rem' }}>
         Connect with top companies & discover exciting opportunities.
       </p>
-      <button style={{
-        marginTop: '2rem',
-        padding: '1rem 2rem',
-        fontSize: '1rem',
-        backgroundColor: '#00BFFF',
-        border: 'none',
-        borderRadius: '8px',
-        cursor: 'pointer'
-      }}>
-        Register Now
-      </button>
     </div>
   );
 };

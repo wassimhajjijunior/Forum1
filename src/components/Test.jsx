@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import BackgroundCanvas from './BackgroundCanvas';
 import Sections from './Sections';
 
+
 function Test() {
   // Create the state for tracking current section
   const [currentSection, setCurrentSection] = useState(0);
@@ -15,7 +16,7 @@ function Test() {
       />
 
       {/* Overlay Sections */}
-      <Sections currentSection={currentSection} /> 
+      {/* <Sections currentSection={currentSection} />  */}
 
       </div>
   );
