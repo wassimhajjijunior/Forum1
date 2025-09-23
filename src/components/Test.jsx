@@ -16,7 +16,7 @@ function Test() {
       />
 
       {/* Overlay Sections */}
-      {/* <Sections currentSection={currentSection} />  */}
+      <Sections currentSection={currentSection} /> 
 
       </div>
   );
