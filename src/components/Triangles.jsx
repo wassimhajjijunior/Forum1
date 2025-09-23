@@ -24,13 +24,15 @@ const Triangles = () => {
         <mesh
           key={index}
           position={[0, 0, -index * 5]} // Stack them behind each other
-          geometry={triangleGeometry}
+          geometry={triangleGeometry} 
+          
           
         >
           <meshBasicMaterial 
             wireframe 
             transparent 
             opacity={1}
+            color={"#00ffff"}
             
           />
         </mesh>

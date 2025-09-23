@@ -19,7 +19,7 @@ const BackgroundCanvas = ({ currentSection, setCurrentSection }) => {
     >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 75 }}
-        style={{ background: "black" }}
+        style={{ background: 'black' }}
       >
         {/* Ambient light */}
         <ambientLight intensity={0.5} />

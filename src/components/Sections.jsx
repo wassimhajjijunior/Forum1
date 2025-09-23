@@ -90,25 +90,12 @@ const Sections = ({ currentSection }) => {
   };
 
   // Blur background style for non-active sections
-  const blurBackgroundStyle = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backdropFilter: "blur(px)",
-    background: "rgba(0, 0, 0, 0.3)",
-    zIndex: 50,
-    opacity: animationStep > 0 ? 1 : 0,
-    transition: "opacity 0.5s ease-in-out",
-    pointerEvents: "none",
-  };
+  
 
   return (
     <>
       {/* Blur background overlay */}
-      <div style={blurBackgroundStyle} />
-      
+     
       {sections.map((section, index) => (
         <div key={index} style={sectionStyle(index)}>
           {index === currentSection && <CurrentComponent />}

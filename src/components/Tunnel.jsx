@@ -1,29 +1,38 @@
-// src/components/TriangleTunnel.jsx
 import React from 'react';
 import * as THREE from 'three';
 
-const TriangleTunnel = ({ length = 50, width = 3, height = 3 }) => {
-  return (
-    <group>
-      {/* Bottom wall */}
-      <mesh position={[0, -height / 2, -length / 2]} rotation={[0, 0, 0]}>
-        <boxGeometry args={[width * 2, 0.05, length]} />
-        <meshStandardMaterial color="#ff5555" />
-      </mesh>
+const TriangleTunnel = ({ segments = 50, width = 3, height = 3, depth = 5 }) => {
+  const texture = new THREE.TextureLoader().load('./src/assets/textures/texture2.jpg');
+  
+  const walls = [];
+  for (let i = 0; i < segments; i++) {
+    const z = -i * depth; // push back
+    const scale = 1 - i / segments; // shrink progressively (vanish at end)
 
-      {/* Left wall */}
-      <mesh position={[-width / 2, 0, -length / 2]} rotation={[0, 0, Math.PI / 3]}>
-        <boxGeometry args={[width * 2, 0.05, length]} />
-        <meshStandardMaterial color="#55ff55" />
-      </mesh>
+    walls.push(
+      <group key={i} scale={[scale, scale, 1]} position={[0, 0, z]}>
+        {/* Bottom */}
+        <mesh position={[0, -height / 2, 0]}>
+          <boxGeometry args={[width * 2, 1, depth]} />
+          <meshStandardMaterial map={texture} />
+        </mesh>
 
-      {/* Right wall */}
-      <mesh position={[width / 2, 0, -length / 2]} rotation={[0, 0, -Math.PI / 3]}>
-        <boxGeometry args={[width * 2, 0.05, length]} />
-        <meshStandardMaterial color="#5555ff" />
-      </mesh>
-    </group>
-  );
+        {/* Left */}
+        <mesh position={[-width / 2, 0, 0]} rotation={[0, 0, Math.PI / 3]}>
+          <boxGeometry args={[width * 2, 1, depth]} />
+          <meshStandardMaterial map={texture} />
+        </mesh>
+
+        {/* Right */}
+        <mesh position={[width / 2, 0, 0]} rotation={[0, 0, -Math.PI / 3]}>
+          <boxGeometry args={[width * 2, 1, depth]} />
+          <meshStandardMaterial map={texture} />
+        </mesh>
+      </group>
+    );
+  }
+
+  return <group>{walls}</group>;
 };
 
 export default TriangleTunnel;
