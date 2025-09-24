@@ -2,7 +2,6 @@
 import React from "react";
 import { Canvas } from "@react-three/fiber";
 import CameraController from "./CameraController ";
-import Starfield from "./Starfield";
 import Triangles from "./Triangles";
 import TriangleTunnel from "./Tunnel";
 

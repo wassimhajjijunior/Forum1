@@ -33,7 +33,6 @@ const Triangles = () => {
             transparent 
             opacity={1}
             color={"#00ffff"}
-            
           />
         </mesh>
       ))}

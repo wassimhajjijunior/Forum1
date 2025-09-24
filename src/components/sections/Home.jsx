@@ -1,5 +1,6 @@
 // src/components/sections/Home.jsx
 import React from "react";
+import logo from "./logo3.png";
 
 const Home = () => {
   return (
@@ -13,45 +14,53 @@ const Home = () => {
         textAlign: "center",
         width: "100%",
         height: "100%",
-        padding: "2rem",
+        padding: "1rem",
         boxSizing: "border-box",
-        perspective: "1200px", // enable 3D perspective
+        perspective: "1200px",
       }}
     >
-      {/* Top text (farther away) */}
+      <img
+        src={logo}
+        alt="Logo"
+        style={{
+          width: "300px",          // controls the width
+          aspectRatio: "1.4",      // keeps same ratio as triangle
+          objectFit: "contain",    // keeps logo inside shape
+          marginRight: "1rem",
+          translate: "translateZ(-60px)",
+        }}
+      />
+
       <h3
         style={{
-          fontSize: "2rem",
-          marginBottom: "1rem",
-          lineHeight: 1.2,
-          transform: "translateZ(-40px) rotateX(18deg)",
+          fontSize: "1.8rem",
+          marginBottom: "0.5rem",
+          lineHeight: 1,
+          transform: "translateZ(-40px) rotateX(60deg)",
           opacity: 0.7,
-          textShadow: "0 0 15px rgba(255,255,255,0.2)",
+          textShadow: "0 0 20px rgba(255,255,255,0.3)",
         }}
       >
         X-Ops Space Forum
       </h3>
 
-      {/* Middle text */}
       <p
         style={{
-          fontSize: "1.2rem",
+          fontSize: "1rem",
           maxWidth: "600px",
-          marginBottom: "2rem",
-          lineHeight: 1.4,
-          transform: "translateZ(-20px) rotateX(15deg)",
+          marginBottom: "0.5rem",
+          lineHeight: 1,
+          transform: "translateZ(-20px) rotateX(60deg)",
           opacity: 0.85,
         }}
       >
         Exploring ML, Development and Security Galaxies
       </p>
 
-      {/* Bottom text (closest) */}
       <h3
         style={{
-          fontSize: "2.8rem",
-          marginTop: "0",
-          transform: "translateZ(20px) rotateX(12deg)",
+          fontSize: "2rem",
+          transform: "translateZ(20px) rotateX(60deg)",
           textShadow: "0 0 20px rgba(255,255,255,0.3)",
         }}
       >

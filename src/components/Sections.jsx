@@ -9,7 +9,6 @@ import Teaser from "./sections/Teaser";
 import Timeline from "./sections/Timeline";
 import Venue from "./sections/Venue";
 
-
 const Sections = ({ currentSection }) => {
   const sections = [
     { id: 0, name: "Home", component: Home },
@@ -24,8 +23,11 @@ const Sections = ({ currentSection }) => {
 
   const CurrentComponent = sections[currentSection]?.component || Home;
   const [animationStep, setAnimationStep] = useState(0);
+  const [previousSection, setPreviousSection] = useState(currentSection);
 
   useEffect(() => {
+    // Update previous section when current section changes
+    setPreviousSection(currentSection);
     setAnimationStep(0);
     
     // Timing synced with camera movement (exponential decay ~1.2-1.5s total)
@@ -41,27 +43,40 @@ const Sections = ({ currentSection }) => {
   const sectionStyle = (index) => {
     let clipPath;
     let transform;
+    let zIndex = 100;
 
     if (index !== currentSection) {
+      // Section is not active
       clipPath = "polygon(50% 50%, 50% 50%, 50% 50%)";
-      transform = "scale(0.8)";
+      
+      // If this was the previous section, translate it away on Z-axis with more dramatic effect
+      if (index === previousSection && index !== currentSection) {
+        transform = "scale(0.6) translateZ(-800px)"; // Much further back and smaller
+        zIndex = 99; // Put it behind the incoming section
+      } else {
+        transform = "scale(0.7) translateZ(-400px)"; // Other sections also further back
+        zIndex = 98;
+      }
     } else {
+      // Current active section
+      zIndex = 101; // Ensure it's on top
+      
       switch (animationStep) {
         case 0:
           clipPath = "polygon(50% 50%, 50% 50%, 50% 50%)";
-          transform = "scale(0.8)";
+          transform = "scale(0.8) translateZ(-200px)"; // Start from behind
           break;
         case 1:
           clipPath = "polygon(50% 0%, 0% 100%, 100% 100%)"; // triangle visible
-          transform = "scale(1.05)";
+          transform = "scale(1.05) translateZ(100px)"; // Come forward prominently during animation
           break;
         case 2:
           clipPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"; // full screen
-          transform = "scale(1)";
+          transform = "scale(1) translateZ(0px)"; // Settle to normal position
           break;
         default:
           clipPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
-          transform = "scale(1)";
+          transform = "scale(1) translateZ(0px)";
       }
     }
 
@@ -76,26 +91,24 @@ const Sections = ({ currentSection }) => {
       alignItems: "center",
       padding: "2rem",
       boxSizing: "border-box",
-      zIndex: 100,
+      zIndex,
       pointerEvents: index === currentSection ? "auto" : "none",
       clipPath,
       transform,
       opacity: index === currentSection ? 1 : 0,
       background: "transparent",
-      // Easing curve that matches exponential decay feel of camera movement
-      transition: "clip-path 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s ease-in-out",
+      // Much slower transition for more visible Z-axis movement
+      transition: "clip-path 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 2.5s cubic-bezier(0.15, 0.25, 0.25, 0.95), opacity 0.8s ease-in-out, z-index 0s linear",
       willChange: "clip-path, transform, opacity",
       backfaceVisibility: "hidden",
+      // Enhanced 3D transformations with more pronounced perspective
+      transformStyle: "preserve-3d",
+      perspective: "800px", // Closer perspective for more dramatic effect
     };
   };
 
-  // Blur background style for non-active sections
-  
-
   return (
     <>
-      {/* Blur background overlay */}
-     
       {sections.map((section, index) => (
         <div key={index} style={sectionStyle(index)}>
           {index === currentSection && <CurrentComponent />}
