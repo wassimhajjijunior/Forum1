@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const Triangles = () => {
+const Triangles = ({ visible }) => {
   const groupRef = useRef();
 
   
@@ -18,14 +18,14 @@ const Triangles = () => {
 
 
   return (
-    <group ref={groupRef}>
+    
+    <group ref={groupRef} visible={visible}>
       {/* 6 triangles stacked behind each other */}
       {Array.from({ length: 9 }, (_, index) => (
         <mesh
           key={index}
           position={[0, 0, -index * 5]} // Stack them behind each other
           geometry={triangleGeometry} 
-          
           
         >
           <meshBasicMaterial 

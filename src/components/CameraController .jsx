@@ -7,7 +7,7 @@ const CameraController = ({ onSectionChange }) => {
   const [sectionIndex, setSectionIndex] = useState(0);
   const targetZ = useRef(0);
   const isInitialized = useRef(false);
-  const [isAnimating, setIsAnimating] = useState(false); // NEW: scroll lock
+  const [isAnimating, setIsAnimating] = useState(false); 
   const depth = 5;
   const maxSections = 9;
 
@@ -19,7 +19,7 @@ const CameraController = ({ onSectionChange }) => {
       isInitialized.current = true;
     }
   }, [camera]);
-
+  
   // Update target position when section changes
   useEffect(() => {
     targetZ.current = -sectionIndex * depth;

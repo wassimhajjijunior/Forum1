@@ -22,22 +22,35 @@ const Sections = ({ currentSection }) => {
   ];
 
   const CurrentComponent = sections[currentSection]?.component || Home;
-  const [animationStep, setAnimationStep] = useState(0);
+
+  const [animationStep, setAnimationStep] = useState(0); // for all sections except Home
+  const [homeAnimationStep, setHomeAnimationStep] = useState(0); // special animation for Home
   const [previousSection, setPreviousSection] = useState(currentSection);
 
   useEffect(() => {
-    // Update previous section when current section changes
     setPreviousSection(currentSection);
-    setAnimationStep(0);
-    
-    // Timing synced with camera movement (exponential decay ~1.2-1.5s total)
-    const timer1 = setTimeout(() => setAnimationStep(1), 150); // triangle appears as camera starts moving
-    const timer2 = setTimeout(() => setAnimationStep(2), 800); // morph to full screen as camera settles
-    
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
+
+    if (currentSection === 0) {
+      // Special Home animation
+      setHomeAnimationStep(0);
+      const homeTimer1 = setTimeout(() => setHomeAnimationStep(1), 200); // ⏱️ 200ms
+      const homeTimer2 = setTimeout(() => setHomeAnimationStep(2), 1000); // ⏱️ 1000ms
+
+      return () => {
+        clearTimeout(homeTimer1);
+        clearTimeout(homeTimer2);
+      };
+    } else {
+      // Other sections animation
+      setAnimationStep(0);
+      const timer1 = setTimeout(() => setAnimationStep(1), 150); // ⏱️ 150ms
+      const timer2 = setTimeout(() => setAnimationStep(2), 800); // ⏱️ 800ms
+
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    }
   }, [currentSection]);
 
   const sectionStyle = (index) => {
@@ -45,38 +58,63 @@ const Sections = ({ currentSection }) => {
     let transform;
     let zIndex = 100;
 
-    if (index !== currentSection) {
-      // Section is not active
-      clipPath = "polygon(50% 50%, 50% 50%, 50% 50%)";
-      
-      // If this was the previous section, translate it away on Z-axis with more dramatic effect
-      if (index === previousSection && index !== currentSection) {
-        transform = "scale(0.6) translateZ(-800px)"; // Much further back and smaller
-        zIndex = 99; // Put it behind the incoming section
-      } else {
-        transform = "scale(0.7) translateZ(-400px)"; // Other sections also further back
+    // Home section
+    if (index === 0) {
+      if (index !== currentSection) {
+        clipPath = "circle(0% at 50% 50%)";
+        transform = "scale(0.5) translateZ(-500px)";
         zIndex = 98;
+      } else {
+        zIndex = 101;
+        switch (homeAnimationStep) {
+          case 0:
+            clipPath = "circle(0% at 50% 50%)";
+            transform = "scale(0.8) translateZ(-200px)";
+            break;
+          case 1:
+            clipPath = "circle(60% at 50% 50%)";
+            transform = "scale(1.1) translateZ(50px)";
+            break;
+          case 2:
+            clipPath = "circle(150% at 50% 50%)";
+            transform = "scale(1) translateZ(0px)";
+            break;
+          default:
+            clipPath = "circle(150% at 50% 50%)";
+            transform = "scale(1) translateZ(0px)";
+        }
       }
-    } else {
-      // Current active section
-      zIndex = 101; // Ensure it's on top
-      
-      switch (animationStep) {
-        case 0:
-          clipPath = "polygon(50% 50%, 50% 50%, 50% 50%)";
-          transform = "scale(0.8) translateZ(-200px)"; // Start from behind
-          break;
-        case 1:
-          clipPath = "polygon(50% 0%, 0% 100%, 100% 100%)"; // triangle visible
-          transform = "scale(1.05) translateZ(100px)"; // Come forward prominently during animation
-          break;
-        case 2:
-          clipPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)"; // full screen
-          transform = "scale(1) translateZ(0px)"; // Settle to normal position
-          break;
-        default:
-          clipPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
-          transform = "scale(1) translateZ(0px)";
+    }
+    // Other sections
+    else {
+      if (index !== currentSection) {
+        clipPath = "polygon(50% 50%, 50% 50%, 50% 50%)";
+        if (index === previousSection) {
+          transform = "scale(0.6) translateZ(-800px)";
+          zIndex = 99;
+        } else {
+          transform = "scale(0.7) translateZ(-400px)";
+          zIndex = 98;
+        }
+      } else {
+        zIndex = 101;
+        switch (animationStep) {
+          case 0:
+            clipPath = "polygon(50% 50%, 50% 50%, 50% 50%)";
+            transform = "scale(0.8) translateZ(-200px)";
+            break;
+          case 1:
+            clipPath = "polygon(50% 0%, 0% 100%, 100% 100%)";
+            transform = "scale(1.05) translateZ(100px)";
+            break;
+          case 2:
+            clipPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
+            transform = "scale(1) translateZ(0px)";
+            break;
+          default:
+            clipPath = "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)";
+            transform = "scale(1) translateZ(0px)";
+        }
       }
     }
 
@@ -97,13 +135,12 @@ const Sections = ({ currentSection }) => {
       transform,
       opacity: index === currentSection ? 1 : 0,
       background: "transparent",
-      // Much slower transition for more visible Z-axis movement
-      transition: "clip-path 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 2.5s cubic-bezier(0.15, 0.25, 0.25, 0.95), opacity 0.8s ease-in-out, z-index 0s linear",
+      transition:
+        "clip-path 1s ease-in-out, transform 2.5s cubic-bezier(0.15, 0.25, 0.25, 0.95), opacity 0.8s ease-in-out",
       willChange: "clip-path, transform, opacity",
       backfaceVisibility: "hidden",
-      // Enhanced 3D transformations with more pronounced perspective
       transformStyle: "preserve-3d",
-      perspective: "800px", // Closer perspective for more dramatic effect
+      perspective: "800px",
     };
   };
 
