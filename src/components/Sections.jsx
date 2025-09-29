@@ -33,8 +33,8 @@ const Sections = ({ currentSection }) => {
     if (currentSection === 0) {
       // Special Home animation
       setHomeAnimationStep(0);
-      const homeTimer1 = setTimeout(() => setHomeAnimationStep(1), 200); // ⏱️ 200ms
-      const homeTimer2 = setTimeout(() => setHomeAnimationStep(2), 1000); // ⏱️ 1000ms
+      const homeTimer1 = setTimeout(() => setHomeAnimationStep(1), 200); 
+      const homeTimer2 = setTimeout(() => setHomeAnimationStep(2), 1000); 
 
       return () => {
         clearTimeout(homeTimer1);
@@ -43,8 +43,8 @@ const Sections = ({ currentSection }) => {
     } else {
       // Other sections animation
       setAnimationStep(0);
-      const timer1 = setTimeout(() => setAnimationStep(1), 150); // ⏱️ 150ms
-      const timer2 = setTimeout(() => setAnimationStep(2), 800); // ⏱️ 800ms
+      const timer1 = setTimeout(() => setAnimationStep(1), 150);
+      const timer2 = setTimeout(() => setAnimationStep(2), 800);
 
       return () => {
         clearTimeout(timer1);

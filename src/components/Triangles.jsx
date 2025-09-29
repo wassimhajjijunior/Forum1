@@ -1,41 +1,43 @@
-import React, { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import * as THREE from 'three';
-
+import React, { useRef } from "react";
+import * as THREE from "three";
+import HomeMesh from "./HomeMesh";
 const Triangles = ({ visible }) => {
   const groupRef = useRef();
 
-  
-  // Create wider triangle geometry with head pointing up
+  // Triangle geometry
   const triangleGeometry = new THREE.BufferGeometry();
   const vertices = new Float32Array([
-    -1.5, -1, 0,  // bottom left (wider)
-     1.5, -1, 0,  // bottom right (wider)
-     0,    1.5, 0 // top (higher)
+    -1.5, -1, 0, // bottom left
+     1.5, -1, 0, // bottom right
+     0,    1.5, 0 // top
   ]);
-  triangleGeometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-
-
+  triangleGeometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
 
   return (
-    
     <group ref={groupRef} visible={visible}>
-      {/* 6 triangles stacked behind each other */}
-      {Array.from({ length: 9 }, (_, index) => (
-        <mesh
-          key={index}
-          position={[0, 0, -index * 5]} // Stack them behind each other
-          geometry={triangleGeometry} 
+      {Array.from({ length: 9 }, (_, index) => {
+        // if (index === 3) {
           
-        >
-          <meshBasicMaterial 
-            wireframe 
-            transparent 
-            opacity={1}
-            color={"#00ffff"}
-          />
-        </mesh>
-      ))}
+        //   return (
+        //     <HomeMesh />
+        //   );
+        // }
+
+        return (
+          <mesh
+            key={index}
+            position={[0, 0, -index * 5]}
+            geometry={triangleGeometry}
+          >
+            <meshBasicMaterial
+              wireframe
+              transparent
+              opacity={1}
+              color={"#00ffff"}
+            />
+          </mesh>
+        );
+      })}
     </group>
   );
 };
