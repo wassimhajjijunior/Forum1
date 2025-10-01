@@ -6,15 +6,23 @@ const CameraController = ({ onSectionChange }) => {
   const [sectionIndex, setSectionIndex] = useState(0);
   const targetZ = useRef(0);
   const isInitialized = useRef(false);
+
   const [isAnimating, setIsAnimating] = useState(false);
-  const depth = 5; // distance between sections
+  const isAnimatingRef = useRef(false); // track latest animating state
+
+  const depth = 5; 
   const maxSections = 9;
 
   // Speeds
-  const firstScrollSpeed = 8; // fast for first scroll from Home
-  const normalSpeed = 5;       // slower for others
+  const firstScrollSpeed = 8;
+  const normalSpeed = 5;
   const speedRef = useRef(normalSpeed);
   const prevSection = useRef(0);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    isAnimatingRef.current = isAnimating;
+  }, [isAnimating]);
 
   // Initialize camera
   useEffect(() => {
@@ -30,7 +38,7 @@ const CameraController = ({ onSectionChange }) => {
     targetZ.current = -sectionIndex * depth;
     if (onSectionChange) onSectionChange(sectionIndex);
 
-    // Apply fast speed only when leaving Home section (0 → 1)
+    // Fast speed only for first scroll (0 → 1)
     if (prevSection.current === 0 && sectionIndex === 1) {
       speedRef.current = firstScrollSpeed;
     } else {
@@ -42,32 +50,39 @@ const CameraController = ({ onSectionChange }) => {
 
   // Handle scroll & keyboard
   useEffect(() => {
+    const SCROLL_THRESHOLD = 30; // ✅ ignore small scrolls
+
     const handleWheel = (event) => {
       event.preventDefault();
-      if (isAnimating) return;
+      if (isAnimatingRef.current) return;
+
+      // ignore small scroll values
+      if (Math.abs(event.deltaY) < SCROLL_THRESHOLD) return;
 
       setSectionIndex((prev) => {
         const newIndex = event.deltaY > 0
           ? Math.min(prev + 1, maxSections - 1)
           : Math.max(prev - 1, 0);
-        if (newIndex !== prev) setIsAnimating(true);
+
+        if (newIndex !== prev) {
+          setIsAnimating(true);
+          isAnimatingRef.current = true; // lock immediately
+        }
         return newIndex;
       });
     };
 
     const handleKeyDown = (event) => {
-      if (isAnimating) return;
+      if (isAnimatingRef.current) return;
 
       let newIndex = sectionIndex;
       switch (event.code) {
         case "ArrowDown":
-        case "ArrowRight":
         case "PageDown":
         case "Space":
           newIndex = Math.min(sectionIndex + 1, maxSections - 1);
           break;
         case "ArrowUp":
-        case "ArrowLeft":
         case "PageUp":
           newIndex = Math.max(sectionIndex - 1, 0);
           break;
@@ -80,10 +95,12 @@ const CameraController = ({ onSectionChange }) => {
         default:
           return;
       }
+
       event.preventDefault();
       if (newIndex !== sectionIndex) {
         setSectionIndex(newIndex);
         setIsAnimating(true);
+        isAnimatingRef.current = true;
       }
     };
 
@@ -93,7 +110,7 @@ const CameraController = ({ onSectionChange }) => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [sectionIndex, isAnimating]);
+  }, [sectionIndex, maxSections]);
 
   // Smooth camera animation
   useFrame((state, delta) => {
@@ -103,8 +120,9 @@ const CameraController = ({ onSectionChange }) => {
     if (Math.abs(distance) > 0.01) {
       const lerpFactor = 1 - Math.exp(-speedRef.current * delta);
       camera.position.z += distance * lerpFactor;
-    } else if (isAnimating) {
-      setIsAnimating(false); // unlock scroll
+    } else if (isAnimatingRef.current) {
+      setIsAnimating(false);
+      isAnimatingRef.current = false; // unlock scroll
     }
   });
 

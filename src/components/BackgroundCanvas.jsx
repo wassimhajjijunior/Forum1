@@ -6,17 +6,19 @@ import Triangles from "./Triangles";
 import TriangleTunnel from "./Tunnel";
 import { Stars } from "@react-three/drei";
 import HomeMesh from "./HomeMesh";
+import MovingStars from "./MovingStars";
+import Navbar from "./Navbar";
 
 const BackgroundCanvas = ({ currentSection, setCurrentSection }) => {
-  const [showTunnel, setShowTunnel] = useState(false);
+  const [showScene, setShowScene] = useState(false); // renamed from showTunnel
 
   useEffect(() => {
     let timer;
     if (currentSection >= 1) {
-      // Wait 1 second after passing the logo before showing tunnel
-      timer = setTimeout(() => setShowTunnel(true), 400);
+      // Wait 0.4s after passing the logo before showing both
+      timer = setTimeout(() => setShowScene(true), 400);
     } else {
-      setShowTunnel(false); // hide tunnel immediately when back to home
+      setShowScene(false); // hide immediately when back to home
     }
     return () => clearTimeout(timer);
   }, [currentSection]);
@@ -30,6 +32,7 @@ const BackgroundCanvas = ({ currentSection, setCurrentSection }) => {
         top: 0,
         left: 0,
       }}>
+        
       <Canvas
         camera={{ position: [0, 0, 0], fov: 75 }}
         style={{ background: "black" }}>
@@ -38,11 +41,8 @@ const BackgroundCanvas = ({ currentSection, setCurrentSection }) => {
         <ambientLight intensity={0.5} />
 
         {/* Stars background */}
-        <Stars
-          radius={500}
-          depth={50}
-          count={5000}
-        />
+        {/* <Stars radius={500} depth={50} count={5000} /> */}
+        <MovingStars count={1000} radius={500} speed={5} />
 
         {/* Camera controller */}
         <CameraController onSectionChange={setCurrentSection} />
@@ -50,16 +50,14 @@ const BackgroundCanvas = ({ currentSection, setCurrentSection }) => {
         {/* Landing page content */}
         <HomeMesh />
 
-        {/* Triangles show immediately after leaving logo */}
-        <Triangles visible={currentSection >= 1} />
-
-        {/* Tunnel shows with a delay */}
+        {/* Triangles + Tunnel show together after delay */}
+        <Triangles visible={showScene} />
         <TriangleTunnel
           segments={60}
           spacing={2}
           width={4}
           height={4}
-          visible={showTunnel}
+          visible={showScene}
         />
       </Canvas>
     </div>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import BackgroundCanvas from './BackgroundCanvas';
 import Sections from './Sections';
 import HomeMesh from './sections/Home';
+import Navbar from './Navbar';
 
 
 function Test() {
@@ -15,10 +16,10 @@ function Test() {
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
       />
-
+      <Navbar/>
       {/* Overlay Sections */}
       <Sections currentSection={currentSection} /> 
-
+      
       </div>
   );
 }
