@@ -76,10 +76,10 @@ const Navbar = ({ currentSection, onNavigate }) => {
 
   const sidebarStyle = {
     position: "fixed",
-    top: 0,
-    left: sidebarOpen ? 0 : "-220px",
+    top: 45,
+    left: sidebarOpen ? 5 : "-225px",
     width: "220px",
-    height: "100%",
+    height: "70%",
     background: "rgba(0,0,0,0.85)",
     backdropFilter: "blur(8px)",
     display: "flex",
@@ -88,6 +88,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     gap: "15px",
     transition: "left 0.3s ease",
     zIndex: 1100,
+    border: "1px solid rgba(0,255,255,0.5)",
   };
 
   const hamburgerStyle = {

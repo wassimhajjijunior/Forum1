@@ -1,30 +1,27 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 
-const CameraController = ({ onSectionChange, goToSection }) => {
+const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) => {
   const { camera } = useThree();
   const [sectionIndex, setSectionIndex] = useState(0);
   const targetZ = useRef(0);
   const isInitialized = useRef(false);
 
   const [isAnimating, setIsAnimating] = useState(false);
-  const isAnimatingRef = useRef(false); // track latest animating state
+  const isAnimatingRef = useRef(false);
 
-  const depth = 5; 
+  const depth = 5;
   const maxSections = 9;
 
-  // Speeds
   const firstScrollSpeed = 8;
   const normalSpeed = 5;
   const speedRef = useRef(normalSpeed);
   const prevSection = useRef(0);
 
-  // Keep ref in sync with state
   useEffect(() => {
     isAnimatingRef.current = isAnimating;
   }, [isAnimating]);
 
-  // Initialize camera
   useEffect(() => {
     if (!isInitialized.current) {
       camera.position.z = 0;
@@ -33,12 +30,10 @@ const CameraController = ({ onSectionChange, goToSection }) => {
     }
   }, [camera]);
 
-  // Update target position and speed when section changes
   useEffect(() => {
     targetZ.current = -sectionIndex * depth;
     if (onSectionChange) onSectionChange(sectionIndex);
 
-    // Fast speed only for first scroll (0 → 1)
     if (prevSection.current === 0 && sectionIndex === 1) {
       speedRef.current = firstScrollSpeed;
     } else {
@@ -48,35 +43,42 @@ const CameraController = ({ onSectionChange, goToSection }) => {
     prevSection.current = sectionIndex;
   }, [sectionIndex, onSectionChange]);
 
-  // Handle external navbar navigation
+  // ✅ Handle navbar clicks with clearGoToSection
   useEffect(() => {
-    if (goToSection !== null && goToSection !== undefined) {
-      if (goToSection >= 0 && goToSection < maxSections && goToSection !== sectionIndex) {
-        setSectionIndex(goToSection);
-        setIsAnimating(true);
-        isAnimatingRef.current = true;
-      }
-    }
-  }, [goToSection, sectionIndex, maxSections]);
+    if (
+      goToSection !== null &&
+      goToSection !== undefined &&
+      goToSection >= 0 &&
+      goToSection < maxSections &&
+      goToSection !== sectionIndex
+    ) {
+      setSectionIndex(goToSection);
+      setIsAnimating(true);
+      isAnimatingRef.current = true;
 
-  // Handle scroll & keyboard
+      if (clearGoToSection) clearGoToSection(); // 🔥 reset after navigation
+    }
+  }, [goToSection, sectionIndex, maxSections, clearGoToSection]);
+
+  // ✅ Handle scroll + keyboard + touch
   useEffect(() => {
-    const SCROLL_THRESHOLD = 30; // ✅ ignore small scrolls
+    const SCROLL_THRESHOLD = 30;
+    let touchStartY = 0;
 
     const handleWheel = (event) => {
       event.preventDefault();
       if (isAnimatingRef.current) return;
-
       if (Math.abs(event.deltaY) < SCROLL_THRESHOLD) return;
 
       setSectionIndex((prev) => {
-        const newIndex = event.deltaY > 0
-          ? Math.min(prev + 1, maxSections - 1)
-          : Math.max(prev - 1, 0);
+        const newIndex =
+          event.deltaY > 0
+            ? Math.min(prev + 1, maxSections - 1)
+            : Math.max(prev - 1, 0);
 
         if (newIndex !== prev) {
           setIsAnimating(true);
-          isAnimatingRef.current = true; // lock immediately
+          isAnimatingRef.current = true;
         }
         return newIndex;
       });
@@ -114,15 +116,45 @@ const CameraController = ({ onSectionChange, goToSection }) => {
       }
     };
 
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e) => {
+      if (isAnimatingRef.current) return;
+
+      const touchEndY = e.changedTouches[0].clientY;
+      const deltaY = touchStartY - touchEndY;
+
+      if (Math.abs(deltaY) < SCROLL_THRESHOLD) return;
+
+      setSectionIndex((prev) => {
+        const newIndex =
+          deltaY > 0
+            ? Math.min(prev + 1, maxSections - 1)
+            : Math.max(prev - 1, 0);
+
+        if (newIndex !== prev) {
+          setIsAnimating(true);
+          isAnimatingRef.current = true;
+        }
+        return newIndex;
+      });
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [sectionIndex, maxSections]);
 
-  // Smooth camera animation
   useFrame((state, delta) => {
     if (!isInitialized.current) return;
 
@@ -132,7 +164,7 @@ const CameraController = ({ onSectionChange, goToSection }) => {
       camera.position.z += distance * lerpFactor;
     } else if (isAnimatingRef.current) {
       setIsAnimating(false);
-      isAnimatingRef.current = false; // unlock scroll
+      isAnimatingRef.current = false;
     }
   });
 

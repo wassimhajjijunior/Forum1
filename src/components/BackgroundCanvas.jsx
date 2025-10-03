@@ -8,7 +8,12 @@ import { Stars } from "@react-three/drei";
 import HomeMesh from "./HomeMesh";
 import MovingStars from "./MovingStars";
 
-const BackgroundCanvas = ({ currentSection, setCurrentSection,targetSection }) => {
+const BackgroundCanvas = ({
+  currentSection,
+  setCurrentSection,
+  targetSection,
+  clearGoToSection,
+}) => {
   const [showScene, setShowScene] = useState(false); // renamed from showTunnel
 
   useEffect(() => {
@@ -31,20 +36,22 @@ const BackgroundCanvas = ({ currentSection, setCurrentSection,targetSection }) =
         top: 0,
         left: 0,
       }}>
-        
       <Canvas
         camera={{ position: [0, 0, 0], fov: 75 }}
         style={{ background: "black" }}>
-        
         {/* Ambient light */}
         <ambientLight intensity={0.5} />
 
         {/* Stars background */}
         {/* <Stars radius={500} depth={50} count={5000} /> */}
         <MovingStars count={1000} radius={500} speed={5} />
-        
+
         {/* Camera controller */}
-        <CameraController onSectionChange={setCurrentSection} goToSection={targetSection} />
+        <CameraController
+          onSectionChange={setCurrentSection}
+          goToSection={targetSection}
+          clearGoToSection={clearGoToSection}
+        />
 
         {/* Landing page content */}
         <HomeMesh />
