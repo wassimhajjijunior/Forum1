@@ -18,7 +18,7 @@ function Test() {
         setCurrentSection={setCurrentSection}
         targetSection={targetSection}
       />
-      <TopCircularNavbar currentSection={currentSection} onNavigate={setCurrentSection}/>
+      <TopCircularNavbar currentSection={currentSection} onNavigate={setTargetSection}/>
       {/* Overlay Sections */}
       <Sections currentSection={currentSection} /> 
       

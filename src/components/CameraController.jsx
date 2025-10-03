@@ -1,27 +1,30 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 
-const CameraController = ({ onSectionChange, targetSection }) => {
+const CameraController = ({ onSectionChange, goToSection }) => {
   const { camera } = useThree();
   const [sectionIndex, setSectionIndex] = useState(0);
   const targetZ = useRef(0);
   const isInitialized = useRef(false);
 
   const [isAnimating, setIsAnimating] = useState(false);
-  const isAnimatingRef = useRef(false);
+  const isAnimatingRef = useRef(false); // track latest animating state
 
   const depth = 5; 
   const maxSections = 9;
 
+  // Speeds
   const firstScrollSpeed = 8;
   const normalSpeed = 5;
   const speedRef = useRef(normalSpeed);
   const prevSection = useRef(0);
 
+  // Keep ref in sync with state
   useEffect(() => {
     isAnimatingRef.current = isAnimating;
   }, [isAnimating]);
 
+  // Initialize camera
   useEffect(() => {
     if (!isInitialized.current) {
       camera.position.z = 0;
@@ -30,19 +33,12 @@ const CameraController = ({ onSectionChange, targetSection }) => {
     }
   }, [camera]);
 
-  // 🔥 if targetSection changes (via Navbar), move camera
-  useEffect(() => {
-    if (targetSection !== null && targetSection !== sectionIndex) {
-      setSectionIndex(targetSection);
-      setIsAnimating(true);
-      isAnimatingRef.current = true;
-    }
-  }, [targetSection, sectionIndex]);
-
+  // Update target position and speed when section changes
   useEffect(() => {
     targetZ.current = -sectionIndex * depth;
     if (onSectionChange) onSectionChange(sectionIndex);
 
+    // Fast speed only for first scroll (0 → 1)
     if (prevSection.current === 0 && sectionIndex === 1) {
       speedRef.current = firstScrollSpeed;
     } else {
@@ -52,23 +48,35 @@ const CameraController = ({ onSectionChange, targetSection }) => {
     prevSection.current = sectionIndex;
   }, [sectionIndex, onSectionChange]);
 
+  // Handle external navbar navigation
   useEffect(() => {
-    const SCROLL_THRESHOLD = 30;
+    if (goToSection !== null && goToSection !== undefined) {
+      if (goToSection >= 0 && goToSection < maxSections && goToSection !== sectionIndex) {
+        setSectionIndex(goToSection);
+        setIsAnimating(true);
+        isAnimatingRef.current = true;
+      }
+    }
+  }, [goToSection, sectionIndex, maxSections]);
+
+  // Handle scroll & keyboard
+  useEffect(() => {
+    const SCROLL_THRESHOLD = 30; // ✅ ignore small scrolls
 
     const handleWheel = (event) => {
       event.preventDefault();
       if (isAnimatingRef.current) return;
+
       if (Math.abs(event.deltaY) < SCROLL_THRESHOLD) return;
 
       setSectionIndex((prev) => {
-        const newIndex =
-          event.deltaY > 0
-            ? Math.min(prev + 1, maxSections - 1)
-            : Math.max(prev - 1, 0);
+        const newIndex = event.deltaY > 0
+          ? Math.min(prev + 1, maxSections - 1)
+          : Math.max(prev - 1, 0);
 
         if (newIndex !== prev) {
           setIsAnimating(true);
-          isAnimatingRef.current = true;
+          isAnimatingRef.current = true; // lock immediately
         }
         return newIndex;
       });
@@ -114,6 +122,7 @@ const CameraController = ({ onSectionChange, targetSection }) => {
     };
   }, [sectionIndex, maxSections]);
 
+  // Smooth camera animation
   useFrame((state, delta) => {
     if (!isInitialized.current) return;
 
@@ -123,7 +132,7 @@ const CameraController = ({ onSectionChange, targetSection }) => {
       camera.position.z += distance * lerpFactor;
     } else if (isAnimatingRef.current) {
       setIsAnimating(false);
-      isAnimatingRef.current = false;
+      isAnimatingRef.current = false; // unlock scroll
     }
   });
 

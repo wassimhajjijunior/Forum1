@@ -44,7 +44,7 @@ const BackgroundCanvas = ({ currentSection, setCurrentSection,targetSection }) =
         <MovingStars count={1000} radius={500} speed={5} />
         
         {/* Camera controller */}
-        <CameraController onSectionChange={setCurrentSection} targetSection={currentSection} />
+        <CameraController onSectionChange={setCurrentSection} goToSection={targetSection} />
 
         {/* Landing page content */}
         <HomeMesh />
