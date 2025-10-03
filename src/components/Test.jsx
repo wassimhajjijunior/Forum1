@@ -8,6 +8,7 @@ import TopCircularNavbar from './Navbar';
 function Test() {
   // Create the state for tracking current section
   const [currentSection, setCurrentSection] = useState(0);
+  const [targetSection, setTargetSection] = useState(null);
 
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function Test() {
       <BackgroundCanvas 
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
+        targetSection={targetSection}
       />
       <TopCircularNavbar currentSection={currentSection} onNavigate={setCurrentSection}/>
       {/* Overlay Sections */}

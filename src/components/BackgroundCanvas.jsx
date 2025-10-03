@@ -7,9 +7,8 @@ import TriangleTunnel from "./Tunnel";
 import { Stars } from "@react-three/drei";
 import HomeMesh from "./HomeMesh";
 import MovingStars from "./MovingStars";
-import Navbar from "./Navbar";
 
-const BackgroundCanvas = ({ currentSection, setCurrentSection }) => {
+const BackgroundCanvas = ({ currentSection, setCurrentSection,targetSection }) => {
   const [showScene, setShowScene] = useState(false); // renamed from showTunnel
 
   useEffect(() => {
@@ -43,9 +42,9 @@ const BackgroundCanvas = ({ currentSection, setCurrentSection }) => {
         {/* Stars background */}
         {/* <Stars radius={500} depth={50} count={5000} /> */}
         <MovingStars count={1000} radius={500} speed={5} />
-
+        
         {/* Camera controller */}
-        <CameraController onSectionChange={setCurrentSection} />
+        <CameraController onSectionChange={setCurrentSection} targetSection={currentSection} />
 
         {/* Landing page content */}
         <HomeMesh />

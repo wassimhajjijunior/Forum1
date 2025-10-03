@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const Navbar = ({ currentSection, onNavigate }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const items = [
     { id: 0, label: "Home" },
     { id: 1, label: "Description" },
@@ -12,6 +15,14 @@ const Navbar = ({ currentSection, onNavigate }) => {
     { id: 7, label: "Venue" },
   ];
 
+  // Detect screen size dynamically
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const navbarStyle = {
     position: "fixed",
     top: 0,
@@ -21,14 +32,16 @@ const Navbar = ({ currentSection, onNavigate }) => {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 30px",
+    padding: "0 20px",
     zIndex: 1000,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     color: "#00ffff",
+    background: "rgba(0,0,0,0.5)",
+    backdropFilter: "blur(6px)",
   };
 
   const itemsContainerStyle = {
-    display: "flex",
+    display: isMobile ? "none" : "flex",
     alignItems: "center",
     gap: "12px",
   };
@@ -47,7 +60,6 @@ const Navbar = ({ currentSection, onNavigate }) => {
     textShadow: active ? "0 0 5px #00ffff" : "none",
   });
 
-  // Modern, interactive Register button style
   const registerButtonStyle = {
     padding: "6px 16px",
     borderRadius: "8px",
@@ -59,61 +71,91 @@ const Navbar = ({ currentSection, onNavigate }) => {
     cursor: "pointer",
     transition: "all 0.3s ease",
     boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3)",
+    display: isMobile ? "none" : "block",
+  };
+
+  const sidebarStyle = {
+    position: "fixed",
+    top: 0,
+    left: sidebarOpen ? 0 : "-220px",
+    width: "220px",
+    height: "100%",
+    background: "rgba(0,0,0,0.85)",
+    backdropFilter: "blur(8px)",
+    display: "flex",
+    flexDirection: "column",
+    padding: "20px",
+    gap: "15px",
+    transition: "left 0.3s ease",
+    zIndex: 1100,
+  };
+
+  const hamburgerStyle = {
+    fontSize: "22px",
+    cursor: "pointer",
+    display: isMobile ? "block" : "none",
+    color: "#00ffff",
   };
 
   return (
-    <nav style={navbarStyle}>
-      {/* Left: Logo */}
-      <div
-        style={{
-          fontSize: "18px",
-          fontWeight: "bold",
-          cursor: "pointer",
-          textShadow: "0 0 5px #00ffff",
-        }}
-      >
-        SUPCOM
-      </div>
+    <>
+      <nav style={navbarStyle}>
+        {/* Left: Logo */}
+        <div
+          style={{
+            fontSize: "18px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            textShadow: "0 0 5px #00ffff",
+          }}
+        >
+          SUPCOM
+        </div>
 
-      {/* Center: Menu Items */}
-      <div style={itemsContainerStyle}>
-        {items.map((item) => (
-          <div
-            key={item.id}
-            style={itemStyle(currentSection === item.id)}
-            onClick={() => onNavigate(item.id)}
-            onMouseEnter={(e) =>
-              (e.currentTarget.style.background = "rgba(0,255,255,0.12)")
-            }
-            onMouseLeave={(e) =>
-              (e.currentTarget.style.background =
-                currentSection === item.id
-                  ? "rgba(0,255,255,0.15)"
-                  : "rgba(255,255,255,0.03)")
-            }
-          >
-            {item.label}
+        {/* Center: Menu Items (hidden on mobile) */}
+        <div style={itemsContainerStyle}>
+          {items.map((item) => (
+            <div
+              key={item.id}
+              style={itemStyle(currentSection === item.id)}
+              onClick={() => onNavigate(item.id)}
+            >
+              {item.label}
+            </div>
+          ))}
+        </div>
+
+        {/* Right: Register Button or Hamburger */}
+        {isMobile ? (
+          <div style={hamburgerStyle} onClick={() => setSidebarOpen(!sidebarOpen)}>
+            ☰
           </div>
-        ))}
-      </div>
+        ) : (
+          <button style={registerButtonStyle}>Register</button>
+        )}
+      </nav>
 
-      {/* Right: Register Button */}
-      <button
-        style={registerButtonStyle}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "scale(1.05)";
-          e.currentTarget.style.boxShadow =
-            "0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow =
-            "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3)";
-        }}
-      >
-        Register
-      </button>
-    </nav>
+      {/* Sidebar for mobile */}
+      {isMobile && (
+        <div style={sidebarStyle}>
+          {items.map((item) => (
+            <div
+              key={item.id}
+              style={itemStyle(currentSection === item.id)}
+              onClick={() => {
+                onNavigate(item.id);
+                setSidebarOpen(false); // close sidebar after click
+              }}
+            >
+              {item.label}
+            </div>
+          ))}
+          <button style={{ ...registerButtonStyle, display: "block", marginTop: "20px" }}>
+            Register
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 
