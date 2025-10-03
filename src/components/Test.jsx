@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BackgroundCanvas from './BackgroundCanvas';
 import Sections from './Sections';
 import HomeMesh from './sections/Home';
-import Navbar from './Navbar';
+import TopCircularNavbar from './Navbar';
 
 
 function Test() {
@@ -16,7 +16,7 @@ function Test() {
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
       />
-      <Navbar/>
+      <TopCircularNavbar currentSection={currentSection} onNavigate={setCurrentSection}/>
       {/* Overlay Sections */}
       <Sections currentSection={currentSection} /> 
       

@@ -9,8 +9,8 @@ const TriangleTunnel = ({ segments = 50, width = 3, height = 3, depth = 4 , visi
   const walls = [];
   for (let i = 2; i < segments; i++) {
     const z = -i * depth; // no scaling, so they touch each other
-    // const texture = i % 3 === 0 ? texture1 : i % 3 === 1 ? texture2 : texture3;
-    const texture = texture1;
+    const texture = i % 3 === 0 ? texture1 : i % 3 === 1 ? texture2 : texture3;
+    // const texture = texture1;
 
     walls.push(
       <group key={i} position={[0, 0, z]} visible={visible}>

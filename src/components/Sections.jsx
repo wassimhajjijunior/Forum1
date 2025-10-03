@@ -146,6 +146,7 @@ const Sections = ({ currentSection }) => {
 
   return (
     <>
+    
       {sections.map((section, index) => (
         <div key={index} style={sectionStyle(index)}>
           {index === currentSection && <CurrentComponent />}
