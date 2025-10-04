@@ -15,7 +15,6 @@ const Navbar = ({ currentSection, onNavigate }) => {
     { id: 7, label: "Venue" },
   ];
 
-  // Detect screen size dynamically
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
@@ -32,7 +31,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 20px",
+    padding: "0 10px 0 20px",
     zIndex: 1000,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     color: "#00ffff",
@@ -71,7 +70,6 @@ const Navbar = ({ currentSection, onNavigate }) => {
     cursor: "pointer",
     transition: "all 0.3s ease",
     boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3)",
-    display: isMobile ? "none" : "block",
   };
 
   const sidebarStyle = {
@@ -79,7 +77,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     top: 45,
     left: sidebarOpen ? 5 : "-225px",
     width: "220px",
-    height: "70%",
+    height: "calc(100vh - 45px)",
     background: "rgba(0,0,0,0.85)",
     backdropFilter: "blur(8px)",
     display: "flex",
@@ -101,38 +99,71 @@ const Navbar = ({ currentSection, onNavigate }) => {
   return (
     <>
       <nav style={navbarStyle}>
-        {/* Left: Logo */}
-        <div
-          style={{
-            fontSize: "18px",
-            fontWeight: "bold",
-            cursor: "pointer",
-            textShadow: "0 0 5px #00ffff",
-          }}
-        >
-          SUPCOM
-        </div>
-
-        {/* Center: Menu Items (hidden on mobile) */}
-        <div style={itemsContainerStyle}>
-          {items.map((item) => (
-            <div
-              key={item.id}
-              style={itemStyle(currentSection === item.id)}
-              onClick={() => onNavigate(item.id)}
-            >
-              {item.label}
-            </div>
-          ))}
-        </div>
-
-        {/* Right: Register Button or Hamburger */}
+        {/* Mobile layout: logo, centered register button, hamburger */}
         {isMobile ? (
-          <div style={hamburgerStyle} onClick={() => setSidebarOpen(!sidebarOpen)}>
-            ☰
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+              height: "50px",
+              padding: "0 15px",
+              position: "absolute",
+              top: 0,
+              left: 0,
+            }}
+          >
+            {/* Logo */}
+            <div
+              style={{
+                fontSize: "18px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                textShadow: "0 0 5px #00ffff",
+              }}
+            >
+              SUPCOM
+            </div>
+
+            {/* Register Button */}
+            <button style={registerButtonStyle}>Registeration</button>
+
+            {/* Hamburger */}
+            <div style={hamburgerStyle} onClick={() => setSidebarOpen(!sidebarOpen)}>
+              ☰
+            </div>
           </div>
         ) : (
-          <button style={registerButtonStyle}>Register</button>
+          <>
+            {/* Left: Logo */}
+            <div
+              style={{
+                fontSize: "18px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                textShadow: "0 0 5px #00ffff",
+              }}
+            >
+              SUPCOM
+            </div>
+
+            {/* Center: Menu Items */}
+            <div style={itemsContainerStyle}>
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  style={itemStyle(currentSection === item.id)}
+                  onClick={() => onNavigate(item.id)}
+                >
+                  {item.label}
+                </div>
+              ))}
+            </div>
+
+            {/* Right: Register Button */}
+            <button style={registerButtonStyle}>Registeration</button>
+          </>
         )}
       </nav>
 
@@ -145,14 +176,14 @@ const Navbar = ({ currentSection, onNavigate }) => {
               style={itemStyle(currentSection === item.id)}
               onClick={() => {
                 onNavigate(item.id);
-                setSidebarOpen(false); // close sidebar after click
+                setSidebarOpen(false);
               }}
             >
               {item.label}
             </div>
           ))}
           <button style={{ ...registerButtonStyle, display: "block", marginTop: "20px" }}>
-            Register
+            Registeration
           </button>
         </div>
       )}
