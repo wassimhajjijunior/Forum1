@@ -77,8 +77,8 @@ const Navbar = ({ currentSection, onNavigate }) => {
     top: 45,
     left: sidebarOpen ? 5 : "-225px",
     width: "220px",
-    height: "calc(100vh - 45px)",
-    background: "rgba(0,0,0,0.85)",
+    height: "auto",
+    background: "transparent",
     backdropFilter: "blur(8px)",
     display: "flex",
     flexDirection: "column",
@@ -108,7 +108,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
               justifyContent: "space-between",
               width: "100%",
               height: "50px",
-              padding: "0 15px",
+              padding: "0 10px",
               position: "absolute",
               top: 0,
               left: 0,
@@ -182,9 +182,6 @@ const Navbar = ({ currentSection, onNavigate }) => {
               {item.label}
             </div>
           ))}
-          <button style={{ ...registerButtonStyle, display: "block", marginTop: "20px" }}>
-            Registeration
-          </button>
         </div>
       )}
     </>

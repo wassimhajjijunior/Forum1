@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import BackgroundCanvas from './BackgroundCanvas';
 import Sections from './Sections';
-import HomeMesh from './sections/Home';
 import TopCircularNavbar from './Navbar';
 
 
