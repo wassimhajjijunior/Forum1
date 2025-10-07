@@ -27,16 +27,17 @@ const Navbar = ({ currentSection, onNavigate }) => {
     top: 0,
     left: 0,
     width: "100%",
-    height: "50px",
+    height: "55px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 10px 0 20px",
+    padding: "0 15px",
     zIndex: 1000,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     color: "#00ffff",
     background: "rgba(0,0,0,0.5)",
-    backdropFilter: "blur(6px)",
+    backdropFilter: "blur(8px)",
+    boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
   };
 
   const itemsContainerStyle = {
@@ -57,6 +58,11 @@ const Navbar = ({ currentSection, onNavigate }) => {
     background: active ? "rgba(0,255,255,0.15)" : "rgba(255,255,255,0.03)",
     transition: "all 0.3s ease",
     textShadow: active ? "0 0 5px #00ffff" : "none",
+    transform: "scale(1)",
+    "&:hover": {
+      transform: "scale(1.05)",
+      background: "rgba(0,255,255,0.1)",
+    },
   });
 
   const registerButtonStyle = {
@@ -66,7 +72,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     background: "linear-gradient(135deg, #00ffff, #00aaff)",
     color: "#000",
     fontWeight: "bold",
-    fontSize: "14px",
+    fontSize: "12px",
     cursor: "pointer",
     transition: "all 0.3s ease",
     boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3)",
@@ -74,44 +80,44 @@ const Navbar = ({ currentSection, onNavigate }) => {
 
   const sidebarStyle = {
     position: "fixed",
-    top: 45,
-    left: sidebarOpen ? 5 : "-225px",
+    top: 55,
+    left: sidebarOpen ? 0 : "-250px",
     width: "220px",
     height: "auto",
-    background: "transparent",
-    backdropFilter: "blur(8px)",
+    background: "rgba(0,0,0,0.8)",
+    backdropFilter: "blur(10px)",
     display: "flex",
     flexDirection: "column",
     padding: "20px",
     gap: "15px",
     transition: "left 0.3s ease",
     zIndex: 1100,
-    border: "1px solid rgba(0,255,255,0.5)",
+    boxShadow: "2px 0 15px rgba(0,255,255,0.2)",
+    borderRight: "1px solid rgba(0,255,255,0.3)",
   };
 
   const hamburgerStyle = {
-    fontSize: "22px",
+    fontSize: "24px",
     cursor: "pointer",
-    display: isMobile ? "block" : "none",
+    position: "absolute",
+    right: 15,
     color: "#00ffff",
+    transform: sidebarOpen ? "rotate(90deg)" : "rotate(0deg)",
+    transition: "transform 0.3s ease",
   };
 
   return (
     <>
       <nav style={navbarStyle}>
-        {/* Mobile layout: logo, centered register button, hamburger */}
         {isMobile ? (
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: "center",
               width: "100%",
-              height: "50px",
-              padding: "0 10px",
-              position: "absolute",
-              top: 0,
-              left: 0,
+              height: "55px",
+              position: "relative",
             }}
           >
             {/* Logo */}
@@ -121,22 +127,40 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 fontWeight: "bold",
                 cursor: "pointer",
                 textShadow: "0 0 5px #00ffff",
+                position: "absolute",
+                left: 15,
               }}
             >
               SUPCOM
             </div>
 
-            {/* Register Button */}
-            <button style={registerButtonStyle}>Registeration</button>
+            {/* Register button */}
+            <button
+              style={{
+                ...registerButtonStyle,
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.transform = "scale(1)")
+              }
+            >
+              Registeration
+            </button>
 
             {/* Hamburger */}
-            <div style={hamburgerStyle} onClick={() => setSidebarOpen(!sidebarOpen)}>
+            <div
+              style={hamburgerStyle}
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
               ☰
             </div>
           </div>
         ) : (
           <>
-            {/* Left: Logo */}
+            {/* Desktop */}
             <div
               style={{
                 fontSize: "18px",
@@ -148,26 +172,40 @@ const Navbar = ({ currentSection, onNavigate }) => {
               SUPCOM
             </div>
 
-            {/* Center: Menu Items */}
             <div style={itemsContainerStyle}>
               {items.map((item) => (
                 <div
                   key={item.id}
                   style={itemStyle(currentSection === item.id)}
                   onClick={() => onNavigate(item.id)}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.05)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }
                 >
                   {item.label}
                 </div>
               ))}
             </div>
 
-            {/* Right: Register Button */}
-            <button style={registerButtonStyle}>Registeration</button>
+            <button
+              style={registerButtonStyle}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.transform = "scale(1)")
+              }
+            >
+              Registeration
+            </button>
           </>
         )}
       </nav>
 
-      {/* Sidebar for mobile */}
+      {/* Mobile Sidebar */}
       {isMobile && (
         <div style={sidebarStyle}>
           {items.map((item) => (
@@ -178,6 +216,12 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 onNavigate(item.id);
                 setSidebarOpen(false);
               }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.transform = "scale(1)")
+              }
             >
               {item.label}
             </div>
