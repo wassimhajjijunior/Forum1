@@ -1,7 +1,6 @@
 // Photos.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InfiniteBanner from "../Photos/InfiniteBanner";
-import me from "../../assets/lastPhotos/me.jpg";
 import { motion, AnimatePresence } from "framer-motion";
 
 import img1 from "../../assets/lastPhotos/img1_.jpg";
@@ -17,16 +16,22 @@ import img10 from "../../assets/lastPhotos/img10_.jpg";
 import img11 from "../../assets/lastPhotos/img11_.jpg";
 import img12 from "../../assets/lastPhotos/img12_.jpg";
 
-
-
-const bannerOneImages = [img1, img2, img3, img4, img5,img6];
+const bannerOneImages = [img1, img2, img3, img4, img5, img6];
 const bannerTwoImages = [img7, img8, img9, img10, img11, img12];
 
 const Photos = () => {
   const [selected, setSelected] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize(); // set initial
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-transparent text-white gap-12">
+    <div className="w-full h-screen flex flex-col justify-center items-center bg-transparent text-white gap-12 overflow-hidden">
       <InfiniteBanner
         images={bannerOneImages}
         direction="left"
@@ -40,27 +45,42 @@ const Photos = () => {
         speed={40}
         onClick={setSelected}
         layoutIdPrefix="bannerTwo"
-        
       />
 
-      {/* Lightbox with fly-to-center & back animation */}
+      {/* Lightbox */}
       <AnimatePresence>
         {selected && (
-          <motion.div
-            className="fixed inset-0 bg-transparent bg-opacity-80 flex justify-center items-center z-50"
-            onClick={() => setSelected(null)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <motion.img
-              src={selected.src}
-              alt=""
-              layoutId={selected.layoutId} // key for smooth transition
-              className="w-[35%]  rounded-lg shadow-lg"
+          <>
+            {/* Background fade */}
+            <motion.div
+              className="fixed inset-0 bg-transparent/70  z-40"
+              onClick={() => setSelected(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
             />
-          </motion.div>
+
+            {/* Image fly-in */}
+            <motion.div
+              className="fixed inset-0 flex justify-center items-center z-50"
+              onClick={() => setSelected(null)}
+            >
+              <motion.img
+                src={selected.src}
+                alt=""
+                layoutId={selected.layoutId}
+                className={`rounded-xl shadow-2xl object-contain 
+                  ${isMobile ? "w-[90%]" : "w-[35%]"} 
+                  sm:w-[70%] md:w-[55%] lg:w-[35%] 
+                  max-h-[90vh]`}
+                transition={{
+                  layout: { duration: isMobile ? 0.6 : 0.5, ease: [0.25, 0.8, 0.25, 1] },
+                  duration: isMobile ? 0.5 : 0.4,
+                }}
+              />
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
