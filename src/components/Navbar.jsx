@@ -4,6 +4,29 @@ const Navbar = ({ currentSection, onNavigate }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Timer state
+  const [timeLeft, setTimeLeft] = useState({});
+  const registrationDate = new Date("2025-11-12T08:00:00"); // Set your target date
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const diff = registrationDate - now;
+      if (diff <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      } else {
+        setTimeLeft({
+          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((diff / 1000 / 60) % 60),
+          seconds: Math.floor((diff / 1000) % 60),
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const items = [
     { id: 0, label: "Home" },
     { id: 1, label: "Description" },
@@ -78,6 +101,14 @@ const Navbar = ({ currentSection, onNavigate }) => {
     boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3)",
   };
 
+  const timerStyle = {
+    fontSize: "10px",
+    color: "#ffffffcc",
+    marginTop: "4px",
+    animation: "pulse 1s infinite",
+    textAlign: "center",
+  };
+
   const sidebarStyle = {
     position: "fixed",
     top: 55,
@@ -136,10 +167,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
 
             {/* Register button */}
             <button
-              style={{
-                ...registerButtonStyle,
-                transition: "all 0.2s ease",
-              }}
+              style={registerButtonStyle}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.transform = "scale(1.05)")
               }
@@ -190,17 +218,27 @@ const Navbar = ({ currentSection, onNavigate }) => {
               ))}
             </div>
 
-            <button
-              style={registerButtonStyle}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
-            >
-              Registeration
-            </button>
+            {/* Register button with timer (desktop only) */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <button
+                style={registerButtonStyle}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.05)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }
+              >
+                Registeration
+              </button>
+
+              {/* Show timer only if not on Home page */}
+              {currentSection !== 0 && (
+                <div style={timerStyle}>
+                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+                </div>
+              )}
+            </div>
           </>
         )}
       </nav>

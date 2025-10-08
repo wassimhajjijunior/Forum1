@@ -1,52 +1,161 @@
-  import React, { useRef } from "react";
-  import { Text } from "@react-three/drei";
-  import { useLoader } from "@react-three/fiber";
-  import * as THREE from "three";
-  import logo from "../assets/logo3.png";
+import React, { useRef, useEffect, useState } from "react";
+import { Text } from "@react-three/drei";
+import { useLoader, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
+import logo from "../assets/logo3.png";
 
-  const HomeMesh = () => {
-    const groupRef = useRef();
+const HomeMesh = () => {
+  const groupRef = useRef();
+  const timerBoxRefs = useRef([]);
 
-    // Load the texture only once
-    const texture = useLoader(THREE.TextureLoader, logo);
+  const texture = useLoader(THREE.TextureLoader, logo);
 
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
-    const [isMobile, setIsMobile] = React.useState(false);
+  const targetDate = new Date("2025-11-12T08:00:00");
 
-    
-    
-    return (
-      <group ref={groupRef} position={[0, 0, -5]}>
-        {/* Logo plane */}
-        <mesh position={[0, 0.4, 0]}>
-          <planeGeometry args={[3, 3]} /> 
-          <meshBasicMaterial map={texture} transparent={true} alphaTest={0.1} />
-        </mesh>
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const diff = targetDate - now;
+      if (diff <= 0) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      } else {
+        setTimeLeft({
+          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((diff / (1000 * 60)) % 60),
+          seconds: Math.floor((diff / 1000) % 60),
+        });
+      }
+    }, 1000);
 
-        {/* Title above the logo */}
-        <Text
-          position={[0, -1.4, 0]}
-          fontSize={0.5}
-          color="#00ffff"
-          anchorX="center"
-          anchorY="middle"
-        >
-          X-Ops Space Forum
-        </Text>
+    return () => clearInterval(interval);
+  }, [targetDate]);
 
-        {/* Subtitle below the logo */}
-        <Text
-          position={[0, -2, 0]}
-          fontSize={0.3}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          Exploring ML, Development and Security Galaxies
-        </Text>
+  // Subtle hover-like scale animation
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    timerBoxRefs.current.forEach((box, i) => {
+      if (box) {
+        const scale = 1 + Math.sin(t * 1.5 + i * 0.3) * 0.02;
+        box.scale.set(scale, scale, 1);
+      }
+    });
+  });
 
+  const formatUnit = (unit) => String(unit).padStart(2, "0");
+
+  const timeUnits = [
+    { label: "Days", value: timeLeft.days },
+    { label: "Hours", value: timeLeft.hours },
+    { label: "Minutes", value: timeLeft.minutes },
+    { label: "Seconds", value: timeLeft.seconds },
+  ];
+
+  return (
+    <group ref={groupRef} position={[0, 0, -5]}>
+      {/* Logo */}
+      <mesh position={[0, 0.5, 0]}>
+        <planeGeometry args={[3, 3]} />
+        <meshBasicMaterial map={texture} transparent alphaTest={0.1} />
+      </mesh>
+
+      {/* Main Title */}
+      <Text
+        position={[0, -1.3, 0]}
+        fontSize={0.5}
+        color="#ffffff"
+        anchorX="center"
+        anchorY="middle"
+        fontWeight={600}
+      >
+        X-Ops Space Forum
+      </Text>
+
+      {/* Subtitle */}
+      <Text
+        position={[0, -1.8, 0]}
+        fontSize={0.22}
+        color="#a0b0c0"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Exploring ML, Development & Security Galaxies
+      </Text>
+
+      {/* Timer Section */}
+      <group position={[0, -2.5, 0]}>
+        {timeUnits.map((unit, index) => (
+          <group 
+            key={index} 
+            ref={(el) => (timerBoxRefs.current[index] = el)}
+            position={[index * 1.0 - 1.5, 0, 0]}
+          >
+            {/* Clean container with subtle depth */}
+            <mesh position={[0, 0, 0]}>
+              <boxGeometry args={[0.85, 0.75, 0.08]} />
+              <meshStandardMaterial
+                color="#1a2332"
+                metalness={0.2}
+                roughness={0.4}
+                transparent
+                opacity={0.85}
+              />
+            </mesh>
+
+            {/* Thin border accent */}
+            <lineSegments position={[0, 0, 0.041]}>
+              <edgesGeometry 
+                attach="geometry" 
+                args={[new THREE.BoxGeometry(0.87, 0.77, 0.08)]} 
+              />
+              <lineBasicMaterial color="#00a8ff" opacity={0.3} transparent />
+            </lineSegments>
+
+            {/* Timer Value */}
+            <Text
+              position={[0, 0.1, 0.05]}
+              fontSize={0.32}
+              color="#00d4ff"
+              anchorX="center"
+              anchorY="middle"
+              fontWeight={700}
+            >
+              {formatUnit(unit.value)}
+            </Text>
+
+            {/* Timer Label */}
+            <Text
+              position={[0, -0.2, 0.05]}
+              fontSize={0.1}
+              color="#8899aa"
+              anchorX="center"
+              anchorY="middle"
+              fontWeight={300}
+            >
+              {unit.label}
+            </Text>
+
+            {/* Subtle glow underneath */}
+            <mesh position={[0, 0, -0.05]}>
+              <planeGeometry args={[0.95, 0.85]} />
+              <meshBasicMaterial 
+                color="#00a8ff" 
+                transparent 
+                opacity={0.04}
+              />
+            </mesh>
+          </group>
+        ))}
       </group>
-    );
-  };
+    </group>
+  );
+};
 
-  export default HomeMesh;
+export default HomeMesh;

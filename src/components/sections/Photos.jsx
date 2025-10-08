@@ -1,4 +1,3 @@
-// Photos.jsx
 import React, { useState, useEffect } from "react";
 import InfiniteBanner from "../Photos/InfiniteBanner";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,43 +24,61 @@ const Photos = () => {
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 640);
-    handleResize(); // set initial
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-transparent text-white gap-12 overflow-hidden">
-      <InfiniteBanner
-        images={bannerOneImages}
-        direction="left"
-        speed={40}
-        onClick={setSelected}
-        layoutIdPrefix="bannerOne"
-      />
-      <InfiniteBanner
-        images={bannerTwoImages}
-        direction="right"
-        speed={40}
-        onClick={setSelected}
-        layoutIdPrefix="bannerTwo"
-      />
+    <div className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-transparent ">
+      {/* 🟪 Transparent Trapezoid Container */}
+      <div
+        className=" relative flex flex-col justify-center items-center text-white overflow-hidden"
+        style={{
+          width: "100%",
+          height: "100%",
+          clipPath: "polygon(32% 0%, 68% 0%, 100% 100%, 0% 100%)", // balanced trapezoid
+          background: "transparent", // fully transparent
+        }}
+      >
+        {/* Top Banner */}
+        <div className="w-full">
+          <InfiniteBanner
+            images={bannerOneImages}
+            direction="left"
+            speed={40}
+            onClick={setSelected}
+            layoutIdPrefix="bannerOne"
+          />
+        </div>
 
-      {/* Lightbox */}
+        {/* Spacing */}
+        <div className="h-12 sm:h-16 md:h-20 lg:h-24" />
+
+        {/* Bottom Banner */}
+        <div className="w-full">
+          <InfiniteBanner
+            images={bannerTwoImages}
+            direction="right"
+            speed={40}
+            onClick={setSelected}
+            layoutIdPrefix="bannerTwo"
+          />
+        </div>
+      </div>
+
+      {/* 🖼 Lightbox */}
       <AnimatePresence>
         {selected && (
           <>
-            {/* Background fade */}
             <motion.div
-              className="fixed inset-0 bg-transparent/70  z-40"
+              className="fixed inset-0 bg-transparent/70 z-40"
               onClick={() => setSelected(null)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
             />
-
-            {/* Image fly-in */}
             <motion.div
               className="fixed inset-0 flex justify-center items-center z-50"
               onClick={() => setSelected(null)}
