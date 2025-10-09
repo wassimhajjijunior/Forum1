@@ -6,7 +6,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
 
   // Timer state
   const [timeLeft, setTimeLeft] = useState({});
-  const registrationDate = new Date("2025-11-12T08:00:00"); // Set your target date
+  const registrationDate = new Date("2025-11-12T08:00:00"); // Target date
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,6 +36,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     { id: 5, label: "Teaser" },
     { id: 6, label: "Timeline" },
     { id: 7, label: "Venue" },
+    { id: 8, label: "Registration" }, // 👈 Added registration as the last section
   ];
 
   useEffect(() => {
@@ -82,10 +83,6 @@ const Navbar = ({ currentSection, onNavigate }) => {
     transition: "all 0.3s ease",
     textShadow: active ? "0 0 5px #00ffff" : "none",
     transform: "scale(1)",
-    "&:hover": {
-      transform: "scale(1.05)",
-      background: "rgba(0,255,255,0.1)",
-    },
   });
 
   const registerButtonStyle = {
@@ -149,8 +146,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
               width: "100%",
               height: "55px",
               position: "relative",
-            }}
-          >
+            }}>
             {/* Logo */}
             <div
               style={{
@@ -160,29 +156,30 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 textShadow: "0 0 5px #00ffff",
                 position: "absolute",
                 left: 15,
-              }}
-            >
+              }}>
               SUPCOM
             </div>
 
             {/* Register button */}
             <button
               style={registerButtonStyle}
+              onClick={() => {
+                onNavigate(8); // 👈 navigate to Registration
+                setSidebarOpen(false);
+              }}
               onMouseEnter={(e) =>
                 (e.currentTarget.style.transform = "scale(1.05)")
               }
               onMouseLeave={(e) =>
                 (e.currentTarget.style.transform = "scale(1)")
-              }
-            >
-              Registeration
+              }>
+              Registration
             </button>
 
             {/* Hamburger */}
             <div
               style={hamburgerStyle}
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-            >
+              onClick={() => setSidebarOpen(!sidebarOpen)}>
               ☰
             </div>
           </div>
@@ -195,47 +192,53 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 fontWeight: "bold",
                 cursor: "pointer",
                 textShadow: "0 0 5px #00ffff",
-              }}
-            >
+              }}>
               SUPCOM
             </div>
 
             <div style={itemsContainerStyle}>
-              {items.map((item) => (
-                <div
-                  key={item.id}
-                  style={itemStyle(currentSection === item.id)}
-                  onClick={() => onNavigate(item.id)}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.transform = "scale(1.05)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.transform = "scale(1)")
-                  }
-                >
-                  {item.label}
-                </div>
-              ))}
+              {items
+                .filter((item) => item.label !== "Registration") // hide it from navbar
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    style={itemStyle(currentSection === item.id)}
+                    onClick={() => onNavigate(item.id)}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.05)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }>
+                    {item.label}
+                  </div>
+                ))}
             </div>
 
             {/* Register button with timer (desktop only) */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}>
               <button
                 style={registerButtonStyle}
+                onClick={() => onNavigate(8)} // 👈 navigate to Registration
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.transform = "scale(1.05)")
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.transform = "scale(1)")
-                }
-              >
-                Registeration
+                }>
+                Registration
               </button>
 
-              {/* Show timer only if not on Home page */}
+              {/* Timer */}
               {currentSection !== 0 && (
                 <div style={timerStyle}>
-                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
+                  {timeLeft.seconds}s
                 </div>
               )}
             </div>
@@ -246,24 +249,22 @@ const Navbar = ({ currentSection, onNavigate }) => {
       {/* Mobile Sidebar */}
       {isMobile && (
         <div style={sidebarStyle}>
-          {items.map((item) => (
-            <div
-              key={item.id}
-              style={itemStyle(currentSection === item.id)}
-              onClick={() => {
-                onNavigate(item.id);
-                setSidebarOpen(false);
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
-            >
-              {item.label}
-            </div>
-          ))}
+          {items
+            .filter((item) => item.label !== "Registration") // hide it from navbar
+            .map((item) => (
+              <div
+                key={item.id}
+                style={itemStyle(currentSection === item.id)}
+                onClick={() => onNavigate(item.id)}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.05)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }>
+                {item.label}
+              </div>
+            ))}
         </div>
       )}
     </>

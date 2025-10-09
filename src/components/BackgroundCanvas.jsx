@@ -7,6 +7,7 @@ import TriangleTunnel from "./Tunnel";
 import { Stars } from "@react-three/drei";
 import HomeMesh from "./HomeMesh";
 import MovingStars from "./MovingStars";
+import Registration from "./sections/Registration";
 
 const BackgroundCanvas = ({
   currentSection,
@@ -54,7 +55,7 @@ const BackgroundCanvas = ({
         />
 
         {/* Landing page content */}
-        <HomeMesh />
+        <HomeMesh  />
 
         {/* Triangles + Tunnel show together after delay */}
         <Triangles visible={showScene} />

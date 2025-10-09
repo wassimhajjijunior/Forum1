@@ -8,6 +8,7 @@ import Sponsors from "./sections/Sponsors";
 import Teaser from "./sections/Teaser";
 import Timeline from "./sections/Timeline";
 import Venue from "./sections/Venue";
+import Registration from "./sections/Registration";
 
 const Sections = ({ currentSection }) => {
   const sections = [
@@ -19,6 +20,7 @@ const Sections = ({ currentSection }) => {
     { id: 5, name: "Teaser", component: Teaser },
     { id: 6, name: "Timeline", component: Timeline },
     { id: 7, name: "Venue", component: Venue },
+    { id: 8, name: "Registration", component: Registration },
   ];
 
   const CurrentComponent = sections[currentSection]?.component || Home;
