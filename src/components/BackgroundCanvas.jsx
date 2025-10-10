@@ -4,10 +4,8 @@ import { Canvas } from "@react-three/fiber";
 import CameraController from "./CameraController";
 import Triangles from "./Triangles";
 import TriangleTunnel from "./Tunnel";
-import { Stars } from "@react-three/drei";
 import HomeMesh from "./HomeMesh";
 import MovingStars from "./MovingStars";
-import Registration from "./sections/Registration";
 
 const BackgroundCanvas = ({
   currentSection,

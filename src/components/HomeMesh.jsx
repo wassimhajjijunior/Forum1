@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Text } from "@react-three/drei";
 import { useLoader, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import logo from "../assets/logo3.png";
+import logo from "../assets/logo.svg";
 
 const HomeMesh = () => {
   const groupRef = useRef();
