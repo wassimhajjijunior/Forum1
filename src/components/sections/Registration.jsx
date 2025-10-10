@@ -24,80 +24,100 @@ export default function Registration() {
     );
   };
 
+  const inputClass = (value) =>
+    `px-4 py-2 rounded-xl border border-white/30 ${
+      value ? "bg-white text-black" : "bg-white/10 text-white placeholder-white/70"
+    } focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all text-sm`;
+
   return (
     <>
       {/* 🌐 Desktop Triangle Design */}
-      <div
-        className="hidden md:flex relative mx-auto flex-col items-center justify-center"
-        style={{
-          width: "500px",
-          height: "450px",
-          backdropFilter: "blur(100px)",
-          clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
-          padding: "3rem 2rem",
-          paddingTop: "120px",
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${logo})`,
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          marginTop: "50px", //
-        }}
-      >
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col items-center justify-start space-y-4"
+      <div className="hidden md:flex relative mx-auto flex-col items-center justify-center">
+        {/* Logo background with opacity */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundImage: `url(${logo})`,
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            opacity: 0.2,
+            zIndex: 0,
+          }}
+        ></div>
+
+        <div
+          style={{
+            width: "500px",
+            height: "450px",
+            clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
+            padding: "3rem 2rem",
+            paddingTop: "100px",
+            zIndex: 1,
+          }}
         >
-          <h2 className="text-xl font-bold text-white text-center mb-4">
-            Register
-          </h2>
-
-          <div className="flex flex-col w-40">
-            <label className="text-white mb-1 text-sm">Full Name</label>
-            <input
-              type="text"
-              value={formData.fullName}
-              onChange={(e) => handleChange("fullName", e.target.value)}
-              placeholder="Enter your full name"
-              className="px-4 py-2 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/20 transition-all text-sm"
-            />
-          </div>
-
-          <div className="flex flex-col w-60">
-            <label className="text-white mb-1 text-sm">University</label>
-            <input
-              type="text"
-              value={formData.university}
-              onChange={(e) => handleChange("university", e.target.value)}
-              placeholder="Enter your university"
-              className="px-4 py-2 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/20 transition-all text-sm"
-            />
-          </div>
-
-          <div className="flex flex-col w-80">
-            <label className="text-white mb-1 text-sm">Email</label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleChange("email", e.target.value)}
-              placeholder="Enter your email"
-              className="px-4 py-2 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/20 transition-all text-sm"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-100 py-2.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-sm mt-4 cursor-pointer"
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center justify-start space-y-4"
           >
-            Submit
-          </button>
-        </form>
+            <h2 className="text-xl font-bold text-white text-center mb-4">
+              Register
+            </h2>
+
+            <div className="flex flex-col w-40">
+              <label className="text-white mb-1 text-sm">Full Name</label>
+              <input
+                type="text"
+                value={formData.fullName}
+                onChange={(e) => handleChange("fullName", e.target.value)}
+                placeholder="Enter your full name"
+                className={inputClass(formData.fullName)}
+              />
+            </div>
+
+            <div className="flex flex-col w-60">
+              <label className="text-white mb-1 text-sm">University</label>
+              <input
+                type="text"
+                value={formData.university}
+                onChange={(e) => handleChange("university", e.target.value)}
+                placeholder="Enter your university"
+                className={inputClass(formData.university)}
+              />
+            </div>
+
+            <div className="flex flex-col w-80">
+              <label className="text-white mb-1 text-sm">Email</label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleChange("email", e.target.value)}
+                placeholder="Enter your email"
+                className={inputClass(formData.email)}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-100 py-2.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-sm mt-4 cursor-pointer"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
 
       {/* 📱 Mobile Card Design */}
       <div className="flex md:hidden items-center justify-center min-h-screen p-6 relative">
+        
+
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-sm bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-6 shadow-lg space-y-4"
+          className="w-full max-w-sm bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-6 shadow-lg space-y-4 relative z-10"
         >
           <h2 className="text-2xl font-bold text-white text-center">
             Register
@@ -110,7 +130,7 @@ export default function Registration() {
               value={formData.fullName}
               onChange={(e) => handleChange("fullName", e.target.value)}
               placeholder="Enter your full name"
-              className="px-4 py-2 rounded-lg border border-white/30 bg-black/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-black/30 transition-all text-sm"
+              className={inputClass(formData.fullName)}
             />
           </div>
 
@@ -121,7 +141,7 @@ export default function Registration() {
               value={formData.university}
               onChange={(e) => handleChange("university", e.target.value)}
               placeholder="Enter your university"
-              className="px-4 py-2 rounded-lg border border-white/30 bg-black/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-black/30 transition-all text-sm"
+              className={inputClass(formData.university)}
             />
           </div>
 
@@ -132,7 +152,7 @@ export default function Registration() {
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
               placeholder="Enter your email"
-              className="px-4 py-2 rounded-lg border border-white/30 bg-black/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-black/30 transition-all text-sm"
+              className={inputClass(formData.email)}
             />
           </div>
 
