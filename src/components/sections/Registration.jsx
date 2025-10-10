@@ -1,6 +1,6 @@
 // src/components/Registration.jsx
 import { useState } from "react";
-import logo from "../../assets/logo.svg";
+import logo from "../../assets/logof.png";
 
 export default function Registration() {
   const [formData, setFormData] = useState({
@@ -33,15 +33,14 @@ export default function Registration() {
           width: "500px",
           height: "450px",
           backdropFilter: "blur(100px)",
-          background: "rgba(255, 255, 255, 0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.3)",
           clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
           padding: "3rem 2rem",
           paddingTop: "120px",
-          backgroundImage: `url(${logo})`,
-          backgroundSize: "cover",
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${logo})`,
+          backgroundSize: "contain",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
+          marginTop: "50px", //
         }}
       >
         <form
@@ -95,10 +94,10 @@ export default function Registration() {
       </div>
 
       {/* 📱 Mobile Card Design */}
-      <div className="flex md:hidden items-center justify-center min-h-screen p-6">
+      <div className="flex md:hidden items-center justify-center min-h-screen p-6 relative">
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-sm bg-white/10 backdrop-blur-2xl border border-white/30 rounded-2xl p-6 shadow-lg space-y-4"
+          className="w-full max-w-sm bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-6 shadow-lg space-y-4"
         >
           <h2 className="text-2xl font-bold text-white text-center">
             Register
@@ -111,7 +110,7 @@ export default function Registration() {
               value={formData.fullName}
               onChange={(e) => handleChange("fullName", e.target.value)}
               placeholder="Enter your full name"
-              className="px-4 py-2 rounded-lg border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/20 transition-all text-sm"
+              className="px-4 py-2 rounded-lg border border-white/30 bg-black/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-black/30 transition-all text-sm"
             />
           </div>
 
@@ -122,7 +121,7 @@ export default function Registration() {
               value={formData.university}
               onChange={(e) => handleChange("university", e.target.value)}
               placeholder="Enter your university"
-              className="px-4 py-2 rounded-lg border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/20 transition-all text-sm"
+              className="px-4 py-2 rounded-lg border border-white/30 bg-black/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-black/30 transition-all text-sm"
             />
           </div>
 
@@ -133,7 +132,7 @@ export default function Registration() {
               value={formData.email}
               onChange={(e) => handleChange("email", e.target.value)}
               placeholder="Enter your email"
-              className="px-4 py-2 rounded-lg border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/20 transition-all text-sm"
+              className="px-4 py-2 rounded-lg border border-white/30 bg-black/20 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-black/30 transition-all text-sm"
             />
           </div>
 
