@@ -121,7 +121,6 @@ const Navbar = ({ currentSection, onNavigate }) => {
     gap: "15px",
     transition: "left 0.3s ease",
     zIndex: 1100,
-    // boxShadow: "2px 0 15px rgba(0,255,255,0.2)",
     borderRight: "1px solid rgba(0,255,255,0.3)",
   };
 
@@ -139,7 +138,6 @@ const Navbar = ({ currentSection, onNavigate }) => {
     height: isMobile ? "25px" : "32px",
     width: "auto",
     cursor: "pointer",
-    // filter: "drop-shadow(0 0 2px rgba(0,255,255,0.6))",
   };
 
   return (
@@ -171,12 +169,8 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 onNavigate(8);
                 setSidebarOpen(false);
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
             >
               Registration
             </button>
@@ -207,12 +201,8 @@ const Navbar = ({ currentSection, onNavigate }) => {
                     key={item.id}
                     style={itemStyle(currentSection === item.id)}
                     onClick={() => onNavigate(item.id)}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.transform = "scale(1.05)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                   >
                     {item.label}
                   </div>
@@ -230,12 +220,8 @@ const Navbar = ({ currentSection, onNavigate }) => {
               <button
                 style={registerButtonStyle}
                 onClick={() => onNavigate(8)}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
+                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
               >
                 Registration
               </button>
@@ -260,13 +246,12 @@ const Navbar = ({ currentSection, onNavigate }) => {
               <div
                 key={item.id}
                 style={itemStyle(currentSection === item.id)}
-                onClick={() => onNavigate(item.id)}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }
+                onClick={() => {
+                  onNavigate(item.id);  // Navigate to the section
+                  setSidebarOpen(false); // Close sidebar
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
               >
                 {item.label}
               </div>

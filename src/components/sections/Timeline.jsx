@@ -124,7 +124,7 @@ const Schedule = () => {
           <Timeline position="alternate">
             {/* Timeline Items */}
             <TimelineItem>
-              <TimelineOppositeContent sx={{ display: { xs: "none", sm: "block" } }}>
+              <TimelineOppositeContent sx={{ display: "block" }}>
                 <TimeTypography variant="body2">7:30 am</TimeTypography>
               </TimelineOppositeContent>
               <TimelineSeparator>
@@ -137,7 +137,7 @@ const Schedule = () => {
             </TimelineItem>
 
             <TimelineItem>
-              <TimelineOppositeContent sx={{ display: { xs: "none", sm: "block" } }}>
+              <TimelineOppositeContent sx={{ display: "block" }}>
                 <TimeTypography variant="body2">8:30 am</TimeTypography>
               </TimelineOppositeContent>
               <TimelineSeparator>
@@ -153,7 +153,7 @@ const Schedule = () => {
             </TimelineItem>
 
             <TimelineItem>
-              <TimelineOppositeContent sx={{ display: { xs: "none", sm: "block" } }}>
+              <TimelineOppositeContent sx={{ display: "block" }}>
                 <TimeTypography variant="body2">9:00 am</TimeTypography>
               </TimelineOppositeContent>
               <TimelineSeparator>
@@ -169,7 +169,7 @@ const Schedule = () => {
             </TimelineItem>
 
             <TimelineItem>
-              <TimelineOppositeContent sx={{ display: { xs: "none", sm: "block" } }}>
+              <TimelineOppositeContent sx={{ display: "block" }}>
                 <TimeTypography variant="body2">10:30 am</TimeTypography>
               </TimelineOppositeContent>
               <TimelineSeparator>
@@ -182,7 +182,7 @@ const Schedule = () => {
             </TimelineItem>
 
             <TimelineItem>
-              <TimelineOppositeContent sx={{ display: { xs: "none", sm: "block" } }}>
+              <TimelineOppositeContent sx={{ display: "block" }}>
                 <TimeTypography variant="body2">2:00 pm</TimeTypography>
               </TimelineOppositeContent>
               <TimelineSeparator>
@@ -198,7 +198,7 @@ const Schedule = () => {
             </TimelineItem>
 
             <TimelineItem>
-              <TimelineOppositeContent sx={{ display: { xs: "none", sm: "block" } }}>
+              <TimelineOppositeContent sx={{ display: "block" }}>
                 <TimeTypography variant="body2">4:00 pm</TimeTypography>
               </TimelineOppositeContent>
               <TimelineSeparator>
