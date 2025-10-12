@@ -26,7 +26,9 @@ export default function Registration() {
 
   const inputClass = (value) =>
     `px-4 py-2 rounded-xl border border-white/30 ${
-      value ? "bg-white text-black" : "bg-white/10 text-white placeholder-white/70"
+      value
+        ? "bg-gradient-to-r from-cyan-100 to-amber-100 text-gray-800"
+        : "bg-white/10 text-white placeholder-white/70"
     } focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all text-sm`;
 
   return (
@@ -73,6 +75,7 @@ export default function Registration() {
               <input
                 type="text"
                 value={formData.fullName}
+                onKeyDown={(e) => e.stopPropagation()} // 🛠️ Fix space issue
                 onChange={(e) => handleChange("fullName", e.target.value)}
                 placeholder="Enter your full name"
                 className={inputClass(formData.fullName)}
@@ -84,6 +87,7 @@ export default function Registration() {
               <input
                 type="text"
                 value={formData.university}
+                onKeyDown={(e) => e.stopPropagation()} // 🛠️ Fix space issue
                 onChange={(e) => handleChange("university", e.target.value)}
                 placeholder="Enter your university"
                 className={inputClass(formData.university)}
@@ -95,6 +99,7 @@ export default function Registration() {
               <input
                 type="email"
                 value={formData.email}
+                onKeyDown={(e) => e.stopPropagation()} // 🛠️ Fix space issue
                 onChange={(e) => handleChange("email", e.target.value)}
                 placeholder="Enter your email"
                 className={inputClass(formData.email)}
@@ -113,7 +118,23 @@ export default function Registration() {
 
       {/* 📱 Mobile Card Design */}
       <div className="flex md:hidden items-center justify-center min-h-screen p-6 relative">
-        
+        {/* Smaller, adaptive logo for mobile */}
+        <div
+          style={{
+            position: "absolute",
+            top: "10%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "70%",
+            height: "auto",
+            backgroundImage: `url(${logo})`,
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            opacity: 0.15,
+            zIndex: 0,
+          }}
+        ></div>
 
         <form
           onSubmit={handleSubmit}
@@ -128,6 +149,7 @@ export default function Registration() {
             <input
               type="text"
               value={formData.fullName}
+              onKeyDown={(e) => e.stopPropagation()} // 🛠️ Fix space issue
               onChange={(e) => handleChange("fullName", e.target.value)}
               placeholder="Enter your full name"
               className={inputClass(formData.fullName)}
@@ -139,6 +161,7 @@ export default function Registration() {
             <input
               type="text"
               value={formData.university}
+              onKeyDown={(e) => e.stopPropagation()} // 🛠️ Fix space issue
               onChange={(e) => handleChange("university", e.target.value)}
               placeholder="Enter your university"
               className={inputClass(formData.university)}
@@ -150,6 +173,7 @@ export default function Registration() {
             <input
               type="email"
               value={formData.email}
+              onKeyDown={(e) => e.stopPropagation()} // 🛠️ Fix space issue
               onChange={(e) => handleChange("email", e.target.value)}
               placeholder="Enter your email"
               className={inputClass(formData.email)}

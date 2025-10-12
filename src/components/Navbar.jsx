@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import brand from "../assets/brand.png";
 
 const Navbar = ({ currentSection, onNavigate }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -36,7 +37,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     { id: 5, label: "Teaser" },
     { id: 6, label: "Timeline" },
     { id: 7, label: "Venue" },
-    { id: 8, label: "Registration" }, // 👈 Added registration as the last section
+    { id: 8, label: "Registration" },
   ];
 
   useEffect(() => {
@@ -120,7 +121,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     gap: "15px",
     transition: "left 0.3s ease",
     zIndex: 1100,
-    boxShadow: "2px 0 15px rgba(0,255,255,0.2)",
+    // boxShadow: "2px 0 15px rgba(0,255,255,0.2)",
     borderRight: "1px solid rgba(0,255,255,0.3)",
   };
 
@@ -132,6 +133,13 @@ const Navbar = ({ currentSection, onNavigate }) => {
     color: "#00ffff",
     transform: sidebarOpen ? "rotate(90deg)" : "rotate(0deg)",
     transition: "transform 0.3s ease",
+  };
+
+  const logoStyle = {
+    height: isMobile ? "25px" : "32px",
+    width: "auto",
+    cursor: "pointer",
+    // filter: "drop-shadow(0 0 2px rgba(0,255,255,0.6))",
   };
 
   return (
@@ -146,25 +154,21 @@ const Navbar = ({ currentSection, onNavigate }) => {
               width: "100%",
               height: "55px",
               position: "relative",
-            }}>
-            {/* Logo */}
-            <div
-              style={{
-                fontSize: "18px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                textShadow: "0 0 5px #00ffff",
-                position: "absolute",
-                left: 15,
-              }}>
-              SUPCOM
-            </div>
+            }}
+          >
+            {/* Brand logo */}
+            <img
+              src={brand}
+              alt="Brand Logo"
+              style={{ ...logoStyle, position: "absolute", left: 0 }}
+              onClick={() => onNavigate(0)}
+            />
 
             {/* Register button */}
             <button
               style={registerButtonStyle}
               onClick={() => {
-                onNavigate(8); // 👈 navigate to Registration
+                onNavigate(8);
                 setSidebarOpen(false);
               }}
               onMouseEnter={(e) =>
@@ -172,33 +176,32 @@ const Navbar = ({ currentSection, onNavigate }) => {
               }
               onMouseLeave={(e) =>
                 (e.currentTarget.style.transform = "scale(1)")
-              }>
+              }
+            >
               Registration
             </button>
 
             {/* Hamburger */}
             <div
               style={hamburgerStyle}
-              onClick={() => setSidebarOpen(!sidebarOpen)}>
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
               ☰
             </div>
           </div>
         ) : (
           <>
-            {/* Desktop */}
-            <div
-              style={{
-                fontSize: "18px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                textShadow: "0 0 5px #00ffff",
-              }}>
-              SUPCOM
-            </div>
+            {/* Desktop Logo */}
+            <img
+              src={brand}
+              alt="Brand Logo"
+              style={logoStyle}
+              onClick={() => onNavigate(0)}
+            />
 
             <div style={itemsContainerStyle}>
               {items
-                .filter((item) => item.label !== "Registration") // hide it from navbar
+                .filter((item) => item.label !== "Registration")
                 .map((item) => (
                   <div
                     key={item.id}
@@ -209,32 +212,34 @@ const Navbar = ({ currentSection, onNavigate }) => {
                     }
                     onMouseLeave={(e) =>
                       (e.currentTarget.style.transform = "scale(1)")
-                    }>
+                    }
+                  >
                     {item.label}
                   </div>
                 ))}
             </div>
 
-            {/* Register button with timer (desktop only) */}
+            {/* Register button + timer */}
             <div
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-              }}>
+              }}
+            >
               <button
                 style={registerButtonStyle}
-                onClick={() => onNavigate(8)} // 👈 navigate to Registration
+                onClick={() => onNavigate(8)}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.transform = "scale(1.05)")
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.transform = "scale(1)")
-                }>
+                }
+              >
                 Registration
               </button>
 
-              {/* Timer */}
               {currentSection !== 0 && (
                 <div style={timerStyle}>
                   {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
@@ -250,7 +255,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
       {isMobile && (
         <div style={sidebarStyle}>
           {items
-            .filter((item) => item.label !== "Registration") // hide it from navbar
+            .filter((item) => item.label !== "Registration")
             .map((item) => (
               <div
                 key={item.id}
@@ -261,7 +266,8 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.transform = "scale(1)")
-                }>
+                }
+              >
                 {item.label}
               </div>
             ))}
