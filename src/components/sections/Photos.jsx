@@ -37,7 +37,7 @@ const Photos = () => {
         style={{
           width: "100%",
           height: "100%",
-          clipPath: "polygon(32% 0%, 68% 0%, 100% 100%, 0% 100%)", // balanced trapezoid
+          clipPath: isMobile ? "":"polygon(32% 0%, 68% 0%, 100% 100%, 0% 100%)", // balanced trapezoid
           background: "transparent", // fully transparent
         }}
       >
