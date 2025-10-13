@@ -1,236 +1,124 @@
 import React, { useRef } from "react";
-import {
-  Timeline,
-  TimelineItem,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineOppositeContent,
-} from "@mui/lab";
-import { Typography, Box, IconButton } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-
-// 🎨 Styled components
-const DarkTimelineDot = styled(TimelineDot)({
-  backgroundColor: "#b18460",
-  color: "#fff",
-});
-
-const LightConnector = styled(TimelineConnector)({
-  backgroundColor: "rgba(255,255,255,0.3)",
-  height: 3,
-});
-
-const EventTypography = styled(Typography)({
-  color: "#fff",
-  fontWeight: "bold",
-  fontFamily: "Overpass",
-});
-
-const TimeTypography = styled(Typography)({
-  color: "#b18460",
-  fontFamily: "Overpass",
-});
-
-const DescriptionTypography = styled(Typography)({
-  color: "rgba(255,255,255,0.8)",
-  fontFamily: "Overpass",
-});
-
-const ScrollButton = styled(IconButton)({
-  backgroundColor: "rgba(177, 132, 96, 0.8)",
-  color: "#fff",
-  "&:hover": {
-    backgroundColor: "rgba(177, 132, 96, 1)",
-  },
-  margin: "8px 0",
-  padding: "6px",
-});
+import triangleUp from "../../assets/TimeLine/TimeUp.jpg";
+import triangleDown from "../../assets/TimeLine/TimeDown.jpg";
 
 const Schedule = () => {
-  const scrollRef = useRef(null);
+  const schedule = [
+    { time: "7:30", label: "INSCRIPTION" },
+    { time: "8:30", label: "MOT D'OUVERTURE" },
+    { time: "9:15", label: "CONFÉRENCE" },
+    { time: "9:45", label: "KEYNOTES" },
+    { time: "10:30", label: "PAUSE CAFÉ" },
+    { time: "11:30", label: "CONFÉRENCE" },
+    { time: "12:00", label: "TABLE RONDE" },
+    { time: "12:45", label: "DÉJEUNER" },
+    { time: "14:00", label: "WORKSHOPS" },
+    { time: "16:00", label: "CLÔTURE DU FORUM" },
+  ];
+
+  const containerRef = useRef(null);
 
   const scroll = (direction) => {
-    if (scrollRef.current) {
-      const scrollAmount = 150; // px per click
-      scrollRef.current.scrollBy({
-        top: direction === "down" ? scrollAmount : -scrollAmount,
+    if (containerRef.current) {
+      const amount = 200;
+      containerRef.current.scrollBy({
+        top: direction === "down" ? amount : -amount,
         behavior: "smooth",
       });
     }
   };
 
   return (
-    <section
+    <div
+      className="relative flex justify-center items-center bg-cover bg-center"
       style={{
-        height: "95vh",
+        backgroundImage: "url('/your-background-image.jpg')", // 🔁 Change path here
+        minHeight: "100vh",
         width: "100%",
-        background: "transparent",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: "2rem",
-        position: "relative",
       }}
     >
-      {/* Scrollable container */}
+      {/* Timeline Container */}
       <div
-        ref={scrollRef}
-        style={{
-          width: "80%",
-          maxWidth: "600px",
-          height: "80%",
-          overflowY: "auto",
-          background: "rgba(0, 0, 0, 0.3)",
-          backdropFilter: "blur(10px)",
-          borderRadius: "16px",
-          padding: "1.5rem 1rem",
-          scrollBehavior: "smooth",
-        }}
-        className="no-scrollbar"
+        ref={containerRef}
+        className="relative z-10 w-[90%] md:w-[70%] h-[80vh] overflow-y-auto px-4 py-4 rounded-2xl backdrop-blur-md bg-black/40 no-scrollbar"
       >
         <style>{`
-          .no-scrollbar::-webkit-scrollbar {
-            display: none;
-          }
+          .no-scrollbar::-webkit-scrollbar { display: none; }
         `}</style>
 
-        <Box
-          sx={{
-            width: "100%",
-            color: "white",
-            textAlign: "center",
-            margin: "0 auto",
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{
-              mb: 3,
-              color: "#b18460",
-              fontFamily: "Overpass",
-              fontWeight: "bold",
-              textShadow: "0px 0px 10px rgba(255,255,255,0.3)",
-              textAlign: "center",
-              fontSize: { xs: "1.5rem", sm: "2rem", md: "2.2rem" },
-            }}
-          >
-            Event Schedule
-          </Typography>
+        {/* Title */}
+        <h2 className="text-center text-4xl md:text-5xl font-extrabold text-white tracking-wider mb-14">
+          PROGRAMME DU FORUM
+        </h2>
 
-          <Timeline position="alternate">
-            {/* Timeline Items */}
-            <TimelineItem>
-              <TimelineOppositeContent sx={{ display: "block" }}>
-                <TimeTypography variant="body2">7:30 am</TimeTypography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <DarkTimelineDot />
-                <LightConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <EventTypography>Check-in</EventTypography>
-              </TimelineContent>
-            </TimelineItem>
+        <div className="space-y-10 relative">
+          {schedule.map((item, i) => (
+            <div
+              key={i}
+              className="relative flex flex-col items-center justify-center min-h-[100px]"
+            >
+              {/* Alternate Time Position */}
+              {i % 2 === 0 ? (
+                <>
+                  {/* Time Left */}
+                  <div className="absolute left-0 md:left-[20%] flex items-center group">
+                    <div className="relative w-20 h-20 transition-transform duration-300 group-hover:scale-110">
+                      <img
+                        src={triangleUp}
+                        alt="triangle"
+                        className="w-full h-full object-contain opacity-90"
+                      />
+                      <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">
+                        {item.time}
+                      </span>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Time Right */}
+                  <div className="absolute right-0 md:right-[20%] flex items-center group">
+                    <div className="relative w-20 h-20 transition-transform duration-300 group-hover:scale-110">
+                      <img
+                        src={triangleDown}
+                        alt="triangle"
+                        className="w-full h-full object-contain opacity-90"
+                      />
+                      <span className="absolute inset-0 flex items-center justify-center text-white font-bold text-sm">
+                        {item.time}
+                      </span>
+                    </div>
+                  </div>
+                </>
+              )}
 
-            <TimelineItem>
-              <TimelineOppositeContent sx={{ display: "block" }}>
-                <TimeTypography variant="body2">8:30 am</TimeTypography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <DarkTimelineDot />
-                <LightConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <EventTypography>Opening Ceremony</EventTypography>
-                <DescriptionTypography>
-                  Opening words from our distinguished guests.
-                </DescriptionTypography>
-              </TimelineContent>
-            </TimelineItem>
-
-            <TimelineItem>
-              <TimelineOppositeContent sx={{ display: "block" }}>
-                <TimeTypography variant="body2">9:00 am</TimeTypography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <DarkTimelineDot />
-                <LightConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <EventTypography>Conference 1</EventTypography>
-                <DescriptionTypography>
-                  DevOps: From Reactive Integration to Proactive Production.
-                </DescriptionTypography>
-              </TimelineContent>
-            </TimelineItem>
-
-            <TimelineItem>
-              <TimelineOppositeContent sx={{ display: "block" }}>
-                <TimeTypography variant="body2">10:30 am</TimeTypography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <DarkTimelineDot />
-                <LightConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <EventTypography>Coffee Break</EventTypography>
-              </TimelineContent>
-            </TimelineItem>
-
-            <TimelineItem>
-              <TimelineOppositeContent sx={{ display: "block" }}>
-                <TimeTypography variant="body2">2:00 pm</TimeTypography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <DarkTimelineDot />
-                <LightConnector />
-              </TimelineSeparator>
-              <TimelineContent>
-                <EventTypography>Workshops</EventTypography>
-                <DescriptionTypography>
-                  From Code to Production: Automated DevOps Pipeline.
-                </DescriptionTypography>
-              </TimelineContent>
-            </TimelineItem>
-
-            <TimelineItem>
-              <TimelineOppositeContent sx={{ display: "block" }}>
-                <TimeTypography variant="body2">4:00 pm</TimeTypography>
-              </TimelineOppositeContent>
-              <TimelineSeparator>
-                <DarkTimelineDot />
-              </TimelineSeparator>
-              <TimelineContent>
-                <EventTypography>Closing Ceremony</EventTypography>
-              </TimelineContent>
-            </TimelineItem>
-          </Timeline>
-        </Box>
+              {/* Label */}
+              <div className="text-center mt-8">
+                <span className="text-white font-bold text-lg md:text-xl tracking-widest whitespace-nowrap">
+                  {item.label}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Fixed Scroll Buttons */}
-      <Box
-        sx={{
-          position: "absolute",
-          right: { xs: "2%", sm: "5%" },
-          top: "50%",
-          transform: "translateY(-50%)",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <ScrollButton onClick={() => scroll("up")} sx={{ fontSize: { xs: "1rem", sm: "1.5rem" } }}>
-          <ArrowUpwardIcon />
-        </ScrollButton>
-        <ScrollButton onClick={() => scroll("down")} sx={{ fontSize: { xs: "1rem", sm: "1.5rem" } }}>
-          <ArrowDownwardIcon />
-        </ScrollButton>
-      </Box>
-    </section>
+      {/* Scroll Buttons */}
+      <div className="absolute right-[5%] top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
+        <button
+          onClick={() => scroll("up")}
+          className="bg-[#b18460]/80 text-white rounded-full p-2 shadow-md hover:bg-[#b18460] transition"
+        >
+          ↑
+        </button>
+        <button
+          onClick={() => scroll("down")}
+          className="bg-[#b18460]/80 text-white rounded-full p-2 shadow-md hover:bg-[#b18460] transition"
+        >
+          ↓
+        </button>
+      </div>
+    </div>
   );
 };
 

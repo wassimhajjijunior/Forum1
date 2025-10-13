@@ -1,4 +1,3 @@
-// src/components/Registration.jsx
 import { useState } from "react";
 import logo from "../../assets/logof.png";
 
