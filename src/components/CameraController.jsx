@@ -18,10 +18,12 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
   const speedRef = useRef(normalSpeed);
   const prevSection = useRef(0);
 
+  // Sync animating state
   useEffect(() => {
     isAnimatingRef.current = isAnimating;
   }, [isAnimating]);
 
+  // Initialize camera
   useEffect(() => {
     if (!isInitialized.current) {
       camera.position.z = 0;
@@ -30,20 +32,20 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
     }
   }, [camera]);
 
+  // Update targetZ on section change
   useEffect(() => {
     targetZ.current = -sectionIndex * depth;
     if (onSectionChange) onSectionChange(sectionIndex);
 
-    if (prevSection.current === 0 && sectionIndex === 1) {
-      speedRef.current = firstScrollSpeed;
-    } else {
-      speedRef.current = normalSpeed;
-    }
+    speedRef.current =
+      prevSection.current === 0 && sectionIndex === 1
+        ? firstScrollSpeed
+        : normalSpeed;
 
     prevSection.current = sectionIndex;
   }, [sectionIndex, onSectionChange]);
 
-  // ✅ Handle navbar clicks with clearGoToSection
+  // Handle navbar clicks
   useEffect(() => {
     if (
       goToSection !== null &&
@@ -56,11 +58,11 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
       setIsAnimating(true);
       isAnimatingRef.current = true;
 
-      if (clearGoToSection) clearGoToSection(); // 🔥 reset after navigation
+      if (clearGoToSection) clearGoToSection();
     }
   }, [goToSection, sectionIndex, maxSections, clearGoToSection]);
 
-  // ✅ Handle scroll + keyboard + touch
+  // Scroll, keyboard, and touch
   useEffect(() => {
     const SCROLL_THRESHOLD = 30;
     let touchStartY = 0;
@@ -120,6 +122,11 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
       touchStartY = e.touches[0].clientY;
     };
 
+    const handleTouchMove = (e) => {
+      // Prevent mobile pull-to-refresh / scroll
+      e.preventDefault();
+    };
+
     const handleTouchEnd = (e) => {
       if (isAnimatingRef.current) return;
 
@@ -144,17 +151,20 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
 
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd, { passive: false });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [sectionIndex, maxSections]);
 
+  // Animate camera
   useFrame((state, delta) => {
     if (!isInitialized.current) return;
 

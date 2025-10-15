@@ -62,35 +62,35 @@ const HomeMesh = () => {
     <group ref={groupRef} position={[0, 0, -5]}>
       {/* Logo */}
       <mesh position={[0, 0.5, 0]}>
-        <planeGeometry args={[3, 3]} />
+        <planeGeometry args={[3.2, 3]} />
         <meshBasicMaterial map={texture} transparent alphaTest={0.1} />
       </mesh>
 
       {/* Main Title */}
       <Text
-        position={[0, -1.3, 0]}
+        position={[0, -1.4, 0]}
         fontSize={0.5}
         color="#ffffff"
         anchorX="center"
         anchorY="middle"
         fontWeight={600}
       >
-        X-Ops Space Forum
+        DELTA ∇I
       </Text>
 
       {/* Subtitle */}
       <Text
-        position={[0, -1.8, 0]}
+        position={[0, -1.9, 0]}
         fontSize={0.22}
         color="#a0b0c0"
         anchorX="center"
         anchorY="middle"
       >
-        Exploring ML, Development & Security Galaxies
+        THROUGH THE PORTAL BEYOND THIS DIMENSION
       </Text>
 
       {/* Timer Section */}
-      <group position={[0, -2.5, 0]}>
+      <group position={[0, -2.7 , 0]}>
         {timeUnits.map((unit, index) => (
           <group 
             key={index} 
