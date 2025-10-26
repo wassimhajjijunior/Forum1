@@ -1,25 +1,26 @@
 // src/components/Speakers.jsx
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import WhorkshopImage1 from "../../assets/speakers/me.jpg";
 
 const speakers = [
   {
     id: 1,
     name: "Speaker One",
     role: "AI Engineer",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    image: WhorkshopImage1,
   },
   {
     id: 2,
     name: "Speaker Two",
     role: "Tech Lead",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+    image: WhorkshopImage1,
   },
   {
     id: 3,
     name: "Wassim Hajji",
     role: "A passionate developer, entrepreneur, and innovator",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+    image: WhorkshopImage1,
   },
 ];
 
@@ -50,7 +51,7 @@ const getPositionOnPath = (path, t) => {
   };
 };
 
-const Speakers = () => {
+const Workshops = () => {
   const [time, setTime] = useState(0);
   const [paused, setPaused] = useState(false);
   const [hoveredId, setHoveredId] = useState(null); // Track which card is hovered
@@ -139,4 +140,4 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
   </div>
 );
 
-export default Speakers;
+export default Workshops;

@@ -32,12 +32,12 @@ const Navbar = ({ currentSection, onNavigate }) => {
     { id: 0, label: "Home" },
     { id: 1, label: "Description" },
     { id: 2, label: "Photos" },
-    { id: 3, label: "Speakers" },
-    { id: 4, label: "Sponsors" },
-    { id: 5, label: "Teaser" },
-    { id: 6, label: "Timeline" },
-    { id: 7, label: "Venue" },
-    { id: 8, label: "Registration" },
+    { id: 3, label: "Speakers" }, // Covers section 3 & 4
+    { id: 5, label: "Sponsors" },
+    { id: 6, label: "Teaser" },
+    { id: 7, label: "Timeline" },
+    { id: 8, label: "Venue" },
+    { id: 9, label: "Registration" },
   ];
 
   useEffect(() => {
@@ -166,11 +166,15 @@ const Navbar = ({ currentSection, onNavigate }) => {
             <button
               style={registerButtonStyle}
               onClick={() => {
-                onNavigate(8);
+                onNavigate(9); // ✅ Fixed here (was 8)
                 setSidebarOpen(false);
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-              onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.transform = "scale(1)")
+              }
             >
               Registration
             </button>
@@ -199,10 +203,18 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 .map((item) => (
                   <div
                     key={item.id}
-                    style={itemStyle(currentSection === item.id)}
+                    style={itemStyle(
+                      item.label === "Speakers"
+                        ? currentSection === 3 || currentSection === 4
+                        : currentSection === item.id
+                    )}
                     onClick={() => onNavigate(item.id)}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.05)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }
                   >
                     {item.label}
                   </div>
@@ -219,9 +231,13 @@ const Navbar = ({ currentSection, onNavigate }) => {
             >
               <button
                 style={registerButtonStyle}
-                onClick={() => onNavigate(8)}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                onClick={() => onNavigate(9)} // ✅ Fixed here (was 8)
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.05)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }
               >
                 Registration
               </button>
@@ -245,13 +261,21 @@ const Navbar = ({ currentSection, onNavigate }) => {
             .map((item) => (
               <div
                 key={item.id}
-                style={itemStyle(currentSection === item.id)}
+                style={itemStyle(
+                  item.label === "Speakers"
+                    ? currentSection === 3 || currentSection === 4
+                    : currentSection === item.id
+                )}
                 onClick={() => {
-                  onNavigate(item.id);  // Navigate to the section
-                  setSidebarOpen(false); // Close sidebar
+                  onNavigate(item.id);
+                  setSidebarOpen(false);
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.05)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }
               >
                 {item.label}
               </div>

@@ -4,6 +4,7 @@ import Home from "./sections/Home";
 import Description from "./sections/Description";
 import Photos from "./sections/Photos";
 import Speakers from "./sections/Speakers";
+import Workshops from "./sections/Workshops";
 import Sponsors from "./sections/Sponsors";
 import Teaser from "./sections/Teaser";
 import Timeline from "./sections/Timeline";
@@ -16,11 +17,12 @@ const Sections = ({ currentSection }) => {
     { id: 1, name: "Description", component: Description },
     { id: 2, name: "Photos", component: Photos },
     { id: 3, name: "Speakers", component: Speakers },
-    { id: 4, name: "Sponsors", component: Sponsors },
-    { id: 5, name: "Teaser", component: Teaser },
-    { id: 6, name: "Timeline", component: Timeline },
-    { id: 7, name: "Venue", component: Venue },
-    { id: 8, name: "Registration", component: Registration },
+    { id: 4, name: "Workshops", component: Workshops },
+    { id: 5, name: "Sponsors", component: Sponsors },
+    { id: 6, name: "Teaser", component: Teaser },
+    { id: 7, name: "Timeline", component: Timeline },
+    { id: 8, name: "Venue", component: Venue },
+    { id: 9, name: "Registration", component: Registration },
   ];
 
   const CurrentComponent = sections[currentSection]?.component || Home;
@@ -35,8 +37,8 @@ const Sections = ({ currentSection }) => {
     if (currentSection === 0) {
       // Special Home animation
       setHomeAnimationStep(0);
-      const homeTimer1 = setTimeout(() => setHomeAnimationStep(1), 200); 
-      const homeTimer2 = setTimeout(() => setHomeAnimationStep(2), 1000); 
+      const homeTimer1 = setTimeout(() => setHomeAnimationStep(1), 200);
+      const homeTimer2 = setTimeout(() => setHomeAnimationStep(2), 1000);
 
       return () => {
         clearTimeout(homeTimer1);
@@ -148,7 +150,6 @@ const Sections = ({ currentSection }) => {
 
   return (
     <>
-    
       {sections.map((section, index) => (
         <div key={index} style={sectionStyle(index)}>
           {index === currentSection && <CurrentComponent />}

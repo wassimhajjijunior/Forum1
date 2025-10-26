@@ -17,21 +17,21 @@ const TriangleTunnel = ({ segments = 50, width = 3, height = 3, depth = 4 , visi
         {/* Bottom */}
         <mesh position={[0, -height / 2, 0]}>
           <boxGeometry args={[width * 2, 0, depth]} />
-          <meshStandardMaterial map={texture} />
+          <meshStandardMaterial map={texture1} />
           
         </mesh>
 
         {/* Left */}
         <mesh position={[-width / 2, 0, 0]} rotation={[0, 0, Math.PI / 3]}>
           <boxGeometry args={[width * 2, 0, depth]} />
-          <meshStandardMaterial map={texture} />
+          <meshStandardMaterial map={texture2} />
 
         </mesh>
 
         {/* Right */}
         <mesh position={[width / 2, 0, 0]} rotation={[0, 0, -Math.PI / 3]}>
           <boxGeometry args={[width * 2, 0, depth]} />
-          <meshStandardMaterial map={texture} />
+          <meshStandardMaterial map={texture3} />
         </mesh>
         <ambientLight intensity={0.009} />
       </group>

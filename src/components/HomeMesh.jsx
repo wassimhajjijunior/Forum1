@@ -7,7 +7,6 @@ import logo from "../assets/logof.png";
 const HomeMesh = () => {
   const groupRef = useRef();
   const timerBoxRefs = useRef([]);
-
   const texture = useLoader(THREE.TextureLoader, logo);
 
   const [timeLeft, setTimeLeft] = useState({
@@ -16,6 +15,18 @@ const HomeMesh = () => {
     minutes: 0,
     seconds: 0,
   });
+
+  // ✅ Detect mobile device
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // any width < 768px = mobile
+    };
+    handleResize(); // run once on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const targetDate = new Date("2025-11-12T08:00:00");
 
@@ -34,11 +45,9 @@ const HomeMesh = () => {
         });
       }
     }, 1000);
-
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  // Subtle hover-like scale animation
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     timerBoxRefs.current.forEach((box, i) => {
@@ -58,8 +67,11 @@ const HomeMesh = () => {
     { label: "Seconds", value: timeLeft.seconds },
   ];
 
+  // ✅ Only change scale for mobile
+  const groupScale = isMobile ? 0.65 : 1;
+
   return (
-    <group ref={groupRef} position={[0, 0, -5]}>
+    <group ref={groupRef} position={[0, 0, -5]} scale={[groupScale, groupScale, groupScale]}>
       {/* Logo */}
       <mesh position={[0, 0.5, 0]}>
         <planeGeometry args={[3.2, 3]} />
@@ -90,14 +102,13 @@ const HomeMesh = () => {
       </Text>
 
       {/* Timer Section */}
-      <group position={[0, -2.7 , 0]}>
+      <group position={[0, -2.7, 0]}>
         {timeUnits.map((unit, index) => (
-          <group 
-            key={index} 
+          <group
+            key={index}
             ref={(el) => (timerBoxRefs.current[index] = el)}
             position={[index * 1.0 - 1.5, 0, 0]}
           >
-            {/* Clean container with subtle depth */}
             <mesh position={[0, 0, 0]}>
               <boxGeometry args={[0.85, 0.75, 0.08]} />
               <meshStandardMaterial
@@ -109,16 +120,11 @@ const HomeMesh = () => {
               />
             </mesh>
 
-            {/* Thin border accent */}
             <lineSegments position={[0, 0, 0.041]}>
-              <edgesGeometry 
-                attach="geometry" 
-                args={[new THREE.BoxGeometry(0.87, 0.77, 0.08)]} 
-              />
+              <edgesGeometry attach="geometry" args={[new THREE.BoxGeometry(0.87, 0.77, 0.08)]} />
               <lineBasicMaterial color="#00a8ff" opacity={0.3} transparent />
             </lineSegments>
 
-            {/* Timer Value */}
             <Text
               position={[0, 0.1, 0.05]}
               fontSize={0.32}
@@ -130,7 +136,6 @@ const HomeMesh = () => {
               {formatUnit(unit.value)}
             </Text>
 
-            {/* Timer Label */}
             <Text
               position={[0, -0.2, 0.05]}
               fontSize={0.1}
@@ -142,14 +147,9 @@ const HomeMesh = () => {
               {unit.label}
             </Text>
 
-            {/* Subtle glow underneath */}
             <mesh position={[0, 0, -0.05]}>
               <planeGeometry args={[0.95, 0.85]} />
-              <meshBasicMaterial 
-                color="#00a8ff" 
-                transparent 
-                opacity={0.04}
-              />
+              <meshBasicMaterial color="#00a8ff" transparent opacity={0.04} />
             </mesh>
           </group>
         ))}
