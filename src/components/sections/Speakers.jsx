@@ -18,7 +18,7 @@ const speakers = [
   {
     id: 3,
     name: "Wassim Hajji",
-    role: "A passionate developer, entrepreneur, and innovator",
+    role: "A passionate developer",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
   },
 ];
@@ -56,7 +56,7 @@ const Speakers = () => {
   const [hoveredId, setHoveredId] = useState(null); // Track which card is hovered
   const requestRef = useRef();
 
-  const speed = 0.003; // slower movement
+  const speed = 0.004; // slower movement
 
   const animate = () => {
     if (!paused) setTime((prev) => prev + speed);

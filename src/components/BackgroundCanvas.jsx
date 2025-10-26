@@ -37,13 +37,13 @@ const BackgroundCanvas = ({
       }}>
       <Canvas
         camera={{ position: [0, 0, 0], fov: 75 }}
-        style={{ background: "black" }}>
+        style={{ background: "radial-gradient(rgb(50,90,120),rgb(2,5,30))" }}>
         {/* Ambient light */}
         <ambientLight intensity={0.5} />
 
         {/* Stars background */}
         {/* <Stars radius={500} depth={50} count={5000} /> */}
-        <MovingStars count={1000} radius={10} speed={5} />
+        <MovingStars count={500} radius={10} speed={6} length={20} />
 
         {/* Camera controller */}
         <CameraController

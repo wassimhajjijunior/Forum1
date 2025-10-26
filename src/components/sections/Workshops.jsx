@@ -19,7 +19,7 @@ const speakers = [
   {
     id: 3,
     name: "Wassim Hajji",
-    role: "A passionate developer, entrepreneur, and innovator",
+    role: "A passionate developer",
     image: WhorkshopImage1,
   },
 ];
@@ -57,7 +57,7 @@ const Workshops = () => {
   const [hoveredId, setHoveredId] = useState(null); // Track which card is hovered
   const requestRef = useRef();
 
-  const speed = 0.003; // slower movement
+  const speed = 0.004; // slower movement
 
   const animate = () => {
     if (!paused) setTime((prev) => prev + speed);

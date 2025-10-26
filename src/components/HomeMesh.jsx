@@ -116,7 +116,7 @@ const HomeMesh = () => {
                 metalness={0.2}
                 roughness={0.4}
                 transparent
-                opacity={0.85}
+                opacity={0.5}
               />
             </mesh>
 

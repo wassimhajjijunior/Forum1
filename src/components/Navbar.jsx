@@ -60,7 +60,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     zIndex: 1000,
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     color: "#00ffff",
-    background: "rgba(0,0,0,0.5)",
+    background: "rgba(0,0,0,0.2)",
     backdropFilter: "blur(8px)",
     boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
   };

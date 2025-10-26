@@ -1,52 +1,74 @@
 import React, { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 
-const MovingStars = ({ count = 2000, speed = 0.05, spread = 1000 }) => {
-  const pointsRef = useRef();
+const MovingStars = ({
+  count = 2000,
+  speed = 0.2,
+  spread = 900,
+  length = 20,
+}) => {
+  const linesRef = useRef();
 
-  // Generate star positions
+  // Generate stars as line segments
   const positions = useMemo(() => {
-    const arr = new Float32Array(count * 3);
+    const arr = [];
     for (let i = 0; i < count; i++) {
-      arr[i * 3 + 0] = (Math.random() - 0.5) * spread; // x
-      arr[i * 3 + 1] = (Math.random() - 0.5) * spread; // y
-      arr[i * 3 + 2] = -Math.random() * spread * 2;    // z
+      const x = (Math.random() - 0.5) * spread;
+      const y = (Math.random() - 0.5) * spread;
+      const z = -Math.random() * spread * 2;
+
+      arr.push(
+        x, y, z,            // start point
+        x, y, z + length    // end point (small segment)
+      );
     }
-    return arr;
-  }, [count, spread]);
+    return new Float32Array(arr);
+  }, [count, spread, length]);
 
-  useFrame(({ clock }) => {
-    if (!pointsRef.current) return;
-    const positionsArray = pointsRef.current.geometry.attributes.position.array;
-    const time = clock.getElapsedTime();
+  useFrame(() => {
+    if (!linesRef.current) return;
+    const positionsArray = linesRef.current.geometry.attributes.position.array;
 
-    for (let i = 0; i < positionsArray.length; i += 3) {
-      positionsArray[i + 2] += speed; // move stars forward
-      if (positionsArray[i + 2] > 50) positionsArray[i + 2] = -spread * 2; // reset
+    for (let i = 0; i < positionsArray.length; i += 6) {
+      // Move segment forward
+      positionsArray[i + 2] += speed; // start z
+      positionsArray[i + 5] += speed; // end z
+
+      // Reset when out of view
+      if (positionsArray[i + 2] > 50) {
+        const x = (Math.random() - 0.5) * spread;
+        const y = (Math.random() - 0.5) * spread;
+        const z = -spread * 2;
+        positionsArray[i] = x;
+        positionsArray[i + 1] = y;
+        positionsArray[i + 2] = z;
+        positionsArray[i + 3] = x;
+        positionsArray[i + 4] = y;
+        positionsArray[i + 5] = z + length;
+      }
     }
 
-    // twinkle by changing size slightly
-    pointsRef.current.material.size = 0.4 + Math.sin(time * 5) * 0.15;
-    pointsRef.current.geometry.attributes.position.needsUpdate = true;
+    linesRef.current.geometry.attributes.position.needsUpdate = true;
   });
 
   return (
-    <points ref={pointsRef}>
+    <lineSegments ref={linesRef}>
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={positions.length / 3}
           array={positions}
+          count={positions.length / 3}
           itemSize={3}
         />
       </bufferGeometry>
-      <pointsMaterial
+      <lineBasicMaterial
         color="white"
-        size={0.4}
-        sizeAttenuation={true}
         transparent={true}
+        opacity={0.25} // 🔥 lower opacity for softer glow effect
+        linewidth={0.2} // (only affects WebGL2 / certain browsers)
       />
-    </points>
+    </lineSegments>
   );
 };
 
