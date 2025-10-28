@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 const Venue = () => {
   const [dragX, setDragX] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isFullyOpen, setIsFullyOpen] = useState(false);
   const startXRef = useRef(0);
 
   const handleMouseDown = (e) => {
@@ -12,7 +12,7 @@ const Venue = () => {
   };
 
   const handleMouseMove = (e) => {
-    if (!isDragging) return;
+    if (!isDragging || isFullyOpen) return; // prevent moving if fully open
     const newX = e.clientX - startXRef.current;
     const clampedX = Math.max(0, Math.min(267, newX));
     setDragX(clampedX);
@@ -20,22 +20,24 @@ const Venue = () => {
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    
-    // If dragged more than halfway, expand fully and lock
-    if (dragX > 133) {
+    if (!isFullyOpen && dragX > 133) {
       setDragX(267);
-      setIsExpanded(true);
-    } else {
-      // Otherwise return to starting position
-      setDragX(0);
-      setIsExpanded(false);
+      setTimeout(() => {
+        setIsFullyOpen(true);
+      }, 550);
     }
   };
 
-  // Left part stays fixed, center and right move to align perfectly
-  const part1X = 0; // Left part stays fixed at 0
-  const part2X = dragX * 0.498; // Center aligns at 133px
-  const part3X = dragX * 1.0; // Right aligns at 267px
+  const part1X = 0;
+  const part2X = dragX * 0.498;
+  const part3X = dragX * 1.0;
+
+  const mapSrc =
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.936710397326!2d10.1877739!3d36.8918623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e2cb6fc49b7883%3A0x84da64ea383c01d2!2s%C3%89cole%20Sup%C3%A9rieure%20des%20communications%20de%20Tunis!5e0!3m2!1sfr!2stn!4v1761565205564!5m2!1sfr!2stn";
+
+  const transitionStyle = isDragging
+    ? "none"
+    : "left 0.5s cubic-bezier(0.22, 1, 0.36, 1)";
 
   return (
     <div
@@ -46,25 +48,24 @@ const Venue = () => {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      <div className="relative w-[400px] h-[250px]">
-        {/* Left Part - stays fixed */}
+      <div className="relative w-[390px] h-[230px]">
+        {/* Single unified map - preloaded and hidden */}
         <div
           style={{
             position: "absolute",
             top: 0,
-            left: `${part1X}px`,
-            width: "133px",
+            left: 0,
+            width: "400px",
             height: "250px",
-            boxShadow: "0 0 20px rgba(0,0,0,0.2)",
-            borderRadius: "2px",
-            transition: isDragging ? "none" : "left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
-            zIndex: 30,
-            pointerEvents: "none",
+            borderRadius: "6px",
             overflow: "hidden",
+            zIndex: 40,
+            opacity: isFullyOpen ? 1 : 0,
+            pointerEvents: isFullyOpen ? "auto" : "none",
           }}
         >
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.4!2d10.1815!3d36.8065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1sen!2stn!4v1234567890"
+            src={mapSrc}
             style={{
               position: "absolute",
               top: 0,
@@ -73,69 +74,106 @@ const Venue = () => {
               height: "250px",
               border: "none",
             }}
-            title="Map Left"
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Map Full"
           />
         </div>
 
-        {/* Center Part - moves to middle */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: `${part2X}px`,
-            width: "134px",
-            height: "250px",
-            boxShadow: "0 0 15px rgba(0,0,0,0.15)",
-            borderRadius: "2px",
-            transition: isDragging ? "none" : "left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
-            zIndex: 20,
-            pointerEvents: "none",
-            overflow: "hidden",
-          }}
-        >
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.4!2d10.1815!3d36.8065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1sen!2stn!4v1234567890"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: "-133px",
-              width: "400px",
-              height: "250px",
-              border: "none",
-            }}
-            title="Map Center"
-          />
-        </div>
+        {/* Three-part split view when animating or not fully open */}
+        {!isFullyOpen && (
+          <>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: `${part1X}px`,
+                width: "135px",
+                height: "250px",
+                borderRadius: "6px 0 0 6px",
+                transition: transitionStyle,
+                overflow: "hidden",
+                zIndex: 30,
+              }}
+            >
+              <iframe
+                src={mapSrc}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "400px",
+                  height: "250px",
+                  border: "none",
+                }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Map Left"
+              />
+            </div>
 
-        {/* Right Part - moves full distance */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: `${part3X}px`,
-            width: "133px",
-            height: "250px",
-            boxShadow: "0 0 20px rgba(0,0,0,0.15)",
-            borderRadius: "2px",
-            transition: isDragging ? "none" : "left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)",
-            zIndex: 10,
-            pointerEvents: "none",
-            overflow: "hidden",
-          }}
-        >
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.4!2d10.1815!3d36.8065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM!5e0!3m2!1sen!2stn!4v1234567890"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: "-267px",
-              width: "400px",
-              height: "250px",
-              border: "none",
-            }}
-            title="Map Right"
-          />
-        </div>
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: `${part2X - 1}px`,
+                width: "134px",
+                height: "250px",
+                transition: transitionStyle,
+                overflow: "hidden",
+                zIndex: 20,
+              }}
+            >
+              <iframe
+                src={mapSrc}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: "-133px",
+                  width: "400px",
+                  height: "250px",
+                  border: "none",
+                }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Map Center"
+              />
+            </div>
+
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: `${part3X - 2}px`,
+                width: "135px",
+                height: "250px",
+                borderRadius: "0 6px 6px 0",
+                transition: transitionStyle,
+                overflow: "hidden",
+                zIndex: 10,
+              }}
+            >
+              <iframe
+                src={mapSrc}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: "-267px",
+                  width: "400px",
+                  height: "250px",
+                  border: "none",
+                }}
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Map Right"
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

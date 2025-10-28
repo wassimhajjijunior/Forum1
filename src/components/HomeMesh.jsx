@@ -1,13 +1,15 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Text } from "@react-three/drei";
+import { Text, Image } from "@react-three/drei";
 import { useLoader, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import logo from "../assets/logof.png";
+import logo from "../assets/logoForum.png";
+import titleForum from "../assets/delta/DELTA.svg";
 
 const HomeMesh = () => {
   const groupRef = useRef();
   const timerBoxRefs = useRef([]);
-  const texture = useLoader(THREE.TextureLoader, logo);
+  const textureLogo = useLoader(THREE.TextureLoader, logo);
+  const textureTitle = useLoader(THREE.TextureLoader, titleForum); // Load SVG as texture
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -16,14 +18,11 @@ const HomeMesh = () => {
     seconds: 0,
   });
 
-  // ✅ Detect mobile device
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768); // any width < 768px = mobile
-    };
-    handleResize(); // run once on mount
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -67,7 +66,6 @@ const HomeMesh = () => {
     { label: "Seconds", value: timeLeft.seconds },
   ];
 
-  // ✅ Only change scale for mobile
   const groupScale = isMobile ? 0.65 : 1;
 
   return (
@@ -75,24 +73,18 @@ const HomeMesh = () => {
       {/* Logo */}
       <mesh position={[0, 0.5, 0]}>
         <planeGeometry args={[3.2, 3]} />
-        <meshBasicMaterial map={texture} transparent alphaTest={0.1} />
+        <meshBasicMaterial map={textureLogo} transparent alphaTest={0.1} />
       </mesh>
 
-      {/* Main Title */}
-      <Text
-        position={[0, -1.4, 0]}
-        fontSize={0.5}
-        color="#ffffff"
-        anchorX="center"
-        anchorY="middle"
-        fontWeight={600}
-      >
-        DELTA ∇I
-      </Text>
+      {/* Replace Text DELTA ∇I with SVG Image */}
+      <mesh position={[0, -1.6, 0]}>
+        <planeGeometry args={[3, 0.6]} /> {/* adjust width & height to match SVG aspect */}
+        <meshBasicMaterial map={textureTitle} transparent />
+      </mesh>
 
       {/* Subtitle */}
       <Text
-        position={[0, -1.9, 0]}
+        position={[0, -2.2, 0]}
         fontSize={0.22}
         color="#a0b0c0"
         anchorX="center"
@@ -102,7 +94,7 @@ const HomeMesh = () => {
       </Text>
 
       {/* Timer Section */}
-      <group position={[0, -2.7, 0]}>
+      <group position={[0, -2.9, 0]}>
         {timeUnits.map((unit, index) => (
           <group
             key={index}
