@@ -70,7 +70,7 @@ export default function Registration() {
             </h2>
 
             <div className="flex flex-col w-40">
-              <label className="text-white mb-1 text-sm">Full Name</label>
+              <label className="text-white mb-1 text-sm text-center">Full Name</label>
               <input
                 type="text"
                 value={formData.fullName}
@@ -82,7 +82,7 @@ export default function Registration() {
             </div>
 
             <div className="flex flex-col w-60">
-              <label className="text-white mb-1 text-sm">University</label>
+              <label className="text-white mb-1 text-sm text-center">University</label>
               <input
                 type="text"
                 value={formData.university}
@@ -94,7 +94,7 @@ export default function Registration() {
             </div>
 
             <div className="flex flex-col w-80">
-              <label className="text-white mb-1 text-sm">Email</label>
+              <label className="text-white mb-1 text-sm text-center">Email</label>
               <input
                 type="email"
                 value={formData.email}

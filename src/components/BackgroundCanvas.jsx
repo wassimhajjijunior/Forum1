@@ -43,7 +43,7 @@ const BackgroundCanvas = ({
 
         {/* Stars background */}
         {/* <Stars radius={500} depth={50} count={5000} /> */}
-        <MovingStars count={500} radius={10} speed={6} length={20} />
+        <MovingStars count={500} radius={10} speed={8} length={50} />
 
         {/* Camera controller */}
         <CameraController

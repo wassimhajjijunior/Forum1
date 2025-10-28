@@ -97,6 +97,75 @@ const Venue = () => {
                 zIndex: 30,
               }}
             >
+              {/* Cover that hides when dragging starts */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "135px",
+                  height: "250px",
+                  backgroundImage: "url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&h=600&fit=crop')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  borderRadius: "6px 0 0 6px",
+                  zIndex: 50,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "white",
+                  opacity: dragX === 0 ? 1 : 0,
+                  transition: "opacity 0.3s ease",
+                  pointerEvents: "none",
+                  overflow: "hidden",
+                }}
+              >
+                {/* Subtle dark overlay for text visibility */}
+                <div style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  background: "rgba(0, 0, 0, 0.3)",
+                  zIndex: 1,
+                }}></div>
+
+                {/* Venue location icon */}
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style={{ marginBottom: "16px", zIndex: 2, filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>
+                  <circle cx="32" cy="32" r="28" fill="rgba(255, 255, 255, 0.2)" stroke="white" strokeWidth="2"/>
+                  <path d="M32 16C26.48 16 22 20.48 22 26C22 33 32 46 32 46C32 46 42 33 42 26C42 20.48 37.52 16 32 16ZM32 30C29.79 30 28 28.21 28 26C28 23.79 29.79 22 32 22C34.21 22 36 23.79 36 26C36 28.21 34.21 30 32 30Z" fill="white"/>
+                </svg>
+
+                {/* Pull tab design */}
+                <div style={{
+                  width: "60px",
+                  height: "80px",
+                  background: "rgba(255, 255, 255, 0.25)",
+                  borderRadius: "8px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  backdropFilter: "blur(10px)",
+                  border: "2px solid rgba(255, 255, 255, 0.4)",
+                  zIndex: 2,
+                }}>
+                  {/* Three horizontal lines (grip indicator) */}
+                  <div style={{ width: "30px", height: "3px", background: "white", borderRadius: "2px" }}></div>
+                  <div style={{ width: "30px", height: "3px", background: "white", borderRadius: "2px" }}></div>
+                  <div style={{ width: "30px", height: "3px", background: "white", borderRadius: "2px" }}></div>
+                  
+                  {/* Arrow pointing right */}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginTop: "4px" }}>
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                
+                <span style={{ fontSize: "13px", fontWeight: "600", marginTop: "12px", opacity: 0.9, zIndex: 2, textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}>Pull to view venue</span>
+              </div>
               <iframe
                 src={mapSrc}
                 style={{

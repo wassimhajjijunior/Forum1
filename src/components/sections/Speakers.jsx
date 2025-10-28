@@ -23,7 +23,7 @@ const speakers = [
   },
 ];
 
-const radius = 105;
+const radius = 110;
 
 const triangleVertices = [
   { x: 0, y: -radius },      // top
