@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import triangleUp from "../../assets/TimeLine/TrianglesProgramUp.png";
 import triangleDown from "../../assets/TimeLine/TrianglesProgramdown.png";
 import logoF from "../../assets/logoForum.png";
-
+import "../../index.css";
 const Schedule = () => {
   const schedule = [
     { time: "07:30", label: "INSCRIPTION" },
@@ -55,41 +55,41 @@ const Schedule = () => {
         `}</style>
 
         {/* Title */}
-        <h2 className="text-center text-2xl md:text-2xl font-extrabold text-white tracking-wider mb-8">
+        <h2 className="font-hazmat-regular text-center text-2xl md:text-2xl  text-white tracking-wider mb-8">
           PROGRAMME DU FORUM
         </h2>
 
-        <div className="space-y-1 relative">
+        <div className=" space-y-1 relative">
           {schedule.map((item, i) => (
             <div
               key={i}
-              className="relative flex flex-col items-center justify-center min-h-[80px]"
+              className="relative flex items-center justify-center min-h-[80px]"
             >
               {/* Alternate Time Position */}
               {i % 2 === 0 ? (
                 // Time Left (triangleUp)
-                <div className="absolute left-0 md:left-[23%] flex items-center">
+                <div className="absolute left-0 md:left-[23%] flex items-center ">
                   <div className="relative w-14 h-14">
                     <img
                       src={triangleUp}
                       alt="triangle"
                       className="w-full h-full object-contain opacity-90"
                     />
-                    <span className="absolute top-[62%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-[11px]">
+                    <span className="absolute top-[62%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-hazmat-regular text-[8px]">
                       {item.time}
                     </span>
                   </div>
                 </div>
               ) : (
                 // Time Right (triangleDown)
-                <div className="absolute right-0 md:right-[23%] flex items-center">
+                <div className="absolute right-0 md:right-[23%] flex items-center ">
                   <div className="relative w-14 h-14">
                     <img
                       src={triangleDown}
                       alt="triangle"
                       className="w-full h-full object-contain opacity-90"
                     />
-                    <span className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-bold text-[11px]">
+                    <span className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-hazmat-regular text-[8px]">
                       {item.time}
                     </span>
                   </div>
@@ -97,8 +97,8 @@ const Schedule = () => {
               )}
 
               {/* Label */}
-              <div className="text-center mt-5">
-                <span className="text-white font-semibold text-sm md:text-base tracking-widest whitespace-nowrap">
+              <div className="text-center">
+                <span className="text-white font-hazmat-regular text-[12px] tracking-widest whitespace-nowrap">
                   {item.label}
                 </span>
               </div>
@@ -108,7 +108,7 @@ const Schedule = () => {
       </div>
 
       {/* Scroll Buttons */}
-      <div className="absolute right-[5%] top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
+      <div className="absolute right-[2%] top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
         <button
           onClick={() => scroll("up")}
           className="bg-[#b18460]/80 text-white rounded-full p-2.5 shadow-md hover:bg-[#b18460] transition text-base"

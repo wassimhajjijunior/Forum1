@@ -58,7 +58,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     justifyContent: "space-between",
     padding: "0 15px",
     zIndex: 1000,
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontFamily: "font-hazmat-regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     color: "#00ffff",
     background: "rgba(0,0,0,0.2)",
     backdropFilter: "blur(8px)",
@@ -75,7 +75,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     position: "relative",
     cursor: "pointer",
     color: active ? "#00ffff" : "#ffffffaa",
-    fontSize: "14px",
+    fontSize: "10px",
     fontWeight: 500,
     padding: "4px 10px",
     borderRadius: "6px",
@@ -84,6 +84,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     transition: "all 0.3s ease",
     textShadow: active ? "0 0 5px #00ffff" : "none",
     transform: "scale(1)",
+    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   });
 
   const registerButtonStyle = {
@@ -93,10 +94,11 @@ const Navbar = ({ currentSection, onNavigate }) => {
     background: "linear-gradient(135deg, #00ffff, #00aaff)",
     color: "#000",
     fontWeight: "bold",
-    fontSize: "12px",
+    fontSize: "10px",
     cursor: "pointer",
     transition: "all 0.3s ease",
     boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3)",
+    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   };
 
   const timerStyle = {
@@ -105,6 +107,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     marginTop: "4px",
     animation: "pulse 1s infinite",
     textAlign: "center",
+    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   };
 
   const sidebarStyle = {
@@ -166,7 +169,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
             <button
               style={registerButtonStyle}
               onClick={() => {
-                onNavigate(9); // ✅ Fixed here (was 8)
+                onNavigate(9);
                 setSidebarOpen(false);
               }}
               onMouseEnter={(e) =>
@@ -231,7 +234,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
             >
               <button
                 style={registerButtonStyle}
-                onClick={() => onNavigate(9)} // ✅ Fixed here (was 8)
+                onClick={() => onNavigate(9)}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.transform = "scale(1.05)")
                 }

@@ -28,7 +28,11 @@ export default function Registration() {
       value
         ? "bg-gradient-to-r from-cyan-100 to-amber-100 text-gray-800"
         : "bg-white/10 text-white placeholder-white/70"
-    } focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all text-sm`;
+    } focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all text-xs`;
+
+  const fontStyle = {
+    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+  };
 
   return (
     <>
@@ -65,12 +69,12 @@ export default function Registration() {
             onSubmit={handleSubmit}
             className="flex flex-col items-center justify-start space-y-4"
           >
-            <h2 className="text-xl font-bold text-white text-center mb-4">
+            <h2 className="text-sm font-bold text-white text-center mb-4" style={fontStyle}>
               Register
             </h2>
 
             <div className="flex flex-col w-40">
-              <label className="text-white mb-1 text-sm text-center">Full Name</label>
+              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>Full Name</label>
               <input
                 type="text"
                 value={formData.fullName}
@@ -78,11 +82,12 @@ export default function Registration() {
                 onChange={(e) => handleChange("fullName", e.target.value)}
                 placeholder="Enter your full name"
                 className={inputClass(formData.fullName)}
+                style={fontStyle}
               />
             </div>
 
             <div className="flex flex-col w-60">
-              <label className="text-white mb-1 text-sm text-center">University</label>
+              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>University</label>
               <input
                 type="text"
                 value={formData.university}
@@ -90,11 +95,12 @@ export default function Registration() {
                 onChange={(e) => handleChange("university", e.target.value)}
                 placeholder="Enter your university"
                 className={inputClass(formData.university)}
+                style={fontStyle}
               />
             </div>
 
             <div className="flex flex-col w-80">
-              <label className="text-white mb-1 text-sm text-center">Email</label>
+              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>Email</label>
               <input
                 type="email"
                 value={formData.email}
@@ -102,12 +108,14 @@ export default function Registration() {
                 onChange={(e) => handleChange("email", e.target.value)}
                 placeholder="Enter your email"
                 className={inputClass(formData.email)}
+                style={fontStyle}
               />
             </div>
 
             <button
               type="submit"
-              className="w-100 py-2.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-sm mt-4 cursor-pointer"
+              className="w-100 py-2.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs mt-4 cursor-pointer"
+              style={fontStyle}
             >
               Submit
             </button>
@@ -139,12 +147,12 @@ export default function Registration() {
           onSubmit={handleSubmit}
           className="w-full max-w-sm bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-6 shadow-lg space-y-4 relative z-10"
         >
-          <h2 className="text-2xl font-bold text-white text-center">
+          <h2 className="text-lg font-bold text-white text-center" style={fontStyle}>
             Register
           </h2>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-sm">Full Name</label>
+            <label className="text-white mb-1 text-xs" style={fontStyle}>Full Name</label>
             <input
               type="text"
               value={formData.fullName}
@@ -152,11 +160,12 @@ export default function Registration() {
               onChange={(e) => handleChange("fullName", e.target.value)}
               placeholder="Enter your full name"
               className={inputClass(formData.fullName)}
+              style={fontStyle}
             />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-sm">University</label>
+            <label className="text-white mb-1 text-xs" style={fontStyle}>University</label>
             <input
               type="text"
               value={formData.university}
@@ -164,11 +173,12 @@ export default function Registration() {
               onChange={(e) => handleChange("university", e.target.value)}
               placeholder="Enter your university"
               className={inputClass(formData.university)}
+              style={fontStyle}
             />
           </div>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-sm">Email</label>
+            <label className="text-white mb-1 text-xs" style={fontStyle}>Email</label>
             <input
               type="email"
               value={formData.email}
@@ -176,12 +186,14 @@ export default function Registration() {
               onChange={(e) => handleChange("email", e.target.value)}
               placeholder="Enter your email"
               className={inputClass(formData.email)}
+              style={fontStyle}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl text-sm mt-2"
+            className="w-full py-2.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl text-xs mt-2"
+            style={fontStyle}
           >
             Submit
           </button>

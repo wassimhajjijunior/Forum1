@@ -86,6 +86,7 @@ const HomeMesh = () => {
       <Text
         position={[0, -2.2, 0]}
         fontSize={0.22}
+        font="/fonts/hazmat-regular.ttf"
         color="#a0b0c0"
         anchorX="center"
         anchorY="middle"
@@ -119,22 +120,24 @@ const HomeMesh = () => {
 
             <Text
               position={[0, 0.1, 0.05]}
-              fontSize={0.32}
+              fontSize={0.25}
               color="#00d4ff"
               anchorX="center"
               anchorY="middle"
               fontWeight={700}
+              font="/fonts/hazmat-oblique.ttf"
             >
               {formatUnit(unit.value)}
             </Text>
 
             <Text
               position={[0, -0.2, 0.05]}
-              fontSize={0.1}
+              fontSize={0.08}
               color="#8899aa"
               anchorX="center"
               anchorY="middle"
               fontWeight={300}
+              font="/fonts/hazmat-oblique.ttf"
             >
               {unit.label}
             </Text>
