@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import brand from "../assets/brand.png";
+import brand from "../assets/LOGO_SUPCOM.png";
 
 const Navbar = ({ currentSection, onNavigate }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -77,18 +77,21 @@ const Navbar = ({ currentSection, onNavigate }) => {
     color: active ? "#00ffff" : "#ffffffaa",
     fontSize: "10px",
     fontWeight: 500,
-    padding: "4px 10px",
+    padding: "4px 10px 7px",
     borderRadius: "6px",
     backdropFilter: "blur(6px)",
     background: active ? "rgba(0,255,255,0.15)" : "rgba(255,255,255,0.03)",
     transition: "all 0.3s ease",
-    textShadow: active ? "0 0 5px #00ffff" : "none",
     transform: "scale(1)",
     fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    lineHeight: "14px",
+    boxShadow: active 
+      ? "0 1px 4px rgba(0,255,255,0.4), 0 4px 16px rgba(0,255,255,0.2)" 
+      : "0 1px 6px rgba(255,255,255,0.2), 0 1px 3px rgba(255,255,255,0.1)",
   });
 
   const registerButtonStyle = {
-    padding: "6px 16px",
+    padding: "6px 16px 9px",
     borderRadius: "8px",
     border: "none",
     background: "linear-gradient(135deg, #00ffff, #00aaff)",
@@ -97,7 +100,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     fontSize: "10px",
     cursor: "pointer",
     transition: "all 0.3s ease",
-    boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3)",
+    boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3), 0 2px 8px rgba(255,255,255,0.3)",
     fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   };
 
@@ -165,22 +168,37 @@ const Navbar = ({ currentSection, onNavigate }) => {
               onClick={() => onNavigate(0)}
             />
 
-            {/* Register button */}
-            <button
-              style={registerButtonStyle}
-              onClick={() => {
-                onNavigate(9);
-                setSidebarOpen(false);
+            {/* Register button + timer container */}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }
             >
-              Registration
-            </button>
+              <button
+                style={registerButtonStyle}
+                onClick={() => {
+                  onNavigate(9);
+                  setSidebarOpen(false);
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.05)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }
+              >
+                Registration
+              </button>
+
+              {currentSection !== 0 && (
+                <div style={timerStyle}>
+                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
+                  {timeLeft.seconds}s
+                </div>
+              )}
+            </div>
 
             {/* Hamburger */}
             <div

@@ -24,12 +24,14 @@ const speakers = [
   },
 ];
 
-const radius = 105;
+const radius = 120;
+
+const verticalOffset = 40; // 🔽 move the triangle lower (increase to move further down)
 
 const triangleVertices = [
-  { x: 0, y: -radius },      // top
-  { x: -radius, y: radius }, // bottom-left
-  { x: radius, y: radius },  // bottom-right
+  { x: 0, y: radius + verticalOffset },        // bottom (moved down)
+  { x: -radius, y: -radius + verticalOffset }, // top-left (moved down)
+  { x: radius, y: -radius + verticalOffset },  // top-right (moved down)
 ];
 
 const cardPaths = [
