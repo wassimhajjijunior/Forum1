@@ -52,11 +52,11 @@ const Navbar = ({ currentSection, onNavigate }) => {
     top: 0,
     left: 0,
     width: "100%",
-    height: "55px",
+    height: "45px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 15px",
+    padding: "0 12px",
     zIndex: 1000,
     fontFamily: "font-hazmat-regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     color: "#00ffff",
@@ -75,10 +75,10 @@ const Navbar = ({ currentSection, onNavigate }) => {
     position: "relative",
     cursor: "pointer",
     color: active ? "#00ffff" : "#ffffffaa",
-    fontSize: "10px",
+    fontSize: "9px",
     fontWeight: 500,
-    padding: "4px 10px 7px",
-    borderRadius: "6px",
+    padding: "3px 8px 6px",
+    borderRadius: "5px",
     backdropFilter: "blur(6px)",
     background: active ? "rgba(0,255,255,0.15)" : "rgba(255,255,255,0.03)",
     transition: "all 0.3s ease",
@@ -91,13 +91,13 @@ const Navbar = ({ currentSection, onNavigate }) => {
   });
 
   const registerButtonStyle = {
-    padding: "6px 16px 9px",
-    borderRadius: "8px",
+    padding: "5px 14px 7px",
+    borderRadius: "7px",
     border: "none",
     background: "linear-gradient(135deg, #00ffff, #00aaff)",
     color: "#000",
     fontWeight: "bold",
-    fontSize: "10px",
+    fontSize: "9px",
     cursor: "pointer",
     transition: "all 0.3s ease",
     boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3), 0 2px 8px rgba(255,255,255,0.3)",
@@ -105,7 +105,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
   };
 
   const timerStyle = {
-    fontSize: "10px",
+    fontSize: "7px",
     color: "#ffffffcc",
     marginTop: "4px",
     animation: "pulse 1s infinite",
@@ -141,7 +141,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
   };
 
   const logoStyle = {
-    height: isMobile ? "25px" : "32px",
+    height: isMobile ? "22px" : "28px",
     width: "auto",
     cursor: "pointer",
   };

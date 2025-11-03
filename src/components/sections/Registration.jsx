@@ -114,17 +114,29 @@ export default function Registration() {
 
             <button
               type="submit"
-              className="w-100 py-2.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs mt-4 cursor-pointer"
+              className="w-100 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs mt-2 cursor-pointer"
               style={fontStyle}
             >
               Submit
             </button>
+            {/* Link to last edition - replace href with the real URL */}
+            <div className="text-center">
+              <a
+                href="https://example.com/last-edition"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] text-cyan-300 hover:underline"
+                style={fontStyle}
+              >
+                Last edition website
+              </a>
+            </div>
           </form>
         </div>
       </div>
 
       {/* 📱 Mobile Card Design */}
-      <div className="flex md:hidden items-center justify-center min-h-screen p-6 relative">
+      <div className="flex md:hidden items-center justify-center min-h-screen p-4 relative">
         {/* Smaller, adaptive logo for mobile */}
         <div
           style={{
@@ -145,9 +157,9 @@ export default function Registration() {
 
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-sm bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-6 shadow-lg space-y-4 relative z-10"
+          className="w-full max-w-xs bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-4 shadow-lg space-y-4 relative z-10"
         >
-          <h2 className="font-bold text-white text-center" style={{ ...fontStyle, fontSize: "0.95rem" }}>
+          <h2 className="font-bold text-white text-center" style={{ ...fontStyle, fontSize: "0.9rem" }}>
             Register
           </h2>
 
@@ -159,7 +171,7 @@ export default function Registration() {
               onKeyDown={(e) => e.stopPropagation()}
               onChange={(e) => handleChange("fullName", e.target.value)}
               placeholder="Enter your full name"
-              className="px-3 py-1.5 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
+              className="px-2.5 py-1 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
               style={{ ...fontStyle, fontSize: "0.7rem" }}
             />
           </div>
@@ -172,7 +184,7 @@ export default function Registration() {
               onKeyDown={(e) => e.stopPropagation()}
               onChange={(e) => handleChange("university", e.target.value)}
               placeholder="Enter your university"
-              className="px-3 py-1.5 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
+              className="px-2.5 py-1 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
               style={{ ...fontStyle, fontSize: "0.7rem" }}
             />
           </div>
@@ -185,18 +197,30 @@ export default function Registration() {
               onKeyDown={(e) => e.stopPropagation()}
               onChange={(e) => handleChange("email", e.target.value)}
               placeholder="Enter your email"
-              className="px-3 py-1.5 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
+              className="px-2.5 py-1 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
               style={{ ...fontStyle, fontSize: "0.7rem" }}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl mt-2"
+            className="w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl mt-1"
             style={{ ...fontStyle, fontSize: "0.75rem" }}
           >
             Submit
           </button>
+          {/* Link to last edition - replace href with the real URL */}
+          <div className="mt-1 text-center">
+            <a
+              href="https://example.com/last-edition"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-cyan-300 hover:underline"
+              style={fontStyle}
+            >
+              Last edition
+            </a>
+          </div>
         </form>
       </div>
     </>

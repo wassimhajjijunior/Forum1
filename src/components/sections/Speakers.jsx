@@ -23,16 +23,13 @@ const speakers = [
   },
 ];
 
-const radius = 120;
-
-const verticalOffset = 40; // 🔽 move the triangle lower (increase to move further down)
+const radius = 90;
 
 const triangleVertices = [
-  { x: 0, y: radius + verticalOffset },        // bottom (moved down)
-  { x: -radius, y: -radius + verticalOffset }, // top-left (moved down)
-  { x: radius, y: -radius + verticalOffset },  // top-right (moved down)
+  { x: 0, y: -radius },      // top
+  { x: -radius, y: radius }, // bottom-left
+  { x: radius, y: radius },  // bottom-right
 ];
-
 const cardPaths = [
   [triangleVertices[0], triangleVertices[1], triangleVertices[2]],
   [triangleVertices[0], triangleVertices[1], triangleVertices[2]],
@@ -116,12 +113,12 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       transition={{ duration: 0.3 }}
     >
       <h3 className="text-[12px] font-mistrully text-white tracking-wide ">Keynote</h3>
-      <p className="text-[7px] text-gray-300 font-hazmat-regular">catch up with train of technology</p>
+      <p className="text-[5px] text-gray-300 font-hazmat-regular">catch up with train of technology</p>
     </motion.div>
 
     {/* Circle Image */}
     <div
-      className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-2xl transition-transform hover:scale-105"
+      className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-2xl transition-transform hover:scale-105"
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
     >
@@ -136,7 +133,7 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       transition={{ duration: 0.3 }}
     >
       <h3 className="text-[10px] font-hazmat-regular text-white mb-1">{speaker.name}</h3>
-      <p className="text-xs text-gray-300 font-mistrully">{speaker.role}</p>
+      <p className="text-[10px] text-gray-300 font-mistrully">{speaker.role}</p>
     </motion.div>
   </div>
 );
