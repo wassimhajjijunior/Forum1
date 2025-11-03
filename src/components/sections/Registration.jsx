@@ -122,7 +122,7 @@ export default function Registration() {
             {/* Link to last edition - replace href with the real URL */}
             <div className="text-center">
               <a
-                href="https://example.com/last-edition"
+                href="https://forum.supcom.tn/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] text-cyan-300 hover:underline"

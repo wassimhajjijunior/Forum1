@@ -63,6 +63,7 @@ const BackgroundCanvas = ({
           width={4}
           height={4}
           visible={showScene}
+          currentSection={currentSection}
         />
       </Canvas>
     </div>
