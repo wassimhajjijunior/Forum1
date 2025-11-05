@@ -11,6 +11,11 @@ import Timeline from "./sections/Timeline";
 import Venue from "./sections/Venue";
 import Registration from "./sections/Registration";
 
+import Sponsors1 from "./sections/Sponsor1";
+import Sponsors2 from "./sections/Sponsor2";
+import Sponsors3 from "./sections/Sponsor3";
+import Sponsors4 from "./sections/Sponsor4";
+
 const Sections = ({ currentSection }) => {
   const sections = [
     { id: 0, name: "Home", component: Home },
@@ -18,11 +23,18 @@ const Sections = ({ currentSection }) => {
     { id: 2, name: "Photos", component: Photos },
     { id: 3, name: "Speakers", component: Speakers },
     { id: 4, name: "Workshops", component: Workshops },
+
     { id: 5, name: "Sponsors", component: Sponsors },
-    { id: 6, name: "Teaser", component: Teaser },
-    { id: 7, name: "Timeline", component: Timeline },
-    { id: 8, name: "Venue", component: Venue },
-    { id: 9, name: "Registration", component: Registration },
+    { id: 6, name: "Sponsors1", component: Sponsors1 },
+    { id: 7, name: "Sponsors2", component: Sponsors2 },
+    { id: 8, name: "Sponsors3", component: Sponsors3 },
+    { id: 9, name: "Sponsors4", component: Sponsors4 },
+
+
+    { id: 10, name: "Teaser", component: Teaser },
+    { id: 11, name: "Timeline", component: Timeline },
+    { id: 12, name: "Venue", component: Venue },
+    { id: 13, name: "Registration", component: Registration },
   ];
 
   const CurrentComponent = sections[currentSection]?.component || Home;

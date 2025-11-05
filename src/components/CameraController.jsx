@@ -11,7 +11,7 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
   const isAnimatingRef = useRef(false);
 
   const depth = 5;
-  const maxSections = 10;
+  const maxSections = 14;
 
   const firstScrollSpeed = 8;
   const normalSpeed = 5;
