@@ -23,7 +23,7 @@ const InfiniteBanner = ({
     <div className="overflow-hidden w-full">
       <motion.div
         ref={containerRef}
-        className="flex gap-6"
+        className="flex gap-4"
         animate={{
           x:
             direction === "left"

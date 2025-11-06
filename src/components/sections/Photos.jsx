@@ -33,11 +33,11 @@ const Photos = () => {
     <div className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-transparent ">
       {/* 🟪 Transparent Trapezoid Container */}
       <div
-        className=" relative flex flex-col justify-center items-center text-white overflow-hidden"
+        className="relative flex flex-col justify-center items-center text-white overflow-hidden"
         style={{
           width: "100%",
           height: "100%",
-          clipPath: isMobile ? "":"polygon(31% 1%, 69% 1%, 94% 85%, 3% 96%)",
+          clipPath: isMobile ? "":"polygon(31% 1%, 69% 1%, 96% 91%, 3% 94%)",
           background: "transparent", // fully transparent
         }}
       >
@@ -89,7 +89,7 @@ const Photos = () => {
                 layoutId={selected.layoutId}
                 className={`rounded-xl shadow-2xl object-contain 
                   ${isMobile ? "w-[90%]" : "w-[35%]"} 
-                  sm:w-[70%] md:w-[55%] lg:w-[35%] 
+                  sm:w-[70%] md:w-[35%] lg:w-[35%] 
                   max-h-[90vh]`}
                 transition={{
                   layout: { duration: isMobile ? 0.6 : 0.5, ease: [0.25, 0.8, 0.25, 1] },

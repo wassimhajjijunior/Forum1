@@ -36,7 +36,7 @@ const TriangleTunnel = ({ segments = 50, width = 3, height = 3, depth = 4 , visi
           <boxGeometry args={[width * 2, 0, depth]} />
           <meshStandardMaterial map={rightTexture} />
         </mesh>
-        <ambientLight intensity={currentSection === 9 ? 0.0009 : 0.009} />
+        <ambientLight intensity={currentSection === 13 ? 0.0009 : 0.009} />
       </group>
     );
   }

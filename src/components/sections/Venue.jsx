@@ -1,248 +1,228 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import bg from "../../assets/supcombg.jpg";
 
 const Venue = () => {
-  const [dragX, setDragX] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [isFullyOpen, setIsFullyOpen] = useState(false);
-  const startXRef = useRef(0);
-
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    startXRef.current = e.clientX - dragX;
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging || isFullyOpen) return; // prevent moving if fully open
-    const newX = e.clientX - startXRef.current;
-    const clampedX = Math.max(0, Math.min(267, newX));
-    setDragX(clampedX);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    if (!isFullyOpen && dragX > 133) {
-      setDragX(267);
-      setTimeout(() => {
-        setIsFullyOpen(true);
-      }, 550);
-    }
-  };
-
-  const part1X = 0;
-  const part2X = dragX * 0.498;
-  const part3X = dragX * 1.0;
+  const [isOpen, setIsOpen] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const frameRef = useRef(null);
 
   const mapSrc =
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.936710397326!2d10.1877739!3d36.8918623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e2cb6fc49b7883%3A0x84da64ea383c01d2!2s%C3%89cole%20Sup%C3%A9rieure%20des%20communications%20de%20Tunis!5e0!3m2!1sfr!2stn!4v1761565205564!5m2!1sfr!2stn";
 
-  const transitionStyle = isDragging
-    ? "none"
-    : "left 0.5s cubic-bezier(0.22, 1, 0.36, 1)";
+  useEffect(() => {
+    if (isOpen) {
+      const duration = 2500;
+      const start = performance.now();
+      const ease = (t) => 1 - Math.pow(1 - t, 3.5);
+
+      const animate = (time) => {
+        const elapsed = time - start;
+        const t = Math.min(elapsed / duration, 1);
+        const eased = ease(t);
+        setProgress(eased);
+        if (t < 1) frameRef.current = requestAnimationFrame(animate);
+        else {
+          setProgress(1);
+          cancelAnimationFrame(frameRef.current);
+        }
+      };
+
+      frameRef.current = requestAnimationFrame(animate);
+      return () => cancelAnimationFrame(frameRef.current);
+    }
+  }, [isOpen]);
+
+  const handleClick = (e) => {
+    e.stopPropagation();
+    if (!isOpen) setIsOpen(true);
+  };
+
+  const middleX = progress * 100;
+  const rightX = progress * 200;
 
   return (
-    <div
-      className="w-screen h-screen flex justify-center items-center overflow-hidden"
-      style={{ cursor: isDragging ? "grabbing" : "grab" }}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-    >
-      <div className="relative w-[390px] h-[230px]">
-        {/* Single unified map - preloaded and hidden */}
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "400px",
-            height: "250px",
-            borderRadius: "6px",
-            overflow: "hidden",
-            zIndex: 40,
-            opacity: isFullyOpen ? 1 : 0,
-            pointerEvents: isFullyOpen ? "auto" : "none",
-          }}
-        >
-          <iframe
-            src={mapSrc}
+    <div className="w-screen min-h-screen flex items-center justify-center bg-transparent p-4">
+      {/* Responsive Wrapper */}
+      <div
+        className="flex flex-col md:flex-row items-center justify-between w-full max-w-[1000px] gap-6 md:gap-10"
+      >
+        {/* Map Animation (LEFT SIDE) */}
+        <div className="relative w-full md:w-[350px] h-[200px]">
+          {/* Full Map */}
+          <div
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
-              width: "400px",
-              height: "250px",
-              border: "none",
+              inset: 0,
+              borderRadius: "10px",
+              overflow: "hidden",
+              opacity: progress,
+              transition: "opacity 0.8s ease",
+              zIndex: 10,
             }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Map Full"
-          />
-        </div>
+          >
+            <iframe
+              src={mapSrc}
+              style={{ width: "100%", height: "100%", border: "none" }}
+              loading="lazy"
+              title="Full Map"
+            />
+          </div>
 
-        {/* Three-part split view when animating or not fully open */}
-        {!isFullyOpen && (
-          <>
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: `${part1X}px`,
-                width: "135px",
-                height: "250px",
-                borderRadius: "6px 0 0 6px",
-                transition: transitionStyle,
-                overflow: "hidden",
-                zIndex: 30,
-              }}
-            >
-              {/* Cover that hides when dragging starts */}
+          {/* Split parts */}
+          {progress < 1 && (
+            <>
+              {/* Left Part */}
               <div
                 style={{
                   position: "absolute",
                   top: 0,
-                  left: 0,
-                  width: "135px",
-                  height: "250px",
-                  backgroundImage: "url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=400&h=600&fit=crop')",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  borderRadius: "6px 0 0 6px",
-                  zIndex: 50,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  opacity: dragX === 0 ? 1 : 0,
-                  transition: "opacity 0.3s ease",
-                  pointerEvents: "none",
+                  width: "100px",
+                  height: "100%",
                   overflow: "hidden",
+                  zIndex: 30,
                 }}
               >
-                {/* Subtle dark overlay for text visibility */}
-                <div style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  background: "rgba(0, 0, 0, 0.3)",
-                  zIndex: 1,
-                }}></div>
-
-                {/* Venue location icon */}
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" style={{ marginBottom: "16px", zIndex: 2, filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.3))" }}>
-                  <circle cx="32" cy="32" r="28" fill="rgba(255, 255, 255, 0.2)" stroke="white" strokeWidth="2"/>
-                  <path d="M32 16C26.48 16 22 20.48 22 26C22 33 32 46 32 46C32 46 42 33 42 26C42 20.48 37.52 16 32 16ZM32 30C29.79 30 28 28.21 28 26C28 23.79 29.79 22 32 22C34.21 22 36 23.79 36 26C36 28.21 34.21 30 32 30Z" fill="white"/>
-                </svg>
-
-                {/* Pull tab design */}
-                <div style={{
-                  width: "60px",
-                  height: "80px",
-                  background: "rgba(255, 255, 255, 0.25)",
-                  borderRadius: "8px",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "8px",
-                  backdropFilter: "blur(10px)",
-                  border: "2px solid rgba(255, 255, 255, 0.4)",
-                  zIndex: 2,
-                }}>
-                  {/* Three horizontal lines (grip indicator) */}
-                  <div style={{ width: "30px", height: "3px", background: "white", borderRadius: "2px" }}></div>
-                  <div style={{ width: "30px", height: "3px", background: "white", borderRadius: "2px" }}></div>
-                  <div style={{ width: "30px", height: "3px", background: "white", borderRadius: "2px" }}></div>
-                  
-                  {/* Arrow pointing right */}
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ marginTop: "4px" }}>
-                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                <div
+                  onClick={handleClick}
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    color: "white",
+                    fontWeight: "600",
+                    fontSize: "12px",
+                    cursor: "pointer",
+                    background: "rgba(0,0,0,0.45)",
+                    backdropFilter: "blur(3px)",
+                    opacity: 1 - progress,
+                    transition: "opacity 0.8s ease",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = "rgba(0,0,0,0.6)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = "rgba(0,0,0,0.45)")
+                  }
+                >
+                  <svg
+                    width="32"
+                    height="32"
+                    viewBox="0 0 64 64"
+                    fill="none"
+                    style={{ marginBottom: "8px" }}
+                  >
+                    <circle
+                      cx="32"
+                      cy="32"
+                      r="28"
+                      fill="rgba(255,255,255,0.2)"
+                      stroke="white"
+                      strokeWidth="2"
+                    />
+                    <path
+                      d="M32 16C26.48 16 22 20.48 22 26C22 33 32 46 32 46C32 46 42 33 42 26C42 20.48 37.52 16 32 16ZM32 30C29.79 30 28 28.21 28 26C28 23.79 29.79 22 32 22C34.21 22 36 23.79 36 26C36 28.21 34.21 30 32 30Z"
+                      fill="white"
+                    />
                   </svg>
+                  Click to view venue
                 </div>
-                
-                <span style={{ fontSize: "13px", fontWeight: "600", marginTop: "12px", opacity: 0.9, zIndex: 2, textShadow: "0 2px 4px rgba(0,0,0,0.3)" }}>Pull to view venue</span>
               </div>
-              <iframe
-                src={mapSrc}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "400px",
-                  height: "250px",
-                  border: "none",
-                }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Map Left"
-              />
-            </div>
 
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: `${part2X - 1}px`,
-                width: "134px",
-                height: "250px",
-                transition: transitionStyle,
-                overflow: "hidden",
-                zIndex: 20,
-              }}
-            >
-              <iframe
-                src={mapSrc}
+              {/* Middle Part */}
+              <div
                 style={{
                   position: "absolute",
                   top: 0,
-                  left: "-133px",
-                  width: "400px",
-                  height: "250px",
-                  border: "none",
+                  transform: `translateX(${middleX}px)`,
+                  width: "100px",
+                  height: "100%",
+                  overflow: "hidden",
+                  zIndex: 20,
                 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Map Center"
-              />
-            </div>
+              >
+                <iframe
+                  src={mapSrc}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "-100px",
+                    width: "300px",
+                    height: "100%",
+                    border: "none",
+                  }}
+                  loading="lazy"
+                  title="Map Middle"
+                />
+              </div>
 
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: `${part3X - 2}px`,
-                width: "135px",
-                height: "250px",
-                borderRadius: "0 6px 6px 0",
-                transition: transitionStyle,
-                overflow: "hidden",
-                zIndex: 10,
-              }}
-            >
-              <iframe
-                src={mapSrc}
+              {/* Right Part */}
+              <div
                 style={{
                   position: "absolute",
                   top: 0,
-                  left: "-267px",
-                  width: "400px",
-                  height: "250px",
-                  border: "none",
+                  transform: `translateX(${rightX}px)`,
+                  width: "100px",
+                  height: "100%",
+                  borderRadius: "0 10px 10px 0",
+                  overflow: "hidden",
+                  zIndex: 15,
                 }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Map Right"
-              />
-            </div>
-          </>
-        )}
+              >
+                <iframe
+                  src={mapSrc}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "-200px",
+                    width: "300px",
+                    height: "100%",
+                    border: "none",
+                  }}
+                  loading="lazy"
+                  title="Map Right"
+                />
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Card Section (RIGHT SIDE) */}
+        <div
+          className="relative w-full md:w-[350px] h-[200px] rounded-xl overflow-hidden text-white flex flex-col justify-center p-4"
+          style={{
+            backgroundImage: `url(${bg})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          {/* Gradient overlay for readability */}
+          <div
+            className="absolute inset-0 backdrop-blur-sm"
+            style={{
+              background:
+                "linear-gradient(to right, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.2) 80%)",
+            }}
+          />
+
+          {/* Text content */}
+          <div className="relative z-10 text-center md:text-left">
+            <h3 className="text-[8px] text-center sm:text-[10px] md:text-[10px] text-sky-400 font-semibold mb-2">
+              HIGHER SCHOOL OF COMMUNICATION OF TUNIS, Ariana
+            </h3>
+            <p className="text-[8px] text-center sm:text-[10px] md:text-[9px] text-white/80 leading-relaxed">
+              Sup'Com is a leading college for telecommunications engineers in Tunisia.
+              Affiliated to the University of Carthage, the Higher School of Communications
+              of Tunis (Sup'Com) is among the top-ranked schools in Tunisia in the national
+              admission exam for engineering schools. Over and above its national and
+              international reputation, Sup'Com is known for the excellence of its academic
+              training and the high competence level of its graduates and researchers.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
