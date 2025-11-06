@@ -37,8 +37,8 @@ const Venue = () => {
     if (!isOpen) setIsOpen(true);
   };
 
-  const middleX = progress * 100;
-  const rightX = progress * 200;
+  const middleX = progress * 150;
+  const rightX = progress * 250;
 
   return (
     <div className="w-screen min-h-screen flex items-center justify-center bg-transparent p-4">

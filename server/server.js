@@ -2,6 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./db");
+require("dotenv").config();
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,8 @@ app.post("/api/register", async (req, res) => {
   if (!fullName || !university || !email) {
     return res.status(400).json({ success: false, message: "All fields are required!" });
   }
+
+  console.log("New registration:", req.body);
 
   try {
     await db.execute(
@@ -29,5 +32,5 @@ app.post("/api/register", async (req, res) => {
 });
 
 // Start server
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
