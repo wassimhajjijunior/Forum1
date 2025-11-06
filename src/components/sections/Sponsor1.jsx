@@ -1,11 +1,20 @@
 // Sponsors1.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import backgroundImage from "../../assets/sponsor/packs/redDiamand.png";
 import Sponsor1 from "../../assets/sponsor/sponsors/tt.png";
 import Sponsor2 from "../../assets/sponsor/sponsors/Orange.png";
 
 const Sponsors1 = () => {
+  // ✅ Detect mobile dynamically
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const containerStyle = {
     height: "500px",
     width: "100%",
@@ -23,11 +32,12 @@ const Sponsors1 = () => {
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: "50%",
+    backgroundSize: isMobile ? "70%" : "50%", // ✅ Bigger on mobile
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    opacity: 0.6,
     zIndex: 1,
+    filter: "blur(1px)",
+    transition: "background-size 0.3s ease",
   };
 
   const contentStyle = {
@@ -35,13 +45,15 @@ const Sponsors1 = () => {
     zIndex: 2,
     display: "flex",
     justifyContent: "center",
-    alignItems: "flex-end",
-    gap: "80px",
+    alignItems: "center",
+    gap: isMobile ? "40px" : "80px", // ✅ Smaller gap on mobile
+    transform: "translateY(20px)",
+    transition: "gap 0.3s ease",
   };
 
   const podiumStyle = (color) => ({
-    width: "120px",
-    height: "50px",
+    width: isMobile ? "90px" : "110px", // ✅ Smaller podium on mobile
+    height: isMobile ? "40px" : "50px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
     boxShadow: `0 6px 20px ${color}55`,
@@ -50,12 +62,14 @@ const Sponsors1 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
+    transition: "width 0.3s ease, height 0.3s ease",
   });
 
   const logoStyle = {
-    width: "100px",
+    width: isMobile ? "70px" : "90px", // ✅ Smaller logos on mobile
     height: "auto",
-    marginBottom: "20px",
+    marginBottom: "15px",
+    transition: "width 0.3s ease",
   };
 
   return (
@@ -63,7 +77,7 @@ const Sponsors1 = () => {
       {/* Soft animated background */}
       <motion.div
         style={backgroundStyle}
-        animate={{ opacity: [0.6, 0.7, 0.6] }}
+        animate={{ opacity: [0.9, 1, 0.9] }}
         transition={{
           duration: 8,
           repeat: Infinity,
@@ -73,7 +87,7 @@ const Sponsors1 = () => {
 
       <div style={contentStyle}>
         {/* Sponsor 1 Podium */}
-        <div style={podiumStyle("rgba(0,191,255,0.5)")}>
+        <div style={podiumStyle("rgba(204,22,47,0.3)")}>
           <motion.img
             src={Sponsor1}
             alt="Sponsor 1"
@@ -91,8 +105,8 @@ const Sponsors1 = () => {
               position: "absolute",
               bottom: 0,
               width: "100%",
-              height: "8px",
-              backgroundColor: "rgba(0,191,255,0.7)",
+              height: "6px",
+              backgroundColor: "rgba(210,25,0,0.4)",
               borderRadius: "4px 4px 0 0",
             }}
             animate={{ opacity: [0.8, 1, 0.8] }}
@@ -105,7 +119,7 @@ const Sponsors1 = () => {
         </div>
 
         {/* Sponsor 2 Podium */}
-        <div style={podiumStyle("rgba(255, 165, 0, 0.5)")}>
+        <div style={podiumStyle("rgba(204,22,47, 0.3)")}>
           <motion.img
             src={Sponsor2}
             alt="Sponsor 2"
@@ -124,8 +138,8 @@ const Sponsors1 = () => {
               position: "absolute",
               bottom: 0,
               width: "100%",
-              height: "8px",
-              backgroundColor: "rgba(255, 165, 0, 0.7)",
+              height: "6px",
+              backgroundColor: "rgba(210,25,0, 0.4)",
               borderRadius: "4px 4px 0 0",
             }}
             animate={{ opacity: [0.8, 1, 0.8] }}

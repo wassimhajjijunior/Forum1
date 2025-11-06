@@ -12,15 +12,33 @@ export default function Registration() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!formData.fullName || !formData.university || !formData.email) {
       alert("Please fill in all fields");
       return;
     }
-    alert(
-      `Registration submitted!\nName: ${formData.fullName}\nUniversity: ${formData.university}\nEmail: ${formData.email}`
-    );
+
+    try {
+      const res = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("✅ " + data.message);
+        setFormData({ fullName: "", university: "", email: "" }); // clear form
+      } else {
+        alert("❌ Something went wrong.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("⚠️ Server not reachable.");
+    }
   };
 
   const inputClass = (value) =>
@@ -74,7 +92,9 @@ export default function Registration() {
             </h2>
 
             <div className="flex flex-col w-40">
-              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>Full Name</label>
+              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>
+                Full Name
+              </label>
               <input
                 type="text"
                 value={formData.fullName}
@@ -87,7 +107,9 @@ export default function Registration() {
             </div>
 
             <div className="flex flex-col w-60">
-              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>University</label>
+              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>
+                University
+              </label>
               <input
                 type="text"
                 value={formData.university}
@@ -100,7 +122,9 @@ export default function Registration() {
             </div>
 
             <div className="flex flex-col w-80">
-              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>Email</label>
+              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>
+                Email
+              </label>
               <input
                 type="email"
                 value={formData.email}
@@ -119,7 +143,7 @@ export default function Registration() {
             >
               Submit
             </button>
-            {/* Link to last edition - replace href with the real URL */}
+
             <div className="text-center">
               <a
                 href="https://forum.supcom.tn/"
@@ -164,7 +188,9 @@ export default function Registration() {
           </h2>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>Full Name</label>
+            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>
+              Full Name
+            </label>
             <input
               type="text"
               value={formData.fullName}
@@ -177,7 +203,9 @@ export default function Registration() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>University</label>
+            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>
+              University
+            </label>
             <input
               type="text"
               value={formData.university}
@@ -190,7 +218,9 @@ export default function Registration() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>Email</label>
+            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>
+              Email
+            </label>
             <input
               type="email"
               value={formData.email}
@@ -209,7 +239,7 @@ export default function Registration() {
           >
             Submit
           </button>
-          {/* Link to last edition - replace href with the real URL */}
+
           <div className="mt-1 text-center">
             <a
               href="https://example.com/last-edition"

@@ -1,10 +1,19 @@
 // Sponsors.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import backgroundImage from "../../assets/sponsor/packs/blueDiaman.png";
-import SponsorLogo from "../../assets/sponsor/sponsors/Cognira.png";
+import SponsorLogo from "../../assets/sponsor/sponsors/SAGEMCOM.png";
 
 const Sponsors = () => {
+  // ✅ Track window width reactively
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const containerStyle = {
     height: "500px",
     width: "100%",
@@ -17,16 +26,18 @@ const Sponsors = () => {
 
   const backgroundStyle = {
     position: "absolute",
-    top: 85,
+    top: 90,
     left: 0,
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: "50%",
+    backgroundSize: isMobile ? "95%" : "50%", 
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     opacity: 0.6,
     zIndex: 1,
+    filter: "blur(1px)",
+    transition: "background-size 0.3s ease", // Smooth resize transition
   };
 
   const contentStyle = {
@@ -34,12 +45,11 @@ const Sponsors = () => {
     zIndex: 2,
     display: "flex",
     justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: "center",
   };
 
-  // ✅ podium style from your Sponsors1
   const podiumStyle = (color) => ({
-    width: "270px",
+    width: "220px",
     height: "60px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
@@ -52,7 +62,7 @@ const Sponsors = () => {
   });
 
   const logoStyle = {
-    width: "250px",
+    width: "200px",
     height: "auto",
     marginBottom: "20px",
   };
@@ -62,7 +72,7 @@ const Sponsors = () => {
       {/* Animated background */}
       <motion.div
         style={backgroundStyle}
-        animate={{ opacity: [0.6, 0.7, 0.6] }}
+        animate={{ opacity: [0.9, 1, 0.9] }}
         transition={{
           duration: 8,
           repeat: Infinity,
@@ -71,9 +81,7 @@ const Sponsors = () => {
       />
 
       <div style={contentStyle}>
-        {/* Single sponsor with podium */}
         <div style={podiumStyle("rgba(0,191,255,0.5)")}>
-          {/* Floating logo */}
           <motion.img
             src={SponsorLogo}
             alt="Sponsor Logo"
@@ -87,7 +95,6 @@ const Sponsors = () => {
             whileHover={{ scale: 1.1 }}
           />
 
-          {/* Glowing base bar */}
           <motion.div
             style={{
               position: "absolute",
