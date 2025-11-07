@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
-import triangleUp from "../../assets/TimeLine/TrianglesProgramUp.png";
-import triangleDown from "../../assets/TimeLine/TrianglesProgramdown.png";
+import triangleUp from "/TimeLine/TrianglesProgramUp.png";
+import triangleDown from "/TimeLine/TrianglesProgramdown.png";
 import logoF from "/LogoForum.png";
 import "../../index.css";
 const Schedule = () => {

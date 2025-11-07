@@ -1,8 +1,8 @@
 // Sponsors.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import backgroundImage from "../../assets/sponsor/packs/blueDiaman.png";
-import SponsorLogo from "../../assets/sponsor/sponsors/SAGEMCOM.png";
+import backgroundImage from "/sponsor/packs/blueDiaman.png";
+import SponsorLogo from "/sponsor/sponsors/SAGEMCOM.png";
 
 const Sponsors = () => {
   // ✅ Track window width reactively

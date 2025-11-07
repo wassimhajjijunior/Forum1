@@ -1,14 +1,6 @@
 // Sponsors4.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import backgroundImage from "../../assets/sponsor/packs/silver.png";
-
-// Example sponsors
-import Sponsor5 from "../../assets/sponsor/sponsors/EY.png";
-import Sponsor2 from "../../assets/sponsor/sponsors/Sofrecom.png";
-import Sponsor1 from "../../assets/sponsor/sponsors/Minotore.png";
-import Sponsor4 from "../../assets/sponsor/sponsors/amaris.png";
-import Sponsor3 from "../../assets/sponsor/sponsors/3s.png";
 
 const Sponsors4 = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -18,6 +10,16 @@ const Sponsors4 = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const backgroundImage = "/sponsor/packs/silver.png";
+
+  const sponsors = [
+    { src: "/sponsor/sponsors/minotore.png", delay: 0 },
+    { src: "/sponsor/sponsors/Sofrecom.png", delay: 0.5 },
+    { src: "/sponsor/sponsors/3S.png", delay: 1 },
+    { src: "/sponsor/sponsors/amaris.png", delay: 1.5 },
+    { src: "/sponsor/sponsors/EY.png", delay: 2 },
+  ];
 
   const containerStyle = {
     height: isMobile ? "420px" : "500px",
@@ -54,14 +56,12 @@ const Sponsors4 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-    
   });
 
   const logoStyle = {
     width: isMobile ? "70px" : "90px",
     height: "auto",
     marginBottom: isMobile ? "15px" : "20px",
-    
   };
 
   const podiumGlow = (delay = 0) => (
@@ -83,14 +83,6 @@ const Sponsors4 = () => {
       }}
     />
   );
-
-  const sponsors = [
-    { src: Sponsor1, delay: 0 },
-    { src: Sponsor2, delay: 0.5 },
-    { src: Sponsor3, delay: 1 },
-    { src: Sponsor4, delay: 1.5 },
-    { src: Sponsor5, delay: 2 },
-  ];
 
   return (
     <div style={containerStyle}>
@@ -121,7 +113,6 @@ const Sponsors4 = () => {
               display: "flex",
               justifyContent: "center",
               gap: "100px",
-              
             }}
           >
             {sponsors.slice(0, 3).map((s, index) => (
@@ -153,7 +144,10 @@ const Sponsors4 = () => {
             }}
           >
             {sponsors.slice(3, 5).map((s, index) => (
-              <div key={index + 3} style={podiumStyle("rgba(192, 192, 192, 0.6)")}>
+              <div
+                key={index + 3}
+                style={podiumStyle("rgba(192, 192, 192, 0.6)")}
+              >
                 <motion.img
                   src={s.src}
                   alt={`Sponsor ${index + 4}`}
@@ -173,7 +167,7 @@ const Sponsors4 = () => {
           </div>
         </div>
       ) : (
-        // Mobile layout: 2 on top, 1 in center, 2 on bottom
+        // Mobile layout: 2 on top, 1 center, 2 bottom
         <div
           style={{
             position: "relative",
@@ -228,7 +222,10 @@ const Sponsors4 = () => {
           {/* Bottom row */}
           <div style={{ display: "flex", gap: "40px" }}>
             {sponsors.slice(3, 5).map((s, index) => (
-              <div key={index + 3} style={podiumStyle("rgba(192, 192, 192, 0.6)")}>
+              <div
+                key={index + 3}
+                style={podiumStyle("rgba(192, 192, 192, 0.6)")}
+              >
                 <motion.img
                   src={s.src}
                   alt={`Sponsor ${index + 4}`}

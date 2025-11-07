@@ -21,7 +21,7 @@ export default function Registration() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/register", {
+      const res = await fetch("https://forum-vybt.onrender.com/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -45,7 +45,7 @@ export default function Registration() {
     `px-4 py-2 rounded-xl border border-white/30 ${
       value
         ? "bg-gradient-to-r from-cyan-100 to-amber-100 text-gray-800"
-        : "bg-white/10 text-white placeholder-white/70"
+        : "bg-white/10 text-white placeholder-white/70 "
     } focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all text-xs`;
 
   const fontStyle = {
@@ -100,7 +100,7 @@ export default function Registration() {
                 value={formData.fullName}
                 onKeyDown={(e) => e.stopPropagation()}
                 onChange={(e) => handleChange("fullName", e.target.value)}
-                placeholder="Enter your full name"
+                placeholder="Enter your name"
                 className={inputClass(formData.fullName)}
                 style={fontStyle}
               />

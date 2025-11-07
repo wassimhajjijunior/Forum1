@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import videoFile from "../../assets/Video/Teaser1.mp4";
+import videoFile from "/Video/Teaser1.mp4";
 
 const TeaserVideo = () => {
   const [isMobile, setIsMobile] = useState(false);

@@ -1,10 +1,6 @@
 // Sponsors1.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import backgroundImage from "../../assets/sponsor/packs/redDiamand.png";
-import Sponsor2 from "../../assets/sponsor/sponsors/tt.png";
-import Sponsor3 from "../../assets/sponsor/sponsors/Orange.png";
-import Sponsor1 from "../../assets/sponsor/sponsors/Ooredooo.png"; 
 
 const Sponsors1 = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -14,6 +10,14 @@ const Sponsors1 = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  // ✅ Use public paths
+  const backgroundImage = "/sponsor/packs/redDiamand.png";
+  const sponsors = [
+    { src: "/sponsor/sponsors/Ooredooo.png", delay: 0, width: isMobile ? "85px" : "110px", marginBottom: "5px" },
+    { src: "/sponsor/sponsors/tt.png", delay: 1, width: isMobile ? "70px" : "90px", marginBottom: "15px" },
+    { src: "/sponsor/sponsors/Orange.png", delay: 2, width: isMobile ? "50px" : "60px", marginBottom: "20px" },
+  ];
 
   const containerStyle = {
     height: "500px",
@@ -66,9 +70,7 @@ const Sponsors1 = () => {
   });
 
   const logoStyle = {
-    width: isMobile ? "70px" : "90px",
     height: "auto",
-    marginBottom: "15px",
     transition: "width 0.3s ease",
   };
 
@@ -86,111 +88,44 @@ const Sponsors1 = () => {
       />
 
       <div style={contentStyle}>
-        {/* Sponsor 1 */}
-        <div style={podiumStyle("rgba(204,22,47,0.3)")}>
-          <motion.img
-            src={Sponsor1}
-            alt="Sponsor 1"
-            style={{...logoStyle,
-              width: isMobile ? "85px" : "110px",
-              marginBottom: "5px",
-            }}
-            animate={{ y: [0, -10, 0] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            whileHover={{ scale: 1.1 }}
-          />
-          <motion.div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              height: "6px",
-              backgroundColor: "rgba(210,25,0,0.4)",
-              borderRadius: "4px 4px 0 0",
-            }}
-            animate={{ opacity: [0.8, 1, 0.8] }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        </div>
-
-        {/* Sponsor 2 */}
-        <div style={podiumStyle("rgba(204,22,47,0.3)")}>
-          <motion.img
-            src={Sponsor2}
-            alt="Sponsor 2"
-            style={logoStyle}
-            animate={{ y: [-5, 5, -5] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-            whileHover={{ scale: 1.1 }}
-          />
-          <motion.div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              height: "6px",
-              backgroundColor: "rgba(210,25,0,0.4)",
-              borderRadius: "4px 4px 0 0",
-            }}
-            animate={{ opacity: [0.8, 1, 0.8] }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
-          />
-        </div>
-
-        {/* 🆕 Sponsor 3 */}
-        <div style={podiumStyle("rgba(204,22,47,0.3)")}>
-          <motion.img
-            src={Sponsor3}
-            alt="Sponsor 3"
-            style={{...logoStyle,
-              width: isMobile ? "50px" : "60px",
-              marginBottom: "20px",
-            }}
-            animate={{ y: [10, -5, 10] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-            whileHover={{ scale: 1.1 }}
-          />
-          <motion.div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              width: "100%",
-              height: "6px",
-              backgroundColor: "rgba(210,25,0,0.4)",
-              borderRadius: "4px 4px 0 0",
-            }}
-            animate={{ opacity: [0.8, 1, 0.8] }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-          />
-        </div>
+        {sponsors.map((s, index) => (
+          <div key={index} style={podiumStyle("rgba(204,22,47,0.3)")}>
+            <motion.img
+              src={s.src}
+              alt={`Sponsor ${index + 1}`}
+              style={{
+                ...logoStyle,
+                width: s.width,
+                marginBottom: s.marginBottom,
+              }}
+              animate={{ y: [index === 0 ? 0 : -5, index === 0 ? -10 : 5, index === 0 ? 0 : -5] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: s.delay,
+              }}
+              whileHover={{ scale: 1.1 }}
+            />
+            <motion.div
+              style={{
+                position: "absolute",
+                bottom: 0,
+                width: "100%",
+                height: "6px",
+                backgroundColor: "rgba(210,25,0,0.4)",
+                borderRadius: "4px 4px 0 0",
+              }}
+              animate={{ opacity: [0.8, 1, 0.8] }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: s.delay,
+              }}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

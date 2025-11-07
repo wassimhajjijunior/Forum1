@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import brand from "../assets/LOGO_SUPCOM.png";
+import brand from "/LOGO_SUPCOM.png";
 
 const Navbar = ({ currentSection, onNavigate }) => {
   const [isMobile, setIsMobile] = useState(false);

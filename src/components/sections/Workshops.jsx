@@ -1,7 +1,7 @@
 // src/components/Speakers.jsx
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import WhorkshopImage1 from "../../assets/speakers/me.jpg";
+import WhorkshopImage1 from "/speakers/me.jpg";
 
 const speakers = [
   {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import bg from "../../assets/supcombg.jpg";
+import bg from "/supcombg.jpg";
 
 const Venue = () => {
   const [isOpen, setIsOpen] = useState(false);

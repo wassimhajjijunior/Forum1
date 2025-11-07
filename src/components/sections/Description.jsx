@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import aiLogo from "../../assets/icons/AI icon@2x.png";
-import securityLogo from "../../assets/icons/sec icon@2x.png";
-import iotLogo from "../../assets/icons/cloud.png";
+import aiLogo from "/icons/AI icon@2x.png";
+import securityLogo from "/icons/sec icon@2x.png";
+import iotLogo from "/icons/cloud.png";
 
 const Description = () => {
   const [isMobile, setIsMobile] = useState(false);

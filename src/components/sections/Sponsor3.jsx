@@ -1,11 +1,11 @@
 // Sponsors3.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import backgroundImage from "../../assets/sponsor/packs/gold.png";
-import Sponsor4 from "../../assets/sponsor/sponsors/Pwc.png";
-import Sponsor2 from "../../assets/sponsor/sponsors/SIEMENS.png";
-import Sponsor3 from "../../assets/sponsor/sponsors/Pearlss.png";
-import Sponsor1 from "../../assets/sponsor/sponsors/somef.jpg";
+import backgroundImage from "/sponsor/packs/gold.png";
+import Sponsor4 from "/sponsor/sponsors/Pwc.png";
+import Sponsor2 from "/sponsor/sponsors/SIEMENS.png";
+import Sponsor3 from "/sponsor/sponsors/Pearlss.png";
+import Sponsor1 from "/sponsor/sponsors/somef.jpg";
 
 const Sponsors3 = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);

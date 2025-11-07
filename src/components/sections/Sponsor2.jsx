@@ -1,9 +1,9 @@
 // Sponsors2.jsx
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import backgroundImage from "../../assets/sponsor/packs/green.png";
-import Sponsor1 from "../../assets/sponsor/sponsors/Decade.png";
-import Sponsor2 from "../../assets/sponsor/sponsors/FORVIA.png";
+import backgroundImage from "/sponsor/packs/green.png";
+import Sponsor1 from "/sponsor/sponsors/Decade.png";
+import Sponsor2 from "/sponsor/sponsors/FORVIA.png";
 
 const Sponsors2 = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
