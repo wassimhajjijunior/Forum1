@@ -59,12 +59,13 @@ const Sponsors = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
+    backdropFilter: "blur(2px)",
   });
 
   const logoStyle = {
     width: "200px",
     height: "auto",
-    marginBottom: "12px",
+    marginBottom: "10px",
   };
 
   return (
@@ -81,7 +82,7 @@ const Sponsors = () => {
       />
 
       <div style={contentStyle}>
-        <div style={podiumStyle("rgba(0,190,255,0.4)")}>
+        <div style={podiumStyle("rgba(255,255,255,0.5)")}>
           <motion.img
             src={SponsorLogo}
             alt="Sponsor Logo"

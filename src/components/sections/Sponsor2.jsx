@@ -35,7 +35,6 @@ const Sponsors2 = () => {
     backgroundSize: isMobile ? "70%" : "35%",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    filter: "blur(1px)",
     zIndex: 1,
   };
 

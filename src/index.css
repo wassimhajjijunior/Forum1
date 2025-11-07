@@ -11,39 +11,42 @@ html, body, #root {
 
 @font-face {
   font-family: 'Hazmat Regular';
-  src: url('fonts/hazmat-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: oblique;
-}
-.font-hazmat-regular  {
-  font-family: 'Hazmat Regular';
+  src: url('/fonts/hazmat-regular.woff2') format('woff2'),
+       url('/fonts/hazmat-regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-hazmat-regular {
+  font-family: 'Hazmat Regular', sans-serif;
+  font-weight: 400;
 }
 
 @font-face {
   font-family: 'Hazmat Oblique';
-  src: url('fonts/hazmat-oblique.ttf') format('truetype');
-  
+  src: url('/fonts/hazmat-oblique.woff2') format('woff2'),
+       url('/fonts/hazmat-oblique.ttf') format('truetype');
   font-style: oblique;
+  font-display: swap;
+  -webkit-font-smoothing: antialiased;
 }
-.font-hazmat-oblique  {
-  font-family: 'Hazmat Oblique';
-  /* src: url('fonts/hazmat-regular.ttf') format('truetype'); */
- 
-  font-style: normal;
+
+.font-hazmat-oblique {
+  font-family: 'Hazmat Oblique', sans-serif;
 }
+
 @font-face {
   font-family: 'Mistrully';
-  src: url('fonts/Mistrully.ttf') format('truetype');
+  src: url('/fonts/Mistrully.woff2') format('woff2'),
+       url('/fonts/Mistrully.ttf') format('truetype');
   font-weight: 400;
-  font-style: oblique;
-}
-
-.font-mistrully  {
-  font-family: 'Mistrully';
-  /* src: url('fonts/hazmat-regular.ttf') format('truetype'); */
   font-style: normal;
+  font-display: swap;
+  -webkit-font-smoothing: antialiased;
 }
 
-
+.font-mistrully {
+  font-family: 'Mistrully', cursive;
+}

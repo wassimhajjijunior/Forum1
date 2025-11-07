@@ -52,6 +52,7 @@ const getPositionOnPath = (path, t) => {
 };
 
 const Workshops = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [time, setTime] = useState(0);
   const [paused, setPaused] = useState(false);
   const [hoveredId, setHoveredId] = useState(null); // Track which card is hovered

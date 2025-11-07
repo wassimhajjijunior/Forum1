@@ -179,7 +179,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
               <button
                 style={registerButtonStyle}
                 onClick={() => {
-                  onNavigate(13);
+                  onNavigate(14);
                   setSidebarOpen(false);
                 }}
                 onMouseEnter={(e) =>

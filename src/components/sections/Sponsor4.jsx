@@ -5,10 +5,10 @@ import backgroundImage from "../../assets/sponsor/packs/silver.png";
 
 // Example sponsors
 import Sponsor5 from "../../assets/sponsor/sponsors/EY.png";
-import Sponsor3 from "../../assets/sponsor/sponsors/Sofrecom.png";
+import Sponsor2 from "../../assets/sponsor/sponsors/Sofrecom.png";
 import Sponsor1 from "../../assets/sponsor/sponsors/Minotore.png";
 import Sponsor4 from "../../assets/sponsor/sponsors/amaris.png";
-import Sponsor2 from "../../assets/sponsor/sponsors/3s.png";
+import Sponsor3 from "../../assets/sponsor/sponsors/3s.png";
 
 const Sponsors4 = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -45,7 +45,7 @@ const Sponsors4 = () => {
 
   const podiumStyle = (color) => ({
     width: isMobile ? "80px" : "110px",
-    height: isMobile ? "30px" : "50px",
+    height: isMobile ? "30px" : "60px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
     boxShadow: `0 6px 20px ${color}55`,
@@ -54,12 +54,14 @@ const Sponsors4 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
+    
   });
 
   const logoStyle = {
     width: isMobile ? "70px" : "90px",
     height: "auto",
     marginBottom: isMobile ? "15px" : "20px",
+    
   };
 
   const podiumGlow = (delay = 0) => (
@@ -119,6 +121,7 @@ const Sponsors4 = () => {
               display: "flex",
               justifyContent: "center",
               gap: "100px",
+              
             }}
           >
             {sponsors.slice(0, 3).map((s, index) => (

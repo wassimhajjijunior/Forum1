@@ -27,6 +27,7 @@ const TeaserVideo = () => {
     >
       <video
         src={videoFile}
+        controls
         autoPlay
         loop
         playsInline
