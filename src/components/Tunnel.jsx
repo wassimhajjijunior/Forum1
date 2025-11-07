@@ -2,10 +2,10 @@ import React from 'react';
 import * as THREE from 'three';
 
 const TriangleTunnel = ({ segments = 50, width = 3, height = 3, depth = 4 , visible , currentSection}) => {
-  const texture1 = new THREE.TextureLoader().load('./src/assets/textures/floorr.png');
-  const texture2 = new THREE.TextureLoader().load('./src/assets/textures/floorr.png');
-  const texture3 = new THREE.TextureLoader().load('./src/assets/textures/floorr.png');
-  const texture4 = new THREE.TextureLoader().load('./src/assets/textures/floorr1.png');
+  const texture1 = new THREE.TextureLoader().load('textures/floorr.png');
+  const texture2 = new THREE.TextureLoader().load('textures/floorr.png');
+  const texture3 = new THREE.TextureLoader().load('textures/floorr.png');
+  const texture4 = new THREE.TextureLoader().load('textures/floorr1.png');
 
   const walls = [];
   for (let i = 2; i < segments; i++) {

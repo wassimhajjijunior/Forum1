@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import triangleUp from "../../assets/TimeLine/TrianglesProgramUp.png";
 import triangleDown from "../../assets/TimeLine/TrianglesProgramdown.png";
-import logoF from "../../assets/logoForum.png";
+import logoF from "/LogoForum.png";
 import "../../index.css";
 const Schedule = () => {
   const schedule = [

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../../assets/logoForum.png";
+import logo from "/LogoForum.png";
 
 export default function Registration() {
   const [formData, setFormData] = useState({

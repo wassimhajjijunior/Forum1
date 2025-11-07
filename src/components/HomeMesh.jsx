@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { Text, Image } from "@react-three/drei";
 import { useLoader, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import logo from "../assets/logoForum.png";
-import titleForum from "../assets/delta/DELTA.svg";
+import logo from "/LogoForum.png";
+import titleForum from "/delta/DELTA.svg";
 
 const HomeMesh = () => {
   const groupRef = useRef();

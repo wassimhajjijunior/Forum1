@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../../assets/logoForum.png";
 
 const Home = () => {
   // animationStep: 0 = initial, 1 = zooming into logo, 2 = settled
