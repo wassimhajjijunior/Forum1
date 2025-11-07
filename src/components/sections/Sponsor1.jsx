@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import backgroundImage from "../../assets/sponsor/packs/redDiamand.png";
-import Sponsor1 from "../../assets/sponsor/sponsors/tt.png";
-import Sponsor2 from "../../assets/sponsor/sponsors/Orange.png";
+import Sponsor2 from "../../assets/sponsor/sponsors/tt.png";
+import Sponsor3 from "../../assets/sponsor/sponsors/Orange.png";
+import Sponsor1 from "../../assets/sponsor/sponsors/Ooredooo.png"; 
 
 const Sponsors1 = () => {
-  // ✅ Detect mobile dynamically
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const Sponsors1 = () => {
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: isMobile ? "70%" : "50%", // ✅ Bigger on mobile
+    backgroundSize: isMobile ? "70%" : "50%",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     zIndex: 1,
@@ -46,13 +46,13 @@ const Sponsors1 = () => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: isMobile ? "40px" : "80px", // ✅ Smaller gap on mobile
+    gap: isMobile ? "15px" : "80px",
     transform: "translateY(20px)",
     transition: "gap 0.3s ease",
   };
 
   const podiumStyle = (color) => ({
-    width: isMobile ? "90px" : "110px", // ✅ Smaller podium on mobile
+    width: isMobile ? "80px" : "110px",
     height: isMobile ? "40px" : "50px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
@@ -66,7 +66,7 @@ const Sponsors1 = () => {
   });
 
   const logoStyle = {
-    width: isMobile ? "70px" : "90px", // ✅ Smaller logos on mobile
+    width: isMobile ? "70px" : "90px",
     height: "auto",
     marginBottom: "15px",
     transition: "width 0.3s ease",
@@ -86,12 +86,15 @@ const Sponsors1 = () => {
       />
 
       <div style={contentStyle}>
-        {/* Sponsor 1 Podium */}
+        {/* Sponsor 1 */}
         <div style={podiumStyle("rgba(204,22,47,0.3)")}>
           <motion.img
             src={Sponsor1}
             alt="Sponsor 1"
-            style={logoStyle}
+            style={{...logoStyle,
+              width: isMobile ? "85px" : "110px",
+              marginBottom: "5px",
+            }}
             animate={{ y: [0, -10, 0] }}
             transition={{
               duration: 4,
@@ -118,8 +121,8 @@ const Sponsors1 = () => {
           />
         </div>
 
-        {/* Sponsor 2 Podium */}
-        <div style={podiumStyle("rgba(204,22,47, 0.3)")}>
+        {/* Sponsor 2 */}
+        <div style={podiumStyle("rgba(204,22,47,0.3)")}>
           <motion.img
             src={Sponsor2}
             alt="Sponsor 2"
@@ -139,7 +142,7 @@ const Sponsors1 = () => {
               bottom: 0,
               width: "100%",
               height: "6px",
-              backgroundColor: "rgba(210,25,0, 0.4)",
+              backgroundColor: "rgba(210,25,0,0.4)",
               borderRadius: "4px 4px 0 0",
             }}
             animate={{ opacity: [0.8, 1, 0.8] }}
@@ -148,6 +151,43 @@ const Sponsors1 = () => {
               repeat: Infinity,
               ease: "easeInOut",
               delay: 1,
+            }}
+          />
+        </div>
+
+        {/* 🆕 Sponsor 3 */}
+        <div style={podiumStyle("rgba(204,22,47,0.3)")}>
+          <motion.img
+            src={Sponsor3}
+            alt="Sponsor 3"
+            style={{...logoStyle,
+              width: isMobile ? "50px" : "60px",
+              marginBottom: "20px",
+            }}
+            animate={{ y: [10, -5, 10] }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+            whileHover={{ scale: 1.1 }}
+          />
+          <motion.div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              width: "100%",
+              height: "6px",
+              backgroundColor: "rgba(210,25,0,0.4)",
+              borderRadius: "4px 4px 0 0",
+            }}
+            animate={{ opacity: [0.8, 1, 0.8] }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
             }}
           />
         </div>

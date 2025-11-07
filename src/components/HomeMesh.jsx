@@ -85,7 +85,7 @@ const HomeMesh = () => {
       {/* Subtitle */}
       <Text
         position={[0, -2.2, 0]}
-        fontSize={0.22}
+        fontSize={0.18}
         font="/fonts/hazmat-regular.ttf"
         color="#a0b0c0"
         anchorX="center"

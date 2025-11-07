@@ -64,7 +64,7 @@ const Sponsors = () => {
   const logoStyle = {
     width: "200px",
     height: "auto",
-    marginBottom: "20px",
+    marginBottom: "12px",
   };
 
   return (
@@ -81,7 +81,7 @@ const Sponsors = () => {
       />
 
       <div style={contentStyle}>
-        <div style={podiumStyle("rgba(0,191,255,0.5)")}>
+        <div style={podiumStyle("rgba(0,190,255,0.4)")}>
           <motion.img
             src={SponsorLogo}
             alt="Sponsor Logo"
@@ -101,7 +101,7 @@ const Sponsors = () => {
               bottom: 0,
               width: "100%",
               height: "8px",
-              backgroundColor: "rgba(0,191,255,0.7)",
+              backgroundColor: "rgba(0,191,255,0.8)",
               borderRadius: "4px 4px 0 0",
             }}
             animate={{ opacity: [0.8, 1, 0.8] }}

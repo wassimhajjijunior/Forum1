@@ -83,7 +83,7 @@ const Sponsors2 = () => {
 
       <div style={contentStyle}>
         {/* Sponsor 1 Podium */}
-        <div style={podiumStyle("rgba(63, 195, 128, 0.6)")}>
+        <div style={podiumStyle("rgba(63, 195, 128, 0.4)")}>
           <motion.img
             src={Sponsor1}
             alt="Sponsor 1"
@@ -115,7 +115,7 @@ const Sponsors2 = () => {
         </div>
 
         {/* Sponsor 2 Podium */}
-        <div style={podiumStyle("rgba(63, 195, 128, 0.6)")}>
+        <div style={podiumStyle("rgba(63, 195, 128, 0.4)")}>
           <motion.img
             src={Sponsor2}
             alt="Sponsor 2"

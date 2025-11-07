@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 import backgroundImage from "../../assets/sponsor/packs/silver.png";
 
 // Example sponsors
-import Sponsor1 from "../../assets/sponsor/sponsors/EY.png";
-import Sponsor2 from "../../assets/sponsor/sponsors/Sofrecom.png";
-import Sponsor3 from "../../assets/sponsor/sponsors/Minotore.png";
+import Sponsor5 from "../../assets/sponsor/sponsors/EY.png";
+import Sponsor3 from "../../assets/sponsor/sponsors/Sofrecom.png";
+import Sponsor1 from "../../assets/sponsor/sponsors/Minotore.png";
 import Sponsor4 from "../../assets/sponsor/sponsors/amaris.png";
-import Sponsor5 from "../../assets/sponsor/sponsors/3s.png";
+import Sponsor2 from "../../assets/sponsor/sponsors/3s.png";
 
 const Sponsors4 = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -122,7 +122,7 @@ const Sponsors4 = () => {
             }}
           >
             {sponsors.slice(0, 3).map((s, index) => (
-              <div key={index} style={podiumStyle("rgba(192, 192, 192, 0.6)")}>
+              <div key={index} style={podiumStyle("rgba(192, 192, 192, 0.3)")}>
                 <motion.img
                   src={s.src}
                   alt={`Sponsor ${index + 1}`}

@@ -1,35 +1,37 @@
 // src/components/Speakers.jsx
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import WhorkshopImage1 from "../../assets/speakers/me.jpg";
 
 const speakers = [
   {
     id: 1,
     name: "Speaker One",
     role: "AI Engineer",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
+    image: WhorkshopImage1,
   },
   {
     id: 2,
     name: "Speaker Two",
     role: "Tech Lead",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
+    image: WhorkshopImage1,
   },
   {
     id: 3,
     name: "Wassim Hajji",
     role: "A passionate developer",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop",
+    image: WhorkshopImage1,
   },
 ];
 
-const radius = 90;
+const radius = 85;
 
 const triangleVertices = [
   { x: 0, y: -radius },      // top
   { x: -radius, y: radius }, // bottom-left
   { x: radius, y: radius },  // bottom-right
 ];
+
 const cardPaths = [
   [triangleVertices[0], triangleVertices[1], triangleVertices[2]],
   [triangleVertices[0], triangleVertices[1], triangleVertices[2]],
@@ -77,8 +79,9 @@ const Speakers = () => {
   };
 
   return (
-    <section className="relative w-full h-screen flex items-center justify-center">
-      <div className="relative w-[300px] h-[250px] flex items-center justify-center">
+    <section className="relative w-full h-screen flex flex-col items-center justify-center">
+      <div className="relative w-[300px] h-[250px] flex items-center justify-center"
+      style={{ marginTop: "50px" }}>
         {speakers.map((speaker, idx) => {
           const t = time + (idx / speakers.length) * cardPaths[idx].length;
           const pos = getPositionOnPath(cardPaths[idx], t);
@@ -99,6 +102,16 @@ const Speakers = () => {
           );
         })}
       </div>
+
+      {/* Title at the bottom */}
+      <motion.h2
+        className="mt-10 text-2xl font-hazmat-regular text-white"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        Keynote
+      </motion.h2>
     </section>
   );
 };
@@ -112,13 +125,13 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-[12px] font-mistrully text-white tracking-wide ">Keynote</h3>
+      <h3 className="text-[10px] font-mistrully text-white tracking-wide ">Keynote</h3>
       <p className="text-[5px] text-gray-300 font-hazmat-regular">catch up with train of technology</p>
     </motion.div>
 
     {/* Circle Image */}
     <div
-      className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-2xl transition-transform hover:scale-105"
+      className="w-20 h-20 rounded-full overflow-hidden border-3 border-sky-900 shadow-2xl transition-transform hover:scale-105"
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
     >

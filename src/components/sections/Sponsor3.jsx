@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import backgroundImage from "../../assets/sponsor/packs/gold.png";
-import Sponsor1 from "../../assets/sponsor/sponsors/Pwc.png";
+import Sponsor4 from "../../assets/sponsor/sponsors/Pwc.png";
 import Sponsor2 from "../../assets/sponsor/sponsors/SIEMENS.png";
 import Sponsor3 from "../../assets/sponsor/sponsors/Pearlss.png";
-import Sponsor4 from "../../assets/sponsor/sponsors/Pearls.png";
+import Sponsor1 from "../../assets/sponsor/sponsors/somef.jpg";
 
 const Sponsors3 = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -56,7 +56,7 @@ const Sponsors3 = () => {
   const logoStyle = {
     width: isMobile ? "70px" : "100px",
     height: "auto",
-    marginBottom: isMobile ? "15px" : "20px",
+    marginBottom: isMobile ? "10px" : "20px",
   };
 
   // Positions for square layout
@@ -98,12 +98,12 @@ const Sponsors3 = () => {
             transform: "translateX(-50%)",
           }}
         >
-          <div style={podiumStyle("rgba(255, 215, 0, 0.6)")}>
+          <div style={podiumStyle("rgba(255, 215, 0, 0.3)")}>
             <motion.img
               src={Sponsor1}
               alt="Sponsor 1"
               style={{...logoStyle,
-                marginBottom: isMobile ? "10px" : "0px"
+               width: "50px",
               }}
               animate={{ y: [0, -10, 0] }}
               transition={{
@@ -119,7 +119,7 @@ const Sponsors3 = () => {
                 bottom: 0,
                 width: "100%",
                 height: "8px",
-                backgroundColor: "rgba(255, 215, 0, 0.8)",
+                backgroundColor: "rgba(255, 215, 0, 0.6)",
                 borderRadius: "4px 4px 0 0",
               }}
               animate={{ opacity: [0.8, 1, 0.8] }}
@@ -141,7 +141,7 @@ const Sponsors3 = () => {
             transform: "translateX(-50%)",
           }}
         >
-          <div style={podiumStyle("rgba(255, 215, 0, 0.6)")}>
+          <div style={podiumStyle("rgba(255, 215, 0, 0.3)")}>
             <motion.img
               src={Sponsor2}
               alt="Sponsor 2"
@@ -161,7 +161,7 @@ const Sponsors3 = () => {
                 bottom: 0,
                 width: "100%",
                 height: "8px",
-                backgroundColor: "rgba(255, 215, 0, 0.8)",
+                backgroundColor: "rgba(255, 215, 0, 0.6)",
                 borderRadius: "4px 4px 0 0",
               }}
               animate={{ opacity: [0.8, 1, 0.8] }}
@@ -183,7 +183,7 @@ const Sponsors3 = () => {
             transform: "translateX(-50%)",
           }}
         >
-          <div style={podiumStyle("rgba(255, 215, 0, 0.6)")}>
+          <div style={podiumStyle("rgba(255, 215, 0, 0.3)")}>
             <motion.img
               src={Sponsor3}
               alt="Sponsor 3"
@@ -206,7 +206,7 @@ const Sponsors3 = () => {
                 bottom: 0,
                 width: "100%",
                 height: "8px",
-                backgroundColor: "rgba(255, 215, 0, 0.8)",
+                backgroundColor: "rgba(255, 215, 0, 0.6)",
                 borderRadius: "4px 4px 0 0",
               }}
               animate={{ opacity: [0.8, 1, 0.8] }}
@@ -228,11 +228,14 @@ const Sponsors3 = () => {
             transform: "translateX(-50%)",
           }}
         >
-          <div style={podiumStyle("rgba(255, 215, 0, 0.6)")}>
+          <div style={podiumStyle("rgba(255, 215, 0, 0.3)")}>
             <motion.img
               src={Sponsor4}
               alt="Sponsor 4"
-              style={logoStyle}
+              style={{...logoStyle,
+                width: "80px",
+                marginBottom: isMobile ? "10px" : "0px"
+              }}
               animate={{ y: [5, -5, 5] }}
               transition={{
                 duration: 4,
@@ -248,7 +251,7 @@ const Sponsors3 = () => {
                 bottom: 0,
                 width: "100%",
                 height: "8px",
-                backgroundColor: "rgba(255, 215, 0, 0.8)",
+                backgroundColor: "rgba(255, 215, 0, 0.6)",
                 borderRadius: "4px 4px 0 0",
               }}
               animate={{ opacity: [0.8, 1, 0.8] }}

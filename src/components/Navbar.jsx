@@ -32,12 +32,12 @@ const Navbar = ({ currentSection, onNavigate }) => {
     { id: 0, label: "Home" },
     { id: 1, label: "Description" },
     { id: 2, label: "Photos" },
-    { id: 3, label: "Speakers" }, // Covers section 3 & 4
-    { id: 5, label: "Sponsors" }, // Covers section 5 to 9
-    { id: 10, label: "Teaser" },
-    { id: 11, label: "Timeline" },
-    { id: 12, label: "Venue" },
-    { id: 13, label: "Registration" },
+    { id: 3, label: "Speakers" }, // Covers section 3 & 5
+    { id: 6, label: "Sponsors" }, // Covers section 6 to 10
+    { id: 11, label: "Teaser" },
+    { id: 12, label: "Timeline" },
+    { id: 13, label: "Venue" },
+    { id: 14, label: "Registration" },
   ];
 
   useEffect(() => {
@@ -226,9 +226,9 @@ const Navbar = ({ currentSection, onNavigate }) => {
         key={item.id}
         style={itemStyle(
           item.label === "Speakers"
-            ? currentSection === 3 || currentSection === 4
+            ? currentSection === 3 || currentSection === 4 || currentSection === 5
             : item.label === "Sponsors"
-            ? [5, 6, 7, 8, 9].includes(currentSection)
+            ? [6, 7, 8, 9,10].includes(currentSection)
             : currentSection === item.id
         )}
         onClick={() => onNavigate(item.id)}
@@ -251,7 +251,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
             >
               <button
                 style={registerButtonStyle}
-                onClick={() => onNavigate(13)}
+                onClick={() => onNavigate(14)}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.transform = "scale(1.05)")
                 }

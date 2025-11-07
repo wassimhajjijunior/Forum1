@@ -24,7 +24,7 @@ const speakers = [
   },
 ];
 
-const radius = 90;
+const radius = 85;
 
 const triangleVertices = [
   { x: 0, y: -radius },      // top
@@ -79,8 +79,9 @@ const Workshops = () => {
   };
 
   return (
-    <section className="relative w-full h-screen flex items-center justify-center">
-      <div className="relative w-[300px] h-[250px] flex items-center justify-center">
+    <section className="relative w-full h-screen flex flex-col items-center justify-center">
+      <div className="relative w-[300px] h-[250px] flex items-center justify-center"
+      style={{ marginTop: "50px" }}>
         {speakers.map((speaker, idx) => {
           const t = time + (idx / speakers.length) * cardPaths[idx].length;
           const pos = getPositionOnPath(cardPaths[idx], t);
@@ -101,6 +102,16 @@ const Workshops = () => {
           );
         })}
       </div>
+
+      {/* Title at the bottom */}
+      <motion.h2
+        className="mt-10 text-2xl font-hazmat-regular text-white"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        Workshops
+      </motion.h2>
     </section>
   );
 };
@@ -120,7 +131,7 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
 
     {/* Circle Image */}
     <div
-      className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-2xl transition-transform hover:scale-105"
+      className="w-20 h-20 rounded-full overflow-hidden border-3 border-sky-900 shadow-2xl transition-transform hover:scale-105"
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
     >

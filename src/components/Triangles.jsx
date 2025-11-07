@@ -15,7 +15,7 @@ const Triangles = ({ visible }) => {
 
   return (
     <group ref={groupRef} visible={visible}>
-      {Array.from({ length: 14 }, (_, index) => {
+      {Array.from({ length: 15 }, (_, index) => {
         // if (index === 3) {
           
         //   return (
