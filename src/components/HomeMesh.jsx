@@ -1,15 +1,19 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Text, Image } from "@react-three/drei";
+import { Text } from "@react-three/drei";
 import { useLoader, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+
+// ✅ Import assets from /src (not /public)
 import logo from "/LogoForum.png";
 import titleForum from "/delta/DELTA.svg";
 
 const HomeMesh = () => {
   const groupRef = useRef();
   const timerBoxRefs = useRef([]);
+
+  // ✅ Load textures safely (works in both dev & production)
   const textureLogo = useLoader(THREE.TextureLoader, logo);
-  const textureTitle = useLoader(THREE.TextureLoader, titleForum); // Load SVG as texture
+  const textureTitle = useLoader(THREE.TextureLoader, titleForum);
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -20,13 +24,16 @@ const HomeMesh = () => {
 
   const [isMobile, setIsMobile] = useState(false);
 
+  // ✅ Reliable resize detection (using matchMedia)
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    const updateIsMobile = () =>
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    updateIsMobile();
+    window.addEventListener("resize", updateIsMobile);
+    return () => window.removeEventListener("resize", updateIsMobile);
   }, []);
 
+  // ✅ Countdown timer logic
   const targetDate = new Date("2025-11-12T08:00:00");
 
   useEffect(() => {
@@ -45,8 +52,9 @@ const HomeMesh = () => {
       }
     }, 1000);
     return () => clearInterval(interval);
-  }, [targetDate]);
+  }, []);
 
+  // ✅ Gentle pulsing animation for timer boxes
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     timerBoxRefs.current.forEach((box, i) => {
@@ -66,6 +74,7 @@ const HomeMesh = () => {
     { label: "Seconds", value: timeLeft.seconds },
   ];
 
+  // ✅ Use responsive scale
   const groupScale = isMobile ? 0.65 : 1;
 
   return (
@@ -76,9 +85,9 @@ const HomeMesh = () => {
         <meshBasicMaterial map={textureLogo} transparent alphaTest={0.1} />
       </mesh>
 
-      {/* Replace Text DELTA ∇I with SVG Image */}
+      {/* Title (SVG) */}
       <mesh position={[0, -1.6, 0]}>
-        <planeGeometry args={[3, 0.6]} /> {/* adjust width & height to match SVG aspect */}
+        <planeGeometry args={[3, 0.6]} />
         <meshBasicMaterial map={textureTitle} transparent />
       </mesh>
 
