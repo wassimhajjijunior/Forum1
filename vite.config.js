@@ -8,4 +8,7 @@ export default defineConfig({
   plugins: [ tailwindcss(),
     react()],
     base: "./",
+    safelist: [
+  'hidden', 'block', 'md:block', 'md:hidden', 'lg:block', 'lg:hidden'
+],
 })
