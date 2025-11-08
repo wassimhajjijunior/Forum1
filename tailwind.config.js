@@ -4,6 +4,9 @@ export default {
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}", // adjust if needed
   ],
+      safelist: [
+  'hidden', 'block', 'md:block', 'md:hidden', 'lg:block', 'lg:hidden'
+],
   theme: {
     extend: {
       fontFamily: {
