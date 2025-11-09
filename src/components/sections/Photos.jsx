@@ -37,7 +37,7 @@ const Photos = () => {
         style={{
           width: "100%",
           height: "100%",
-          clipPath: isMobile ? "":"polygon(31% 1%, 69% 1%, 96% 91%, 3% 94%)",
+          clipPath: isMobile ? "":"polygon(33% -5%, 67% -4%, 96% 96%, 5% 93%)",
           background: "transparent", // fully transparent
         }}
       >

@@ -7,7 +7,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
 
   // Timer state
   const [timeLeft, setTimeLeft] = useState({});
-  const registrationDate = new Date("2025-11-12T08:00:00"); 
+  const registrationDate = new Date("2025-11-12T07:30:00");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -52,65 +52,70 @@ const Navbar = ({ currentSection, onNavigate }) => {
     top: 0,
     left: 0,
     width: "100%",
-    height: "45px",
+    height: "75px",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 12px",
+    padding: "0 28px",
     zIndex: 1000,
-    fontFamily: "font-hazmat-regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontFamily:
+      "font-hazmat-regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     color: "#00ffff",
     background: "rgba(0,0,0,0.2)",
     backdropFilter: "blur(8px)",
-    boxShadow: "0 2px 10px rgba(0,0,0,0.3)",
+    boxShadow: "0 3px 15px rgba(0,0,0,0.3)",
   };
 
   const itemsContainerStyle = {
     display: isMobile ? "none" : "flex",
     alignItems: "center",
-    gap: "12px",
+    gap: "20px",
   };
 
   const itemStyle = (active) => ({
     position: "relative",
     cursor: "pointer",
     color: active ? "#00ffff" : "#ffffffaa",
-    fontSize: "9px",
+    fontSize: "15px",
     fontWeight: 500,
-    padding: "3px 8px 6px",
-    borderRadius: "5px",
+    padding: "6px 16px 12px",
+    borderRadius: "8px",
     backdropFilter: "blur(6px)",
     background: active ? "rgba(0,255,255,0.15)" : "rgba(255,255,255,0.03)",
     transition: "all 0.3s ease",
     transform: "none",
-    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    lineHeight: "14px",
-    boxShadow: active 
-      ? "0 1px 4px rgba(0,255,255,0.4), 0 4px 16px rgba(0,255,255,0.2)" 
-      : "0 1px 6px rgba(255,255,255,0.2), 0 1px 3px rgba(255,255,255,0.1)",
+    fontFamily:
+      "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    lineHeight: "20px",
+    boxShadow: active
+      ? "0 2px 6px rgba(0,255,255,0.4), 0 8px 20px rgba(0,255,255,0.2)"
+      : "0 2px 8px rgba(255,255,255,0.2), 0 2px 6px rgba(255,255,255,0.1)",
   });
 
   const registerButtonStyle = {
-    padding: "5px 14px 7px",
-    borderRadius: "7px",
+    padding: "7px 24px 10px",
+    borderRadius: "10px",
     border: "none",
     background: "linear-gradient(135deg, #00ffff, #00aaff)",
     color: "#000",
     fontWeight: "bold",
-    fontSize: "9px",
+    fontSize: "15px",
     cursor: "pointer",
     transition: "all 0.3s ease",
-    boxShadow: "0 0 5px rgba(0,255,255,0.5), 0 0 10px rgba(0,255,255,0.3), 0 2px 8px rgba(255,255,255,0.3)",
-    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    boxShadow:
+      "0 0 8px rgba(0,255,255,0.5), 0 0 15px rgba(0,255,255,0.3), 0 2px 8px rgba(255,255,255,0.3)",
+    fontFamily:
+      "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   };
 
   const timerStyle = {
-    fontSize: "7px",
+    fontSize: "12px",
     color: "#ffffffcc",
-    marginTop: "4px",
+    marginTop: "6px",
     animation: "pulse 1s infinite",
     textAlign: "center",
-    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontFamily:
+      "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   };
 
   const sidebarStyle = {
@@ -141,7 +146,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
   };
 
   const logoStyle = {
-    height: isMobile ? "22px" : "28px",
+    height: isMobile ? "22px" : "48px",
     width: "auto",
     cursor: "pointer",
   };
@@ -156,10 +161,9 @@ const Navbar = ({ currentSection, onNavigate }) => {
               alignItems: "center",
               justifyContent: "center",
               width: "100%",
-              height: "55px",
+              height: "75px",
               position: "relative",
-            }}
-          >
+            }}>
             {/* Brand logo */}
             <img
               src={brand}
@@ -174,8 +178,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-              }}
-            >
+              }}>
               <button
                 style={registerButtonStyle}
                 onClick={() => {
@@ -187,8 +190,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.transform = "scale(1)")
-                }
-              >
+                }>
                 Registration
               </button>
 
@@ -203,8 +205,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
             {/* Hamburger */}
             <div
               style={hamburgerStyle}
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-            >
+              onClick={() => setSidebarOpen(!sidebarOpen)}>
               ☰
             </div>
           </div>
@@ -219,27 +220,31 @@ const Navbar = ({ currentSection, onNavigate }) => {
             />
 
             <div style={itemsContainerStyle}>
-  {items
-    .filter((item) => item.label !== "Registration")
-    .map((item) => (
-      <div
-        key={item.id}
-        style={itemStyle(
-          item.label === "Speakers"
-            ? currentSection === 3 || currentSection === 4 || currentSection === 5
-            : item.label === "Sponsors"
-            ? [6, 7, 8, 9,10].includes(currentSection)
-            : currentSection === item.id
-        )}
-        onClick={() => onNavigate(item.id)}
-        onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.05)")}
-        onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
-      >
-        {item.label}
-      </div>
-    ))}
-</div>
-
+              {items
+                .filter((item) => item.label !== "Registration")
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    style={itemStyle(
+                      item.label === "Speakers"
+                        ? currentSection === 3 ||
+                            currentSection === 4 ||
+                            currentSection === 5
+                        : item.label === "Sponsors"
+                        ? [6, 7, 8, 9, 10].includes(currentSection)
+                        : currentSection === item.id
+                    )}
+                    onClick={() => onNavigate(item.id)}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "scale(1.05)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "scale(1)")
+                    }>
+                    {item.label}
+                  </div>
+                ))}
+            </div>
 
             {/* Register button + timer */}
             <div
@@ -247,8 +252,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-              }}
-            >
+              }}>
               <button
                 style={registerButtonStyle}
                 onClick={() => onNavigate(14)}
@@ -257,8 +261,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.transform = "scale(1)")
-                }
-              >
+                }>
                 Registration
               </button>
 
@@ -295,8 +298,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 }
                 onMouseLeave={(e) =>
                   (e.currentTarget.style.transform = "scale(1)")
-                }
-              >
+                }>
                 {item.label}
               </div>
             ))}
