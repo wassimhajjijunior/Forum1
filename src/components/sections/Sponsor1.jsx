@@ -11,34 +11,33 @@ const Sponsors1 = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // ✅ Use public paths and add sponsor URLs
   const backgroundImage = "/sponsor/packs/redDiamand.png";
   const sponsors = [
     {
       src: "/sponsor/sponsors/Ooredooo.png",
       delay: 0,
-      width: isMobile ? "85px" : "110px",
+      width: isMobile ? "85px" : "170px", // slightly bigger on desktop
       marginBottom: "5px",
       url: "https://www.ooredoo.tn/",
     },
     {
       src: "/sponsor/sponsors/tt.png",
       delay: 1,
-      width: isMobile ? "70px" : "90px",
+      width: isMobile ? "70px" : "120px",
       marginBottom: "15px",
       url: "https://www.tunisietelecom.tn/",
     },
     {
       src: "/sponsor/sponsors/Orange.png",
       delay: 2,
-      width: isMobile ? "50px" : "60px",
+      width: isMobile ? "50px" : "90px",
       marginBottom: "20px",
       url: "https://www.orange.tn/",
     },
   ];
 
   const containerStyle = {
-    height: "500px",
+    height: isMobile ? "500px" : "100vh", // slightly taller on desktop
     width: "100%",
     position: "relative",
     display: "flex",
@@ -49,12 +48,12 @@ const Sponsors1 = () => {
 
   const backgroundStyle = {
     position: "absolute",
-    top: 20,
+    top: isMobile ? 20 : 50,
     left: 0,
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: isMobile ? "70%" : "50%",
+    backgroundSize: isMobile ? "75%" : "40%",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     zIndex: 1,
@@ -64,18 +63,18 @@ const Sponsors1 = () => {
 
   const contentStyle = {
     position: "relative",
-    zIndex: 2,
+    zIndex: 1,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: isMobile ? "15px" : "80px",
+    gap: isMobile ? "15px" : "90px",
     transform: "translateY(20px)",
     transition: "gap 0.3s ease",
   };
 
   const podiumStyle = (color) => ({
-    width: isMobile ? "80px" : "110px",
-    height: isMobile ? "40px" : "50px",
+    width: isMobile ? "80px" : "150px", // slightly bigger
+    height: isMobile ? "40px" : "60px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
     boxShadow: `0 6px 20px ${color}55`,
@@ -84,7 +83,8 @@ const Sponsors1 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-    backdropFilter: "blur(2px)",
+    backdropFilter: "blur(1px)",
+    zIndex:0,
   });
 
   const logoStyle = {
@@ -109,12 +109,7 @@ const Sponsors1 = () => {
       <div style={contentStyle}>
         {sponsors.map((s, index) => (
           <div key={index} style={podiumStyle("rgba(204,22,47,0.3)")}>
-            {/* ✅ Clickable sponsor */}
-            <a
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={s.url} target="_blank" rel="noopener noreferrer">
               <motion.img
                 src={s.src}
                 alt={`Sponsor ${index + 1}`}

@@ -14,7 +14,7 @@ const Sponsors = () => {
   }, []);
 
   const containerStyle = {
-    height: "500px",
+    height: isMobile ? "400px" : "100vh", // bigger on desktop
     width: "100%",
     position: "relative",
     display: "flex",
@@ -25,12 +25,12 @@ const Sponsors = () => {
 
   const backgroundStyle = {
     position: "absolute",
-    top: 90,
+    top: isMobile ? 90 : 160,
     left: 0,
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: isMobile ? "95%" : "50%",
+    backgroundSize: isMobile ? "95%" : "40%", // slightly bigger on desktop
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     opacity: 0.6,
@@ -48,8 +48,8 @@ const Sponsors = () => {
   };
 
   const podiumStyle = (color) => ({
-    width: "220px",
-    height: "60px",
+    width: isMobile ? "180px" : "400px", // slightly bigger on desktop
+    height: isMobile ? "50px" : "100px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
     boxShadow: `0 6px 20px ${color}55`,
@@ -62,7 +62,7 @@ const Sponsors = () => {
   });
 
   const logoStyle = {
-    width: "200px",
+    width: isMobile ? "160px" : "340px", // slightly bigger on desktop
     height: "auto",
     marginBottom: "10px",
     cursor: "pointer",

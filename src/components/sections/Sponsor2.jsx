@@ -16,7 +16,7 @@ const Sponsors2 = () => {
   }, []);
 
   const containerStyle = {
-    height: isMobile ? "380px" : "500px",
+    height: isMobile ? "380px" : "100vh",
     width: "100%",
     position: "relative",
     display: "flex",
@@ -27,12 +27,12 @@ const Sponsors2 = () => {
 
   const backgroundStyle = {
     position: "absolute",
-    top: 20,
+    top: 30,
     left: 0,
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: isMobile ? "70%" : "35%",
+    backgroundSize: isMobile ? "70%" : "30%",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     zIndex: 1,
@@ -44,13 +44,13 @@ const Sponsors2 = () => {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: isMobile ? "35px" : "80px",
+    gap: isMobile ? "35px" : "70px",
     transform: isMobile ? "translateY(10px)" : "translateY(20px)",
   };
 
   const podiumStyle = (color) => ({
-    width: isMobile ? "100px" : "110px",
-    height: isMobile ? "40px" : "50px",
+    width: isMobile ? "100px" : "170px",
+    height: isMobile ? "40px" : "60px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
     boxShadow: `0 6px 20px ${color}55`,
@@ -59,14 +59,14 @@ const Sponsors2 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-    backdropFilter: "blur(2px)",
+    backdropFilter: "blur(1px)",
 
   });
 
   const logoStyle = {
-    width: isMobile ? "100px" : "100px",
+    width: isMobile ? "100px" : "130px",
     height: "auto",
-    marginBottom: isMobile ? "15px" : "20px",
+    marginBottom: isMobile ? "15px" : "15px",
   };
 
   return (
@@ -120,7 +120,9 @@ const Sponsors2 = () => {
           <motion.img
             src={Sponsor2}
             alt="Sponsor 2"
-            style={logoStyle}
+            style={{...logoStyle,
+              marginBottom: isMobile ? "10px" : "15px"
+            }}
             animate={{ y: [-5, 5, -5] }}
             transition={{
               duration: 4,

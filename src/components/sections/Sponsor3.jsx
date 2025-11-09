@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import backgroundImage from "/sponsor/packs/gold.png";
 import Sponsor4 from "/sponsor/sponsors/Pwc.png";
-import Sponsor2 from "/sponsor/sponsors/SIEMENS.png";
+import  Sponsor2 from "/sponsor/sponsors/SIEMENS.png";
 import Sponsor3 from "/sponsor/sponsors/Pearlss.png";
 import Sponsor1 from "/sponsor/sponsors/somef.jpg";
 
@@ -17,7 +17,7 @@ const Sponsors3 = () => {
   }, []);
 
   const containerStyle = {
-    height: isMobile ? "400px" : "500px",
+    height: isMobile ? "370px" : "420px",
     width: "100%",
     position: "relative",
     display: "flex",
@@ -41,8 +41,8 @@ const Sponsors3 = () => {
   };
 
   const podiumStyle = (color) => ({
-    width: isMobile ? "90px" : "130px",
-    height: isMobile ? "30px" : "45px",
+    width: isMobile ? "90px" : "160px",
+    height: isMobile ? "30px" : "55px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
     boxShadow: `0 6px 20px ${color}55`,
@@ -51,14 +51,14 @@ const Sponsors3 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-    backdropFilter: "blur(2px)",
+        backdropFilter: "blur(2px)",
+
   });
 
   const logoStyle = {
-    width: isMobile ? "70px" : "100px",
+    width: isMobile ? "70px" : "140px",
     height: "auto",
     marginBottom: isMobile ? "10px" : "10px",
-    cursor: "pointer",
   };
 
   // Positions for square layout
@@ -91,7 +91,7 @@ const Sponsors3 = () => {
           height: "100%",
         }}
       >
-        {/* Top Left Sponsor - SOMEF */}
+        {/* Top Left Sponsor */}
         <div
           style={{
             position: "absolute",
@@ -101,25 +101,20 @@ const Sponsors3 = () => {
           }}
         >
           <div style={podiumStyle("rgba(255, 215, 0, 0.3)")}>
-            <a
-              href="https://www.somef.tn/fr/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.img
-                src={Sponsor1}
-                alt="SOMEF"
-                style={{ ...logoStyle, width: "50px" }}
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                whileHover={{ scale: 1.1 }}
-              />
-            </a>
-
+            <motion.img
+              src={Sponsor1}
+              alt="Sponsor 1"
+              style={{...logoStyle,
+               width: "60px",
+              }}
+              animate={{ y: [0, -10, 0] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              whileHover={{ scale: 1.1 }}
+            />
             <motion.div
               style={{
                 position: "absolute",
@@ -139,7 +134,7 @@ const Sponsors3 = () => {
           </div>
         </div>
 
-        {/* Top Right Sponsor - SIEMENS */}
+        {/* Top Right Sponsor */}
         <div
           style={{
             position: "absolute",
@@ -149,26 +144,21 @@ const Sponsors3 = () => {
           }}
         >
           <div style={podiumStyle("rgba(255, 215, 0, 0.3)")}>
-            <a
-              href="https://www.siemens.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.img
-                src={Sponsor2}
-                alt="Siemens"
-                style={logoStyle}
-                animate={{ y: [0, -10, 0] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5,
-                }}
-                whileHover={{ scale: 1.1 }}
-              />
-            </a>
-
+            <motion.img
+              src={Sponsor2}
+              alt="Sponsor 2"
+              style={{...logoStyle,
+                marginBottom: isMobile ? "10px" : "15px"
+              }}
+              animate={{ y: [0, -10, 0] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              }}
+              whileHover={{ scale: 1.1 }}
+            />
             <motion.div
               style={{
                 position: "absolute",
@@ -188,7 +178,7 @@ const Sponsors3 = () => {
           </div>
         </div>
 
-        {/* Bottom Left Sponsor - Pearls */}
+        {/* Bottom Left Sponsor */}
         <div
           style={{
             position: "absolute",
@@ -198,30 +188,22 @@ const Sponsors3 = () => {
           }}
         >
           <div style={podiumStyle("rgba(255, 215, 0, 0.3)")}>
-            <a
-              href="https://pearls.consulting/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.img
-                src={Sponsor3}
-                alt="Pearls"
-                style={{
-                  ...logoStyle,
-                  width: isMobile ? "100px" : "200px",
-                  marginBottom: isMobile ? "10px" : "0px",
-                }}
-                animate={{ y: [5, -5, 5] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1,
-                }}
-                whileHover={{ scale: 1.1 }}
-              />
-            </a>
-
+            <motion.img
+              src={Sponsor3}
+              alt="Sponsor 3"
+              style={{...logoStyle,
+                width: isMobile ? "100px" : "250px",
+                marginBottom: isMobile ? "10px" : "0px"
+              }}
+              animate={{ y: [5, -5, 5] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
+              whileHover={{ scale: 1.1 }}
+            />
             <motion.div
               style={{
                 position: "absolute",
@@ -241,7 +223,7 @@ const Sponsors3 = () => {
           </div>
         </div>
 
-        {/* Bottom Right Sponsor - PwC */}
+        {/* Bottom Right Sponsor */}
         <div
           style={{
             position: "absolute",
@@ -251,26 +233,22 @@ const Sponsors3 = () => {
           }}
         >
           <div style={podiumStyle("rgba(255, 215, 0, 0.3)")}>
-            <a
-              href="https://tunisie.pwc.fr/fr/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <motion.img
-                src={Sponsor4}
-                alt="PwC"
-                style={{ ...logoStyle, width: "80px" }}
-                animate={{ y: [5, -5, 5] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 1.5,
-                }}
-                whileHover={{ scale: 1.1 }}
-              />
-            </a>
-
+            <motion.img
+              src={Sponsor4}
+              alt="Sponsor 4"
+              style={{...logoStyle,
+                width: "100px",
+                marginBottom: isMobile ? "0px" : "-5px"
+              }}
+              animate={{ y: [5, -5, 5] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1.5,
+              }}
+              whileHover={{ scale: 1.1 }}
+            />
             <motion.div
               style={{
                 position: "absolute",
