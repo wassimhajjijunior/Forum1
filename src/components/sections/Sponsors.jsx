@@ -1,19 +1,11 @@
 // Sponsors.jsx
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import backgroundImage from "/sponsor/packs/blueDiaman.png";
 import SponsorLogo from "/sponsor/sponsors/SAGEMCOM.png";
 
 const Sponsors = () => {
-  // ✅ Track window width reactively
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
+  // Desktop-only styles (ignore mobile)
   const containerStyle = {
     height: "500px",
     width: "100%",
@@ -31,13 +23,13 @@ const Sponsors = () => {
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: isMobile ? "95%" : "50%", 
+    backgroundSize: "50%", // desktop size only
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     opacity: 0.6,
     zIndex: 1,
     filter: "blur(1px)",
-    transition: "background-size 0.3s ease", // Smooth resize transition
+    transition: "background-size 0.3s ease",
   };
 
   const contentStyle = {
