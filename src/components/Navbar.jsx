@@ -93,7 +93,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
   });
 
   const registerButtonStyle = {
-    padding: "7px 24px 10px",
+    padding: "7px 20px 10px",
     borderRadius: "10px",
     border: "none",
     background: "linear-gradient(135deg, #00ffff, #00aaff)",
