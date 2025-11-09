@@ -265,7 +265,7 @@ export default function Registration() {
 
           <div className="mt-1 text-center">
             <a
-              href="https://example.com/last-edition"
+              href="https://forum.supcom.tn/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-cyan-300 hover:underline"
