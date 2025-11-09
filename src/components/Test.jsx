@@ -10,7 +10,7 @@ function Test() {
   const [targetSection, setTargetSection] = useState(null);
 
   return (
-    <div className="App">
+    <div className="h-[100dvh]">
       {/* Your 3D Scene */}
       <BackgroundCanvas 
         currentSection={currentSection}
