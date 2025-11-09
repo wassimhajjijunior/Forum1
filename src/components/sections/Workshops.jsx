@@ -46,7 +46,7 @@ const Workshops = () => {
     const handleResize = () => {
       const mobile = window.innerWidth < 640;
       setIsMobile(mobile);
-      setRadius(mobile ? 80 : 150);
+      setRadius(mobile ? 90 : 150);
       setContainerSize(
         mobile ? { width: 250, height: 220 } : { width: 500, height: 450 }
       );
