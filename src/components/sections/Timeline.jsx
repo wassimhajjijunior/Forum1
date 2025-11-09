@@ -5,16 +5,14 @@ import logoF from "/LogoForum.png";
 import "../../index.css";
 const Schedule = () => {
   const schedule = [
-    { time: "07:30", label: "INSCRIPTION" },
-    { time: "08:30", label: "MOT D'OUVERTURE" },
-    { time: "09:15", label: "CONFÉRENCE" },
-    { time: "09:45", label: "KEYNOTES" },
-    { time: "10:30", label: "PAUSE CAFÉ" },
-    { time: "11:30", label: "CONFÉRENCE" },
-    { time: "12:00", label: "TABLE RONDE" },
-    { time: "12:45", label: "DÉJEUNER" },
-    { time: "14:00", label: "WORKSHOPS" },
-    { time: "16:00", label: "CLÔTURE DU FORUM" },
+    { time: "07:30", label: "check-in" },
+    { time: "08:30", label: "ceremonie d'ouverture" },
+    { time: "09:15", label: "keynotes" },
+    { time: "10:30", label: "pause café & pause musicale" },
+    { time: "11:30", label: "usecase" },
+    { time: "11:45", label: "table ronde" },
+    { time: "13:00", label: "workshops" },
+    { time: "15:00", label: "clôture du Forum" },
   ];
 
   const containerRef = useRef(null);
@@ -35,8 +33,7 @@ const Schedule = () => {
       style={{
         minHeight: "100vh",
         width: "100%",
-      }}
-    >
+      }}>
       {/* Fixed Background Logo */}
       <img
         src={logoF}
@@ -48,8 +45,7 @@ const Schedule = () => {
       {/* Timeline Container */}
       <div
         ref={containerRef}
-        className="relative z-10 w-[90%] md:w-[65%] h-[75vh] overflow-y-auto px-4 py-4 rounded-2xl bg-transparent no-scrollbar font-audiowide"
-      >
+        className="relative z-10 w-[80%] md:w-[65%] h-[75vh] overflow-y-auto px-4 py-4 rounded-2xl bg-transparent no-scrollbar font-audiowide">
         <style>{`
           .no-scrollbar::-webkit-scrollbar { display: none; }
         `}</style>
@@ -63,8 +59,7 @@ const Schedule = () => {
           {schedule.map((item, i) => (
             <div
               key={i}
-              className="relative flex items-center justify-center min-h-[80px]"
-            >
+              className="relative flex items-center justify-center min-h-[80px]">
               {/* Alternate Time Position */}
               {i % 2 === 0 ? (
                 // Time Left (triangleUp)
@@ -98,8 +93,27 @@ const Schedule = () => {
 
               {/* Label */}
               <div className="text-center">
-                <span className="text-white font-hazmat-regular text-[12px] tracking-widest whitespace-nowrap">
-                  {item.label}
+                <span className="text-white font-hazmat-regular text-[12px] tracking-widest">
+                  {item.label === "ceremonie d'ouverture" ? (
+                    // Each word on its own line
+                    item.label.split(" ").map((word, index) => (
+                      <span key={index}>
+                        {word}
+                        <br />
+                      </span>
+                    ))
+                  ) : item.label === "pause café & pause musicale" ? (
+                    // Break after "pause café & pause"
+                    <>
+                      <span>
+                        pause café &<br />
+                      </span>
+                      <span> pause musicale </span>
+                    </>
+                  ) : (
+                    // Normal label
+                    <span>{item.label}</span>
+                  )}
                 </span>
               </div>
             </div>
@@ -111,14 +125,12 @@ const Schedule = () => {
       <div className="absolute right-[2%] top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
         <button
           onClick={() => scroll("up")}
-          className="bg-[#b18460]/80 text-white rounded-full p-2.5 shadow-md hover:bg-[#b18460] transition text-base"
-        >
+          className="bg-[#b18460]/80 text-white rounded-full p-2.5 shadow-md hover:bg-[#b18460] transition text-base">
           ↑
         </button>
         <button
           onClick={() => scroll("down")}
-          className="bg-[#b18460]/80 text-white rounded-full p-2.5 shadow-md hover:bg-[#b18460] transition text-base"
-        >
+          className="bg-[#b18460]/80 text-white rounded-full p-2.5 shadow-md hover:bg-[#b18460] transition text-base">
           ↓
         </button>
       </div>

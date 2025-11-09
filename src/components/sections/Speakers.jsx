@@ -1,26 +1,31 @@
 // src/components/Speakers.jsx
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import WhorkshopImage1 from "/speakers/me.jpg";
+import WhorkshopImage1 from "/speakers/keynote/Sami.jpg";
+import WhorkshopImage2 from "/speakers/keynote/M.Aymen.jpg";
+import WhorkshopImage3 from "/speakers/me.jpg";
 
 const speakers = [
   {
     id: 1,
-    name: "Speaker One",
-    role: "AI Engineer",
+    name: "M.Sami Haboubi",
+    role: "Senior Manager at Deloitte | Risk Advisory & Consulting | Cyber Risk",
     image: WhorkshopImage1,
+    keynote: "Cybersecurity meets AI and Gen AI",
   },
   {
     id: 2,
-    name: "Speaker Two",
-    role: "Tech Lead",
-    image: WhorkshopImage1,
+    name: "M.Aymen Ghadghadi",
+    role: "CEO Navinspire IA",
+    image: WhorkshopImage2,
+    keynote: "IA Agentique & Générale : comprendre, implémenter, transformer",
   },
   {
     id: 3,
     name: "Wassim Hajji",
     role: "A passionate developer",
     image: WhorkshopImage1,
+    keynote: "catch up with train of technology",
   },
 ];
 
@@ -125,13 +130,13 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-[10px] font-mistrully text-white tracking-wide ">Keynote</h3>
-      <p className="text-[5px] text-gray-300 font-hazmat-regular">catch up with train of technology</p>
+      <h3 className="text-[12px] font-mistrully text-yellow-900 tracking-wide ">Keynote</h3>
+      <p className="text-[5px] text-gray-300 font-hazmat-regular w-40">{speaker.keynote}</p>
     </motion.div>
 
     {/* Circle Image */}
     <div
-      className="w-20 h-20 rounded-full overflow-hidden border-3 border-sky-900 shadow-2xl transition-transform hover:scale-105"
+      className="w-20 h-20  rounded-full overflow-hidden border-3 border-sky-900 shadow-2xl transition-transform hover:scale-105"
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
     >
@@ -145,8 +150,8 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-[10px] font-hazmat-regular text-white mb-1">{speaker.name}</h3>
-      <p className="text-[10px] text-gray-300 font-mistrully">{speaker.role}</p>
+      <h3 className="text-[9px] font-hazmat-regular text-white mb-1">{speaker.name}</h3>
+      <p className="text-[8px] text-gray-300 font-mistrully w-50">{speaker.role}</p>
     </motion.div>
   </div>
 );

@@ -1,26 +1,30 @@
 // src/components/Speakers.jsx
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import WhorkshopImage1 from "/speakers/me.jpg";
+import WhorkshopImage1 from "/speakers/workshop/amel sellami.png";
+import WhorkshopImage2 from "/speakers/workshop/Mohamed.jpg";
 
 const speakers = [
   {
     id: 1,
-    name: "Speaker One",
-    role: "AI Engineer",
+    name: "Amel Sellami",
+    role: "Google Developer Expert in Machine Learning - ML Research Engineer & Team Lead at InstaDeep",
     image: WhorkshopImage1,
+    workshop:"How to Build a Multi-Agent App with ADK and Gemini"
   },
   {
     id: 2,
-    name: "Speaker Two",
-    role: "Tech Lead",
-    image: WhorkshopImage1,
+    name: "Mohamed Ould-ElHassen Aoueileyine",
+    role: "Dr. Eng. | IoT, AI & Industry 4.0 Expert ",
+    image: WhorkshopImage2,
+    workshop:"Predictive Maintenance for Industry 4.0: From Data Collection to Deployment"
   },
   {
     id: 3,
     name: "Wassim Hajji",
     role: "A passionate developer",
-    image: WhorkshopImage1,
+    image: WhorkshopImage2,
+    workshop:"How to Build a Multi-Agent App with ADK and Gemini"
   },
 ];
 
@@ -126,8 +130,8 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-[10px] font-mistrully text-white tracking-wide ">Keynote</h3>
-      <p className="text-[5px] text-gray-300 font-hazmat-regular">catch up with train of technology</p>
+      <h3 className="text-[10px] font-mistrully text-yellow-900 tracking-wide ">Workshop</h3>
+      <p className="text-[5px] text-gray-300 font-hazmat-regular w-50">{speaker.workshop}</p>
     </motion.div>
 
     {/* Circle Image */}
@@ -146,8 +150,8 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-[10px] font-hazmat-regular text-white mb-1">{speaker.name}</h3>
-      <p className="text-[10px] text-gray-300 font-mistrully">{speaker.role}</p>
+      <h3 className="text-[9px] font-hazmat-regular text-white mb-1">{speaker.name}</h3>
+      <p className="text-[8px] text-gray-300 font-mistrully w-50">{speaker.role}</p>
     </motion.div>
   </div>
 );
