@@ -13,12 +13,13 @@ const Sponsors4 = () => {
 
   const backgroundImage = "/sponsor/packs/silver.png";
 
+  // ✅ Added website URLs for each sponsor
   const sponsors = [
-    { src: "/sponsor/sponsors/minotore.png", delay: 0 },
-    { src: "/sponsor/sponsors/Sofrecom.png", delay: 0.5 },
-    { src: "/sponsor/sponsors/3S.png", delay: 1 },
-    { src: "/sponsor/sponsors/amaris.png", delay: 1.5 },
-    { src: "/sponsor/sponsors/EY.png", delay: 2 },
+    { src: "/sponsor/sponsors/minotore.png", delay: 0, url: "https://www.minotore.com/" },
+    { src: "/sponsor/sponsors/Sofrecom.png", delay: 0.5, url: "https://www.sofrecom.com/" },
+    { src: "/sponsor/sponsors/3S.png", delay: 1, url: "https://www.3s.com.tn/" },
+    { src: "/sponsor/sponsors/amaris.png", delay: 1.5, url: "https://amaris.com/" },
+    { src: "/sponsor/sponsors/EY.png", delay: 2, url: "https://www.ey.com/fr_ca/locations/tunisia" },
   ];
 
   const containerStyle = {
@@ -56,14 +57,14 @@ const Sponsors4 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-        backdropFilter: "blur(2px)",
-
+    backdropFilter: "blur(2px)",
   });
 
   const logoStyle = {
     width: isMobile ? "70px" : "90px",
     height: "auto",
     marginBottom: isMobile ? "15px" : "20px",
+    cursor: "pointer", // ✅ Cursor for clickable logo
   };
 
   const podiumGlow = (delay = 0) => (
@@ -97,7 +98,7 @@ const Sponsors4 = () => {
 
       {/* Sponsors Layout */}
       {!isMobile ? (
-        // Desktop layout: 3 on top, 2 on bottom
+        // 🖥️ Desktop layout: 3 on top, 2 on bottom
         <div
           style={{
             position: "relative",
@@ -110,13 +111,7 @@ const Sponsors4 = () => {
           }}
         >
           {/* Top row */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "100px",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "center", gap: "100px" }}>
             {sponsors.slice(0, 3).map((s, index) => (
               <div key={index} style={podiumStyle("rgba(192, 192, 192, 0.3)")}>
                 <motion.img
@@ -131,6 +126,7 @@ const Sponsors4 = () => {
                     delay: s.delay,
                   }}
                   whileHover={{ scale: 1.1 }}
+                  onClick={() => window.open(s.url, "_blank")} // ✅ Open sponsor link
                 />
                 {podiumGlow(s.delay)}
               </div>
@@ -138,18 +134,9 @@ const Sponsors4 = () => {
           </div>
 
           {/* Bottom row */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "120px",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "center", gap: "120px" }}>
             {sponsors.slice(3, 5).map((s, index) => (
-              <div
-                key={index + 3}
-                style={podiumStyle("rgba(192, 192, 192, 0.6)")}
-              >
+              <div key={index + 3} style={podiumStyle("rgba(192, 192, 192, 0.6)")}>
                 <motion.img
                   src={s.src}
                   alt={`Sponsor ${index + 4}`}
@@ -162,6 +149,7 @@ const Sponsors4 = () => {
                     delay: s.delay,
                   }}
                   whileHover={{ scale: 1.1 }}
+                  onClick={() => window.open(s.url, "_blank")}
                 />
                 {podiumGlow(s.delay)}
               </div>
@@ -169,7 +157,7 @@ const Sponsors4 = () => {
           </div>
         </div>
       ) : (
-        // Mobile layout: 2 on top, 1 center, 2 bottom
+        // 📱 Mobile layout: 2 on top, 1 center, 2 bottom
         <div
           style={{
             position: "relative",
@@ -196,6 +184,7 @@ const Sponsors4 = () => {
                     ease: "easeInOut",
                     delay: s.delay,
                   }}
+                  onClick={() => window.open(s.url, "_blank")}
                 />
                 {podiumGlow(s.delay)}
               </div>
@@ -216,6 +205,7 @@ const Sponsors4 = () => {
                   ease: "easeInOut",
                   delay: sponsors[2].delay,
                 }}
+                onClick={() => window.open(sponsors[2].url, "_blank")}
               />
               {podiumGlow(sponsors[2].delay)}
             </div>
@@ -224,10 +214,7 @@ const Sponsors4 = () => {
           {/* Bottom row */}
           <div style={{ display: "flex", gap: "40px" }}>
             {sponsors.slice(3, 5).map((s, index) => (
-              <div
-                key={index + 3}
-                style={podiumStyle("rgba(192, 192, 192, 0.6)")}
-              >
+              <div key={index + 3} style={podiumStyle("rgba(192, 192, 192, 0.6)")}>
                 <motion.img
                   src={s.src}
                   alt={`Sponsor ${index + 4}`}
@@ -239,6 +226,7 @@ const Sponsors4 = () => {
                     ease: "easeInOut",
                     delay: s.delay,
                   }}
+                  onClick={() => window.open(s.url, "_blank")}
                 />
                 {podiumGlow(s.delay)}
               </div>

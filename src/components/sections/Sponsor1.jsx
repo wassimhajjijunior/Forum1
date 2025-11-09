@@ -11,12 +11,30 @@ const Sponsors1 = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // ✅ Use public paths
+  // ✅ Use public paths and add sponsor URLs
   const backgroundImage = "/sponsor/packs/redDiamand.png";
   const sponsors = [
-    { src: "/sponsor/sponsors/Ooredooo.png", delay: 0, width: isMobile ? "85px" : "110px", marginBottom: "5px" },
-    { src: "/sponsor/sponsors/tt.png", delay: 1, width: isMobile ? "70px" : "90px", marginBottom: "15px" },
-    { src: "/sponsor/sponsors/Orange.png", delay: 2, width: isMobile ? "50px" : "60px", marginBottom: "20px" },
+    {
+      src: "/sponsor/sponsors/Ooredooo.png",
+      delay: 0,
+      width: isMobile ? "85px" : "110px",
+      marginBottom: "5px",
+      url: "https://www.ooredoo.tn/",
+    },
+    {
+      src: "/sponsor/sponsors/tt.png",
+      delay: 1,
+      width: isMobile ? "70px" : "90px",
+      marginBottom: "15px",
+      url: "https://www.tunisietelecom.tn/",
+    },
+    {
+      src: "/sponsor/sponsors/Orange.png",
+      delay: 2,
+      width: isMobile ? "50px" : "60px",
+      marginBottom: "20px",
+      url: "https://www.orange.tn/",
+    },
   ];
 
   const containerStyle = {
@@ -67,12 +85,12 @@ const Sponsors1 = () => {
     justifyContent: "flex-end",
     alignItems: "center",
     backdropFilter: "blur(2px)",
-    
   });
 
   const logoStyle = {
     height: "auto",
     transition: "width 0.3s ease",
+    cursor: "pointer",
   };
 
   return (
@@ -91,23 +109,37 @@ const Sponsors1 = () => {
       <div style={contentStyle}>
         {sponsors.map((s, index) => (
           <div key={index} style={podiumStyle("rgba(204,22,47,0.3)")}>
-            <motion.img
-              src={s.src}
-              alt={`Sponsor ${index + 1}`}
-              style={{
-                ...logoStyle,
-                width: s.width,
-                marginBottom: s.marginBottom,
-              }}
-              animate={{ y: [index === 0 ? 0 : -5, index === 0 ? -10 : 5, index === 0 ? 0 : -5] }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: s.delay,
-              }}
-              whileHover={{ scale: 1.1 }}
-            />
+            {/* ✅ Clickable sponsor */}
+            <a
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <motion.img
+                src={s.src}
+                alt={`Sponsor ${index + 1}`}
+                style={{
+                  ...logoStyle,
+                  width: s.width,
+                  marginBottom: s.marginBottom,
+                }}
+                animate={{
+                  y: [
+                    index === 0 ? 0 : -5,
+                    index === 0 ? -10 : 5,
+                    index === 0 ? 0 : -5,
+                  ],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: s.delay,
+                }}
+                whileHover={{ scale: 1.1 }}
+              />
+            </a>
+
             <motion.div
               style={{
                 position: "absolute",

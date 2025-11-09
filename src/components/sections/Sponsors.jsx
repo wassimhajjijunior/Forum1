@@ -5,7 +5,6 @@ import backgroundImage from "/sponsor/packs/blueDiaman.png";
 import SponsorLogo from "/sponsor/sponsors/SAGEMCOM.png";
 
 const Sponsors = () => {
-  // ✅ Track window width reactively
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   useEffect(() => {
@@ -31,13 +30,13 @@ const Sponsors = () => {
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: isMobile ? "95%" : "50%", 
+    backgroundSize: isMobile ? "95%" : "50%",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     opacity: 0.6,
     zIndex: 1,
     filter: "blur(1px)",
-    transition: "background-size 0.3s ease", // Smooth resize transition
+    transition: "background-size 0.3s ease",
   };
 
   const contentStyle = {
@@ -66,11 +65,11 @@ const Sponsors = () => {
     width: "200px",
     height: "auto",
     marginBottom: "10px",
+    cursor: "pointer",
   };
 
   return (
     <div style={containerStyle}>
-      {/* Animated background */}
       <motion.div
         style={backgroundStyle}
         animate={{ opacity: [0.9, 1, 0.9] }}
@@ -83,18 +82,25 @@ const Sponsors = () => {
 
       <div style={contentStyle}>
         <div style={podiumStyle("rgba(255,255,255,0.5)")}>
-          <motion.img
-            src={SponsorLogo}
-            alt="Sponsor Logo"
-            style={logoStyle}
-            animate={{ y: [0, -10, 0] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            whileHover={{ scale: 1.1 }}
-          />
+          {/* ✅ Clickable sponsor image */}
+          <a
+            href="https://sagemcom.com/fr"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <motion.img
+              src={SponsorLogo}
+              alt="Sagemcom"
+              style={logoStyle}
+              animate={{ y: [0, -10, 0] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              whileHover={{ scale: 1.1 }}
+            />
+          </a>
 
           <motion.div
             style={{
