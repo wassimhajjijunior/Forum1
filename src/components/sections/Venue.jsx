@@ -4,11 +4,21 @@ import bg from "/supcombg.jpg";
 const Venue = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const frameRef = useRef(null);
 
   const mapSrc =
     "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.936710397326!2d10.1877739!3d36.8918623!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e2cb6fc49b7883%3A0x84da64ea383c01d2!2s%C3%89cole%20Sup%C3%A9rieure%20des%20communications%20de%20Tunis!5e0!3m2!1sfr!2stn!4v1761565205564!5m2!1sfr!2stn";
 
+  // Detect mobile
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Animate progress
   useEffect(() => {
     if (isOpen) {
       const duration = 2500;
@@ -37,16 +47,16 @@ const Venue = () => {
     if (!isOpen) setIsOpen(true);
   };
 
-  const middleX = progress * 150;
-  const rightX = progress * 250;
+  // Adjust animation distances for mobile
+  const middleX = isMobile ? progress * 100 : progress * 150;
+  const rightX = isMobile ? progress * 190 : progress * 250;
 
   return (
     <div className="w-screen min-h-screen flex items-center justify-center bg-transparent p-4">
-      {/* Responsive Wrapper */}
       <div
-        className="flex flex-col md:flex-row items-center justify-between w-full max-w-[1000px] gap-6 md:gap-10"
+        className={`flex flex-col md:flex-row items-center justify-between w-full max-w-[1000px] gap-6 md:gap-10`}
       >
-        {/* Map Animation (LEFT SIDE) */}
+        {/* Map Animation */}
         <div className="relative w-full md:w-[350px] h-[200px]">
           {/* Full Map */}
           <div
@@ -190,7 +200,7 @@ const Venue = () => {
           )}
         </div>
 
-        {/* Card Section (RIGHT SIDE) */}
+        {/* Card Section */}
         <div
           className="relative w-full md:w-[350px] h-[200px] rounded-xl overflow-hidden text-white flex flex-col justify-center p-4"
           style={{
@@ -199,7 +209,6 @@ const Venue = () => {
             backgroundPosition: "center",
           }}
         >
-          {/* Gradient overlay for readability */}
           <div
             className="absolute inset-0 backdrop-blur-sm"
             style={{
@@ -207,13 +216,11 @@ const Venue = () => {
                 "linear-gradient(to right, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.2) 80%)",
             }}
           />
-
-          {/* Text content */}
           <div className="relative z-10 text-center md:text-left">
-            <h3 className="text-[8px] text-center sm:text-[10px] md:text-[10px] text-sky-400 font-semibold mb-2">
+            <h3 className="text-[8px] sm:text-[10px] md:text-[10px] text-sky-400 font-semibold mb-2">
               HIGHER SCHOOL OF COMMUNICATION OF TUNIS, Ariana
             </h3>
-            <p className="text-[8px] text-center sm:text-[10px] md:text-[9px] text-white/80 leading-relaxed">
+            <p className="text-[8px] sm:text-[10px] md:text-[9px] text-white/80 leading-relaxed">
               Sup'Com is a leading college for telecommunications engineers in Tunisia.
               Affiliated to the University of Carthage, the Higher School of Communications
               of Tunis (Sup'Com) is among the top-ranked schools in Tunisia in the national

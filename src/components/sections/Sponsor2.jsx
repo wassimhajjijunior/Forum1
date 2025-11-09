@@ -59,6 +59,8 @@ const Sponsors2 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
+    backdropFilter: "blur(2px)",
+
   });
 
   const logoStyle = {

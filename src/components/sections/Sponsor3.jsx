@@ -51,12 +51,14 @@ const Sponsors3 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
+        backdropFilter: "blur(3px)",
+
   });
 
   const logoStyle = {
     width: isMobile ? "70px" : "100px",
     height: "auto",
-    marginBottom: isMobile ? "10px" : "20px",
+    marginBottom: isMobile ? "10px" : "10px",
   };
 
   // Positions for square layout
@@ -234,7 +236,7 @@ const Sponsors3 = () => {
               alt="Sponsor 4"
               style={{...logoStyle,
                 width: "80px",
-                marginBottom: isMobile ? "10px" : "0px"
+                marginBottom: isMobile ? "0px" : "0px"
               }}
               animate={{ y: [5, -5, 5] }}
               transition={{

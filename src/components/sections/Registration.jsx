@@ -8,6 +8,9 @@ export default function Registration() {
     email: "",
   });
 
+  const [statusMessage, setStatusMessage] = useState(""); // ✅ Status message
+  const [statusColor, setStatusColor] = useState("text-green-400"); // success or error color
+
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -16,7 +19,8 @@ export default function Registration() {
     e.preventDefault();
 
     if (!formData.fullName || !formData.university || !formData.email) {
-      alert("Please fill in all fields");
+      setStatusMessage("Please fill in all fields");
+      setStatusColor("text-red-400");
       return;
     }
 
@@ -30,14 +34,17 @@ export default function Registration() {
       const data = await res.json();
 
       if (res.ok) {
-        alert("✅ " + data.message);
+        setStatusMessage("✅ Registration successful!");
+        setStatusColor("text-green-400");
         setFormData({ fullName: "", university: "", email: "" }); // clear form
       } else {
-        alert("❌ Something went wrong.");
+        setStatusMessage("❌ Something went wrong.");
+        setStatusColor("text-red-400");
       }
     } catch (err) {
       console.error(err);
-      alert("⚠️ Server not reachable.");
+      setStatusMessage("⚠️ Server not reachable.");
+      setStatusColor("text-red-400");
     }
   };
 
@@ -45,7 +52,7 @@ export default function Registration() {
     `px-4 py-2 rounded-xl border border-white/30 ${
       value
         ? "bg-gradient-to-r from-cyan-100 to-amber-100 text-gray-800"
-        : "bg-white/10 text-white placeholder-white/70 "
+        : "bg-white/10 text-white placeholder-white/70"
     } focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all text-xs`;
 
   const fontStyle = {
@@ -85,7 +92,7 @@ export default function Registration() {
         >
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center justify-start space-y-4"
+            className="flex flex-col items-center justify-start space-y-3"
           >
             <h2 className="text-sm font-bold text-white text-center mb-4" style={fontStyle}>
               Register
@@ -136,13 +143,21 @@ export default function Registration() {
               />
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-100 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs mt-2 cursor-pointer"
+              className="w-90 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs cursor-pointer"
               style={fontStyle}
             >
               Submit
             </button>
+
+            {/* ✅ Small Status Message */}
+            {statusMessage && (
+              <p className={`text-center text-[0.55rem] ${statusColor}`} style={fontStyle}>
+                {statusMessage}
+              </p>
+            )}
 
             <div className="text-center">
               <a
@@ -232,13 +247,21 @@ export default function Registration() {
             />
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl mt-1"
+            className="w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl "
             style={{ ...fontStyle, fontSize: "0.75rem" }}
           >
             Submit
           </button>
+
+          {/* ✅ Small Status Message */}
+          {statusMessage && (
+            <p className={`text-center text-[0.65rem] ${statusColor}`} style={fontStyle}>
+              {statusMessage}
+            </p>
+          )}
 
           <div className="mt-1 text-center">
             <a
