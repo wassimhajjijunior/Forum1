@@ -82,7 +82,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     backdropFilter: "blur(6px)",
     background: active ? "rgba(0,255,255,0.15)" : "rgba(255,255,255,0.03)",
     transition: "all 0.3s ease",
-    transform: "scale(1)",
+    transform: "none",
     fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     lineHeight: "14px",
     boxShadow: active 
