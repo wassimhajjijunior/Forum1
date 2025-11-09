@@ -51,7 +51,7 @@ const Sponsors3 = () => {
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-        backdropFilter: "blur(3px)",
+        backdropFilter: "blur(2px)",
 
   });
 
