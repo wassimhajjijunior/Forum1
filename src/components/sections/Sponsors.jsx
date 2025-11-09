@@ -31,7 +31,7 @@ const Sponsors = () => {
     width: "100%",
     height: "100%",
     backgroundImage: `url(${backgroundImage})`,
-    backgroundSize: "50%", 
+    backgroundSize: isMobile ? "95%" : "50%", 
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     opacity: 0.6,
