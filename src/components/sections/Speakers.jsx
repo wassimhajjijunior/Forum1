@@ -27,40 +27,53 @@ const speakers = [
   },
 ];
 
-const radius = 150; // bigger radius
-
-const triangleVertices = [
-  { x: 0, y: -radius },
-  { x: -radius, y: radius },
-  { x: radius, y: radius },
-];
-
-const cardPaths = [
-  triangleVertices,
-  triangleVertices,
-  triangleVertices,
-];
-
-const getPositionOnPath = (path, t) => {
-  const totalSegments = path.length;
-  const segmentIndex = Math.floor(t % totalSegments);
-  const nextIndex = (segmentIndex + 1) % totalSegments;
-  const localT = t % 1;
-  const p1 = path[segmentIndex];
-  const p2 = path[nextIndex];
-  return {
-    x: p1.x + (p2.x - p1.x) * localT,
-    y: p1.y + (p2.y - p1.y) * localT,
-  };
-};
-
 const Speakers = () => {
   const [time, setTime] = useState(0);
   const [paused, setPaused] = useState(false);
   const [hoveredId, setHoveredId] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const requestRef = useRef();
 
-  const speed = 0.004; // same smooth speed
+  // Responsive radius & container
+  const [radius, setRadius] = useState(150);
+  const [containerSize, setContainerSize] = useState({ width: 500, height: 450 });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      setRadius(mobile ? 80 : 150);
+      setContainerSize(mobile ? { width: 250, height: 220 } : { width: 500, height: 450 });
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Triangle vertices and path
+  const triangleVertices = [
+    { x: 0, y: -radius },
+    { x: -radius, y: radius },
+    { x: radius, y: radius },
+  ];
+
+  const cardPaths = [triangleVertices, triangleVertices, triangleVertices];
+
+  const getPositionOnPath = (path, t) => {
+    const totalSegments = path.length;
+    const segmentIndex = Math.floor(t % totalSegments);
+    const nextIndex = (segmentIndex + 1) % totalSegments;
+    const localT = t % 1;
+    const p1 = path[segmentIndex];
+    const p2 = path[nextIndex];
+    return {
+      x: p1.x + (p2.x - p1.x) * localT,
+      y: p1.y + (p2.y - p1.y) * localT,
+    };
+  };
+
+  const speed = 0.004; // smooth speed
 
   const animate = () => {
     if (!paused) setTime((prev) => prev + speed);
@@ -85,7 +98,7 @@ const Speakers = () => {
     <section className="relative w-full h-screen flex flex-col items-center justify-center">
       <div
         className="relative flex items-center justify-center"
-        style={{ width: "500px", height: "450px", marginTop: "50px" }} // bigger container
+        style={{ width: containerSize.width, height: containerSize.height, marginTop: "50px" }}
       >
         {speakers.map((speaker, idx) => {
           const t = time + (idx / speakers.length) * cardPaths[idx].length;
@@ -102,6 +115,7 @@ const Speakers = () => {
                 isHovered={hoveredId === speaker.id}
                 onHoverStart={() => handleHoverStart(speaker.id)}
                 onHoverEnd={handleHoverEnd}
+                isMobile={isMobile}
               />
             </motion.div>
           );
@@ -109,7 +123,7 @@ const Speakers = () => {
       </div>
 
       <motion.h2
-        className="mt-10 text-4xl font-hazmat-regular text-white"
+        className={`mt-10 ${isMobile ? "text-2xl" : "text-4xl"} font-hazmat-regular text-white`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
@@ -120,7 +134,7 @@ const Speakers = () => {
   );
 };
 
-const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
+const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd, isMobile }) => (
   <div className="flex flex-col items-center">
     <motion.div
       className="text-center mb-3"
@@ -128,14 +142,16 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-base font-mistrully text-yellow-900 tracking-wide">Keynote</h3>
-      <p className="text-[10px] sm:text-[12px] text-gray-300 font-hazmat-regular w-56">
+      <h3 className={`${isMobile ? "text-sm" : "text-base"} font-mistrully text-yellow-900 tracking-wide`}>
+        Keynote
+      </h3>
+      <p className={`${isMobile ? "text-[8px]" : "text-[10px]"} text-gray-300 font-hazmat-regular w-56`}>
         {speaker.keynote}
       </p>
     </motion.div>
 
     <div
-      className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-sky-900 shadow-2xl transition-transform hover:scale-105"
+      className={`${isMobile ? "w-20 h-20" : "w-28 h-28"} sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-sky-900 shadow-2xl transition-transform hover:scale-105`}
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
     >
@@ -148,8 +164,12 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-lg font-hazmat-regular text-white mb-1">{speaker.name}</h3>
-      <p className="text-[11px] sm:text-[12px] text-gray-300 font-mistrully w-60 text-center">{speaker.role}</p>
+      <h3 className={`${isMobile ? "text-sm" : "text-lg"} font-hazmat-regular text-white mb-1`}>
+        {speaker.name}
+      </h3>
+      <p className={`${isMobile ? "text-[7px]" : "text-[11px]"} sm:text-[12px] text-gray-300 font-mistrully w-60 text-center`}>
+        {speaker.role}
+      </p>
     </motion.div>
   </div>
 );
