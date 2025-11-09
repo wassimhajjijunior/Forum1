@@ -1,4 +1,3 @@
-// src/components/Speakers.jsx
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import WhorkshopImage1 from "/speakers/workshop/amel sellami.png";
@@ -10,59 +9,77 @@ const speakers = [
     name: "Amel Sellami",
     role: "Google Developer Expert in Machine Learning - ML Research Engineer & Team Lead at InstaDeep",
     image: WhorkshopImage1,
-    workshop:"How to Build a Multi-Agent App with ADK and Gemini"
+    workshop: "How to Build a Multi-Agent App with ADK and Gemini",
   },
   {
     id: 2,
     name: "Mohamed Ould-ElHassen Aoueileyine",
-    role: "Dr. Eng. | IoT, AI & Industry 4.0 Expert ",
+    role: "Dr. Eng. | IoT, AI & Industry 4.0 Expert",
     image: WhorkshopImage2,
-    workshop:"Predictive Maintenance for Industry 4.0: From Data Collection to Deployment"
+    workshop:
+      "Predictive Maintenance for Industry 4.0: From Data Collection to Deployment",
   },
   {
     id: 3,
     name: "Wassim Hajji",
     role: "A passionate developer",
     image: WhorkshopImage2,
-    workshop:"How to Build a Multi-Agent App with ADK and Gemini"
+    workshop: "How to Build a Multi-Agent App with ADK and Gemini",
   },
 ];
 
-const radius = 85;
-
-const triangleVertices = [
-  { x: 0, y: -radius },      // top
-  { x: -radius, y: radius }, // bottom-left
-  { x: radius, y: radius },  // bottom-right
-];
-
-const cardPaths = [
-  [triangleVertices[0], triangleVertices[1], triangleVertices[2]],
-  [triangleVertices[0], triangleVertices[1], triangleVertices[2]],
-  [triangleVertices[0], triangleVertices[1], triangleVertices[2]],
-];
-
-const getPositionOnPath = (path, t) => {
-  const totalSegments = path.length;
-  const segmentIndex = Math.floor(t % totalSegments);
-  const nextIndex = (segmentIndex + 1) % totalSegments;
-  const localT = t % 1;
-  const p1 = path[segmentIndex];
-  const p2 = path[nextIndex];
-  return {
-    x: p1.x + (p2.x - p1.x) * localT,
-    y: p1.y + (p2.y - p1.y) * localT,
-  };
-};
-
 const Workshops = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [time, setTime] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [hoveredId, setHoveredId] = useState(null); // Track which card is hovered
+  const [hoveredId, setHoveredId] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const requestRef = useRef();
 
-  const speed = 0.004; // slower movement
+  // Responsive radius & container
+  const [radius, setRadius] = useState(150);
+  const [containerSize, setContainerSize] = useState({
+    width: 500,
+    height: 450,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      setRadius(mobile ? 80 : 150);
+      setContainerSize(
+        mobile ? { width: 250, height: 220 } : { width: 500, height: 450 }
+      );
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Triangle vertices and path
+  const triangleVertices = [
+    { x: 0, y: -radius },
+    { x: -radius, y: radius },
+    { x: radius, y: radius },
+  ];
+
+  const cardPaths = [triangleVertices, triangleVertices, triangleVertices];
+
+  const getPositionOnPath = (path, t) => {
+    const totalSegments = path.length;
+    const segmentIndex = Math.floor(t % totalSegments);
+    const nextIndex = (segmentIndex + 1) % totalSegments;
+    const localT = t % 1;
+    const p1 = path[segmentIndex];
+    const p2 = path[nextIndex];
+    return {
+      x: p1.x + (p2.x - p1.x) * localT,
+      y: p1.y + (p2.y - p1.y) * localT,
+    };
+  };
+
+  const speed = 0.004; // smooth speed
 
   const animate = () => {
     if (!paused) setTime((prev) => prev + speed);
@@ -85,8 +102,13 @@ const Workshops = () => {
 
   return (
     <section className="relative w-full h-screen flex flex-col items-center justify-center">
-      <div className="relative w-[300px] h-[250px] flex items-center justify-center"
-      style={{ marginTop: "50px" }}>
+      <div
+        className="relative flex items-center justify-center"
+        style={{
+          width: containerSize.width,
+          height: containerSize.height,
+          marginTop: "50px",
+        }}>
         {speakers.map((speaker, idx) => {
           const t = time + (idx / speakers.length) * cardPaths[idx].length;
           const pos = getPositionOnPath(cardPaths[idx], t);
@@ -95,63 +117,89 @@ const Workshops = () => {
             <motion.div
               key={speaker.id}
               className="absolute flex flex-col items-center"
-              style={{ x: pos.x, y: pos.y }}
-            >
+              style={{ x: pos.x, y: pos.y }}>
               <SpeakerCard
                 speaker={speaker}
-                isHovered={hoveredId === speaker.id} // only this card shows text
+                isHovered={hoveredId === speaker.id}
                 onHoverStart={() => handleHoverStart(speaker.id)}
                 onHoverEnd={handleHoverEnd}
+                isMobile={isMobile}
               />
             </motion.div>
           );
         })}
       </div>
 
-      {/* Title at the bottom */}
       <motion.h2
-        className="mt-10 text-2xl font-hazmat-regular text-white"
+        className={`mt-10 ${
+          isMobile ? "text-2xl" : "text-4xl"
+        } font-hazmat-regular text-white`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Workshops
+        transition={{ duration: 1 }}>
+        Keynote
       </motion.h2>
     </section>
   );
 };
 
-const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
+const SpeakerCard = ({
+  speaker,
+  isHovered,
+  onHoverStart,
+  onHoverEnd,
+  isMobile,
+}) => (
   <div className="flex flex-col items-center">
-    {/* Top text */}
     <motion.div
-      className="text-center mb-1"
+      className="text-center mb-3"
       initial={{ opacity: 0 }}
       animate={{ opacity: isHovered ? 1 : 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <h3 className="text-[10px] font-mistrully text-yellow-900 tracking-wide ">Workshop</h3>
-      <p className="text-[5px] text-gray-300 font-hazmat-regular w-50">{speaker.workshop}</p>
+      transition={{ duration: 0.3 }}>
+      <h3
+        className={`${
+          isMobile ? "text-sm" : "text-base"
+        } font-mistrully text-yellow-900 tracking-wide`}>
+        Keynote
+      </h3>
+      <p
+        className={`${
+          isMobile ? "text-[8px]" : "text-[10px]"
+        } text-gray-300 font-hazmat-regular w-56`}>
+        {speaker.keynote}
+      </p>
     </motion.div>
 
-    {/* Circle Image */}
     <div
-      className="w-20 h-20 rounded-full overflow-hidden border-3 border-sky-900 shadow-2xl transition-transform hover:scale-105"
+      className={`${
+        isMobile ? "w-20 h-20" : "w-28 h-28"
+      } sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-sky-900 shadow-2xl transition-transform hover:scale-105`}
       onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
-    >
-      <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
+      onMouseLeave={onHoverEnd}>
+      <img
+        src={speaker.image}
+        alt={speaker.name}
+        className="w-full h-full object-cover"
+      />
     </div>
 
-    {/* Bottom text */}
     <motion.div
-      className="text-center mt-1"
+      className="text-center mt-3"
       initial={{ opacity: 0 }}
       animate={{ opacity: isHovered ? 1 : 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <h3 className="text-[9px] font-hazmat-regular text-white mb-1">{speaker.name}</h3>
-      <p className="text-[8px] text-gray-300 font-mistrully w-50">{speaker.role}</p>
+      transition={{ duration: 0.3 }}>
+      <h3
+        className={`${
+          isMobile ? "text-sm" : "text-lg"
+        } font-hazmat-regular text-white mb-1`}>
+        {speaker.name}
+      </h3>
+      <p
+        className={`${
+          isMobile ? "text-[7px]" : "text-[11px]"
+        } sm:text-[12px] text-gray-300 font-mistrully w-60 text-center`}>
+        {speaker.role}
+      </p>
     </motion.div>
   </div>
 );

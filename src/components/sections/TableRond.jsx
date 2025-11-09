@@ -1,5 +1,4 @@
-// src/components/Speakers.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const speakers = [
@@ -29,40 +28,58 @@ const speakers = [
   },
 ];
 
-const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd }) => (
+const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd, isMobile }) => (
   <div className="flex flex-col items-center">
+    {/* Top text */}
     <motion.div
-      className="text-center mb-1"
+      className="text-center mb-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-[10px] font-mistrully text-white tracking-wide">Keynote</h3>
-      <p className="text-[5px] text-gray-300 font-hazmat-regular">catch up with train of technology</p>
+      <h3 className={`${isMobile ? "text-sm" : "text-lg"} font-mistrully text-white tracking-wide`}>
+        Keynote
+      </h3>
+      <p className={`${isMobile ? "text-[6px]" : "text-[9px]"} text-gray-300 font-hazmat-regular`}>
+        catch up with train of technology
+      </p>
     </motion.div>
 
+    {/* Circle Image */}
     <div
-      className="w-25 h-25 rounded-full overflow-hidden border-3 border-sky-900 shadow-2xl transition-transform hover:scale-105"
+      className={`${isMobile ? "w-20 h-20" : "w-32 h-32"} rounded-full overflow-hidden border-3 border-sky-900 shadow-2xl transition-transform hover:scale-105`}
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
     >
       <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
     </div>
 
+    {/* Bottom text */}
     <motion.div
-      className="text-center "
+      className="text-center mt-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className="text-[10px] font-hazmat-regular text-white ">{speaker.name}</h3>
-      <p className="text-[10px] text-gray-300 font-mistrully">{speaker.role}</p>
+      <h3 className={`${isMobile ? "text-sm" : "text-xl"} font-hazmat-regular text-white`}>
+        {speaker.name}
+      </h3>
+      <p className={`${isMobile ? "text-[7px]" : "text-[12px]"} text-gray-300 font-mistrully`}>
+        {speaker.role}
+      </p>
     </motion.div>
   </div>
 );
 
 const TableSquare = () => {
   const [hoveredId, setHoveredId] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const baseFloat = {
     y: [0, 10, 0],
@@ -73,11 +90,14 @@ const TableSquare = () => {
 
   return (
     <section className="relative w-full h-screen flex flex-col items-center justify-center">
-      {/* Grid container slightly lower */}
-      <div className="relative grid grid-cols-2 gap-14" style={{ marginTop: "50px" }}>
+      {/* Grid container */}
+      <div
+        className={`relative grid ${isMobile ? "grid-cols-2 gap-6" : "grid-cols-2 gap-16"}`}
+        style={{ marginTop: "50px" }}
+      >
         {/* Center title */}
         <motion.h2
-          className="absolute inset-0 flex items-center justify-center text-2xl  font-hazmat-regular text-white pointer-events-none"
+          className="absolute inset-0 flex items-center justify-center text-2xl font-hazmat-regular text-white pointer-events-none"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1 }}
@@ -104,6 +124,7 @@ const TableSquare = () => {
               isHovered={hoveredId === speaker.id}
               onHoverStart={() => setHoveredId(speaker.id)}
               onHoverEnd={() => setHoveredId(null)}
+              isMobile={isMobile}
             />
           </motion.div>
         ))}

@@ -56,7 +56,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: "0 28px",
+    padding: "0 20px",
     zIndex: 1000,
     fontFamily:
       "font-hazmat-regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
