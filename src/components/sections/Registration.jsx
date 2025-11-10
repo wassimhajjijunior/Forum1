@@ -35,11 +35,18 @@ export default function Registration() {
     setLoading(true); // disable button
 
     try {
-      const res = await fetch("https://forum-vybt.onrender.com/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        "https://checkin-forum-3681f228db7e.herokuapp.com/api/v1/addAttendee",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            name: formData.fullName,
+            number: "21600000000",
+          }),
+        }
+      );
 
       const data = await res.json();
 
