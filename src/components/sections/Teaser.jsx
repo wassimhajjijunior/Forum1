@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import videoFile from "/Video/Teaser1.mp4";
 
-const TeaserVideo = () => {
+const Teaser = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -14,31 +13,30 @@ const TeaserVideo = () => {
   return (
     <div
       style={{
-        width: isMobile ? "75vw" : "60vw",
-        height: isMobile ? "30vh" : "70vh",
+        width: isMobile ? "90vw" : "80vw", // bigger width
+        maxWidth: isMobile? "100%" : "855px", // max width for large screens
+        height: isMobile ? "22vh" : "65vh", // bigger height
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        marginTop: "2.5rem",
+        margin: "2.5rem auto", // centered
         overflow: "hidden",
-        borderRadius:"8px",
+        borderRadius: "12px",
         backgroundColor: "transparent",
-      }}
-    >
-      <video
-        src={videoFile}
-        controls
-        autoPlay
-        loop
-        playsInline
+      }}>
+      <iframe
+        src="https://www.youtube.com/embed/ZQvU5OGcAh0?autoplay=1&mute=0&loop=1&playlist=ZQvU5OGcAh0&controls=0&modestbranding=1&playsinline=1"
+        title="Teaser Video"
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "contain",
+          border: "none",
         }}
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowFullScreen
       />
     </div>
   );
 };
 
-export default TeaserVideo;
+export default Teaser;

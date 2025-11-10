@@ -78,7 +78,7 @@ const Schedule = () => {
 
                 {/* Label */}
                 <div className="text-center">
-                  <span className="text-white font-hazmat-regular text-[12px] md:text-[18px] tracking-widest">
+                  <span className="text-white font-hazmat-regular text-[12px] md:text-[15px] tracking-widest">
                     {item.label === "ceremonie d'ouverture"
                       ? item.label.split(" ").map((word, idx) => <span key={idx}>{word}<br /></span>)
                       : item.label === "pause café & pause musicale"

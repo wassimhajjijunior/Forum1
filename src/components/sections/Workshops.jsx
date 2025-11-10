@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import WhorkshopImage1 from "/speakers/workshop/amel sellami.png";
 import WhorkshopImage2 from "/speakers/workshop/Mohamed.jpg";
@@ -19,189 +19,110 @@ const speakers = [
     workshop:
       "Predictive Maintenance for Industry 4.0: From Data Collection to Deployment",
   },
-  {
-    id: 3,
-    name: "Wassim Hajji",
-    role: "A passionate developer",
-    image: WhorkshopImage2,
-    workshop: "How to Build a Multi-Agent App with ADK and Gemini",
-  },
 ];
 
 const Workshops = () => {
-  const [time, setTime] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [hoveredId, setHoveredId] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const requestRef = useRef();
-
-  // Responsive radius & container
-  const [radius, setRadius] = useState(150);
-  const [containerSize, setContainerSize] = useState({
-    width: 500,
-    height: 450,
-  });
 
   useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 640;
-      setIsMobile(mobile);
-      setRadius(mobile ? 90 : 150);
-      setContainerSize(
-        mobile ? { width: 250, height: 220 } : { width: 500, height: 450 }
-      );
-    };
-
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Triangle vertices and path
-  const triangleVertices = [
-    { x: 0, y: -radius },
-    { x: -radius, y: radius },
-    { x: radius, y: radius },
-  ];
-
-  const cardPaths = [triangleVertices, triangleVertices, triangleVertices];
-
-  const getPositionOnPath = (path, t) => {
-    const totalSegments = path.length;
-    const segmentIndex = Math.floor(t % totalSegments);
-    const nextIndex = (segmentIndex + 1) % totalSegments;
-    const localT = t % 1;
-    const p1 = path[segmentIndex];
-    const p2 = path[nextIndex];
-    return {
-      x: p1.x + (p2.x - p1.x) * localT,
-      y: p1.y + (p2.y - p1.y) * localT,
-    };
-  };
-
-  const speed = 0.004; // smooth speed
-
-  const animate = () => {
-    if (!paused) setTime((prev) => prev + speed);
-    requestRef.current = requestAnimationFrame(animate);
-  };
-
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(requestRef.current);
-  }, [paused]);
-
-  const handleHoverStart = (id) => {
-    setPaused(true);
-    setHoveredId(id);
-  };
-  const handleHoverEnd = () => {
-    setPaused(false);
-    setHoveredId(null);
-  };
-
   return (
-    <section className="relative w-full h-screen flex flex-col items-center justify-center">
-      <div
-        className="relative flex items-center justify-center"
-        style={{
-          width: containerSize.width,
-          height: containerSize.height,
-          marginTop: "50px",
-        }}>
-        {speakers.map((speaker, idx) => {
-          const t = time + (idx / speakers.length) * cardPaths[idx].length;
-          const pos = getPositionOnPath(cardPaths[idx], t);
-
-          return (
-            <motion.div
-              key={speaker.id}
-              className="absolute flex flex-col items-center"
-              style={{ x: pos.x, y: pos.y }}>
-              <SpeakerCard
-                speaker={speaker}
-                isHovered={hoveredId === speaker.id}
-                onHoverStart={() => handleHoverStart(speaker.id)}
-                onHoverEnd={handleHoverEnd}
-                isMobile={isMobile}
-              />
-            </motion.div>
-          );
-        })}
+    <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-4">
+      {/* Speakers Container with smaller gap */}
+      <div className="flex w-full max-w-4xl justify-center items-center gap-16">
+        {speakers.map((speaker, idx) => (
+          <SpeakerCard key={speaker.id} speaker={speaker} isMobile={isMobile} index={idx} />
+        ))}
       </div>
 
       <motion.h2
-        className={`mt-10 ${
-          isMobile ? "text-2xl" : "text-4xl"
-        } font-hazmat-regular text-white`}
+        className={`mt-10 ${isMobile ? "text-2xl" : "text-4xl"} font-hazmat-regular text-white`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}>
+        transition={{ duration: 1 }}
+      >
         Workshops
       </motion.h2>
     </section>
   );
 };
 
-const SpeakerCard = ({
-  speaker,
-  isHovered,
-  onHoverStart,
-  onHoverEnd,
-  isMobile,
-}) => (
-  <div className="flex flex-col items-center">
-    <motion.div
-      className="text-center mb-3"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isHovered ? 1 : 0 }}
-      transition={{ duration: 0.3 }}>
-      <h3
-        className={`${
-          isMobile ? "text-sm" : "text-base"
-        } font-mistrully text-yellow-900 tracking-wide`}>
-        Workshop
-      </h3>
-      <p
-        className={`${
-          isMobile ? "text-[8px]" : "text-[10px]"
-        } text-gray-300 font-hazmat-regular w-56`}>
-        {speaker.workshop}
-      </p>
-    </motion.div>
+const SpeakerCard = ({ speaker, isMobile, index }) => {
+  const [hovered, setHovered] = useState(false);
 
-    <div
-      className={`${
-        isMobile ? "w-20 h-20" : "w-28 h-28"
-      } sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-sky-900 shadow-2xl transition-transform hover:scale-105`}
-      onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}>
-      <img
-        src={speaker.image}
-        alt={speaker.name}
-        className="w-full h-full object-cover"
-      />
-    </div>
+  // Float animation
+  const floatVariants = {
+    float: {
+      y: ["0%", "5%", "0%"],
+      transition: {
+        duration: 3 + index,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
 
+  return (
     <motion.div
-      className="text-center mt-3"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isHovered ? 1 : 0 }}
-      transition={{ duration: 0.3 }}>
-      <h3
+      className="flex flex-col items-center"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      variants={floatVariants}
+      animate="float"
+    >
+      {/* Workshop text */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="text-center mb-2 max-w-[250px]"
+      >
+        <h3
+          className={`${
+            isMobile ? "text-sm" : "text-base"
+          } font-mistrully text-yellow-900 tracking-wide`}
+        >
+          Workshop
+        </h3>
+        <p
+          className={`${
+            isMobile ? "text-[8px]" : "text-[12px]"
+          } text-gray-300 font-hazmat-regular`}
+        >
+          {speaker.workshop}
+        </p>
+      </motion.div>
+
+      {/* Speaker Image - bigger size */}
+      <div
         className={`${
-          isMobile ? "text-sm" : "text-lg"
-        } font-hazmat-regular text-white mb-1 w-70 text-center`}>
-        {speaker.name}
-      </h3>
-      <p
-        className={`${
-          isMobile ? "text-[7px]" : "text-[11px]"
-        } sm:text-[12px] text-gray-300 font-mistrully w-60 text-center`}>
-        {speaker.role}
-      </p>
+          isMobile ? "w-24 h-24" : "w-36 h-36"
+        } rounded-full overflow-hidden border-4 border-sky-900 shadow-2xl transition-transform hover:scale-105`}
+      >
+        <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
+      </div>
+
+      {/* Name & Role */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: hovered ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="text-center mt-3 max-w-[250px]"
+      >
+        <h3 className={`${isMobile ? "text-sm" : "text-lg"} font-hazmat-regular text-white`}>
+          {speaker.name}
+        </h3>
+        <p className={`${isMobile ? "text-[7px]" : "text-[12px]"} text-gray-300 font-mistrully`}>
+          {speaker.role}
+        </p>
+      </motion.div>
     </motion.div>
-  </div>
-);
+  );
+};
 
 export default Workshops;

@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import aiLogo from "/icons/AI icon@2x.png";
 import securityLogo from "/icons/sec icon@2x.png";
-import iotLogo from "/icons/cloud.png";
+import iotLogo from "/icons/IOT.svg";
 
 const Description = () => {
   const floatAnimation = {

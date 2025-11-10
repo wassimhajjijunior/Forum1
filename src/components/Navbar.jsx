@@ -34,10 +34,10 @@ const Navbar = ({ currentSection, onNavigate }) => {
     { id: 2, label: "Photos" },
     { id: 3, label: "Teaser" },
     { id: 4, label: "Speakers" }, // Covers section 4 & 6
-    { id: 7, label: "Sponsors" }, // Covers section 7 to 11
-    { id: 12, label: "Timeline" },
-    { id: 13, label: "Venue" },
-    { id: 14, label: "Registration" },
+    { id: 6, label: "Sponsors" }, // Covers section 7 to 11
+    { id: 11, label: "Timeline" },
+    { id: 12, label: "Venue" },
+    { id: 13, label: "Registration" },
   ];
 
   useEffect(() => {
@@ -182,7 +182,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
               <button
                 style={registerButtonStyle}
                 onClick={() => {
-                  onNavigate(14);
+                  onNavigate(13);
                   setSidebarOpen(false);
                 }}
                 onMouseEnter={(e) =>
@@ -228,10 +228,9 @@ const Navbar = ({ currentSection, onNavigate }) => {
                     style={itemStyle(
                       item.label === "Speakers"
                         ? currentSection === 4 ||
-                            currentSection === 5 ||
-                            currentSection === 6
+                            currentSection === 5 
                         : item.label === "Sponsors"
-                        ? [7, 8, 9, 10,11].includes(currentSection)
+                        ? [6,7, 8, 9, 10].includes(currentSection)
                         : currentSection === item.id
                     )}
                     onClick={() => onNavigate(item.id)}
@@ -255,7 +254,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
               }}>
               <button
                 style={registerButtonStyle}
-                onClick={() => onNavigate(14)}
+                onClick={() => onNavigate(13)}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.transform = "scale(1.05)")
                 }
@@ -286,9 +285,9 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 key={item.id}
                 style={itemStyle(
                   item.label === "Speakers"
-                    ? currentSection === 4 || currentSection === 5 || currentSection === 6
+                    ? currentSection === 4 || currentSection === 5
                     : item.label === "Sponsors"
-                    ? [7, 8, 9, 10,11].includes(currentSection)
+                    ? [6,7, 8, 9, 10].includes(currentSection)
                     : currentSection === item.id
                 )}
                 onClick={() => {

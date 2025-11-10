@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import WhorkshopImage1 from "/speakers/keynote/Sami.jpg";
 import WhorkshopImage2 from "/speakers/keynote/M.Aymen.jpg";
+import WhorkshopImage3 from "/speakers/keynote/ghaithSouissi.jpg";
 
 const speakers = [
   {
@@ -20,10 +21,10 @@ const speakers = [
   },
   {
     id: 3,
-    name: "Wassim Hajji",
-    role: "A passionate developer",
-    image: WhorkshopImage1,
-    keynote: "Catch up with train of technology",
+    name: "Ghaith Souissi",
+    role: "Cybersecurity Enginner | ANCS - tunCERT",
+    image: WhorkshopImage3,
+    keynote: "Cybersécurité en Tunisie : état des lieux et perspectives industrielles",
   },
 ];
 

@@ -26,18 +26,18 @@ const Sections = ({ currentSection }) => {
 
     { id: 4, name: "Speakers", component: Speakers },
     { id: 5, name: "Workshops", component: Workshops },
-    { id: 6, name: "TableRond", component: TableRond },
+    // { id: 6, name: "TableRond", component: TableRond },
 
-    { id: 7, name: "Sponsors", component: Sponsors },
-    { id: 8, name: "Sponsors1", component: Sponsors1 },
-    { id: 9, name: "Sponsors2", component: Sponsors2 },
-    { id: 10, name: "Sponsors3", component: Sponsors3 },
-    { id: 11, name: "Sponsors4", component: Sponsors4 },
+    { id: 6, name: "Sponsors", component: Sponsors },
+    { id: 7, name: "Sponsors1", component: Sponsors1 },
+    { id: 8, name: "Sponsors2", component: Sponsors2 },
+    { id: 9, name: "Sponsors3", component: Sponsors3 },
+    { id: 10, name: "Sponsors4", component: Sponsors4 },
 
 
-    { id: 12, name: "Timeline", component: Timeline },
-    { id: 13, name: "Venue", component: Venue },
-    { id: 14, name: "Registration", component: Registration },
+    { id: 11, name: "Timeline", component: Timeline },
+    { id: 12, name: "Venue", component: Venue },
+    { id: 13, name: "Registration", component: Registration },
   ];
 
   const CurrentComponent = sections[currentSection]?.component || Home;
