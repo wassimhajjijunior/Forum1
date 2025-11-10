@@ -11,7 +11,12 @@ export default function Registration() {
 
   const [statusMessage, setStatusMessage] = useState(""); // ✅ Status message
   const [statusColor, setStatusColor] = useState("text-green-400"); // success or error color
-
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
