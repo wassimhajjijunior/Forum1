@@ -92,6 +92,8 @@ const Photos = () => {
                   ${isMobile ? "w-[90%]" : "w-[35%]"} 
                   sm:w-[70%] md:w-[35%] lg:w-[35%] 
                   max-h-[90vh]`}
+                  loading="lazy"
+
                 transition={{
                   layout: { duration: isMobile ? 0.6 : 0.5, ease: [0.25, 0.8, 0.25, 1] },
                   duration: isMobile ? 0.5 : 0.4,
