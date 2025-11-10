@@ -2,28 +2,43 @@ import React, { useEffect, useState } from 'react';
 import BackgroundCanvas from './BackgroundCanvas';
 import Sections from './Sections';
 import TopCircularNavbar from './Navbar';
-
+import Loading from './Loading'; // your MP4 loader
 
 function Test() {
-  // Create the state for tracking current section
   const [currentSection, setCurrentSection] = useState(0);
   const [targetSection, setTargetSection] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Simulate loading assets (or wait for actual resources)
+    const timer = setTimeout(() => setLoading(false), 3000); // 3s loading
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    // Show full-page MP4 loader while loading
+    return <Loading />;
+  }
 
   return (
     <div className="h-[100dvh]">
-      {/* Your 3D Scene */}
+      {/* 3D Background */}
       <BackgroundCanvas 
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
         targetSection={targetSection}
         clearGoToSection={() => setTargetSection(null)}
       />
-      <TopCircularNavbar currentSection={currentSection} onNavigate={setTargetSection}/>
+
+      {/* Navbar */}
+      <TopCircularNavbar 
+        currentSection={currentSection} 
+        onNavigate={setTargetSection}
+      />
+
       {/* Overlay Sections */}
       <Sections currentSection={currentSection} /> 
-      
-      </div>
+    </div>
   );
 }
 
