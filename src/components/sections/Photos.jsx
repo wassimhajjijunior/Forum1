@@ -4,12 +4,12 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import img1 from "/lastPhotos/img1_.webp";
 import img3 from "/lastPhotos/img3_.webp";
-import img4 from "/lastPhotos/img4_.webp";
-import img7 from "/lastPhotos/img7_.webp";
+import img4 from "/lastPhotos/img1_.jpg";
+import img7 from "/lastPhotos/img5_.jpg";
 import img9 from "/lastPhotos/img9_.webp";
-import img11 from "/lastPhotos/img11_.webp";
-import img12 from "/lastPhotos/img12_.webp";
-import img17 from "/lastPhotos/img17_.webp";
+import img11 from "/lastPhotos/img11_.jpg";
+import img12 from "/lastPhotos/img12_.jpg";
+import img17 from "/lastPhotos/img9_.jpg";
 
 
 

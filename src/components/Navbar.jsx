@@ -31,11 +31,11 @@ const Navbar = ({ currentSection, onNavigate }) => {
   const items = [
     { id: 0, label: "Home" },
     { id: 1, label: "Description" },
-    { id: 2, label: "Photos" },
+    { id: 2, label: "Gallery" },
     { id: 3, label: "Teaser" },
     { id: 4, label: "Speakers" }, // Covers section 4 & 6
     { id: 6, label: "Sponsors" }, // Covers section 7 to 11
-    { id: 11, label: "Timeline" },
+    { id: 11, label: "Program" },
     { id: 12, label: "Venue" },
     { id: 13, label: "Registration" },
   ];
