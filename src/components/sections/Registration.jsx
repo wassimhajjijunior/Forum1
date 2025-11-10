@@ -104,8 +104,7 @@ export default function Registration() {
             backgroundRepeat: "no-repeat",
             opacity: 0.2,
             zIndex: 0,
-          }}
-        ></div>
+          }}></div>
 
         <div
           style={{
@@ -115,16 +114,13 @@ export default function Registration() {
             padding: "3rem 2rem",
             paddingTop: "100px",
             zIndex: 1,
-          }}
-        >
+          }}>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center justify-start space-y-3"
-          >
+            className="flex flex-col items-center justify-start space-y-3">
             <h2
               className="text-sm font-bold text-white text-center mb-4"
-              style={fontStyle}
-            >
+              style={fontStyle}>
               Register
             </h2>
 
@@ -137,12 +133,10 @@ export default function Registration() {
                     : field === "university"
                     ? "w-60"
                     : "w-80"
-                }`}
-              >
+                }`}>
                 <label
                   className="text-white mb-1 text-xs text-center"
-                  style={fontStyle}
-                >
+                  style={fontStyle}>
                   {field === "fullName"
                     ? "Full Name"
                     : field.charAt(0).toUpperCase() + field.slice(1)}
@@ -151,7 +145,10 @@ export default function Registration() {
                   type={field === "email" ? "email" : "text"}
                   value={formData[field]}
                   onChange={(e) => handleChange(field, e.target.value)}
-                  placeholder={`Enter your ${field.replace("fullName", "name")}`}
+                  placeholder={`Enter your ${field.replace(
+                    "fullName",
+                    "name"
+                  )}`}
                   className={inputClass(formData[field])}
                   style={fontStyle}
                 />
@@ -164,16 +161,14 @@ export default function Registration() {
               className={`w-90 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs cursor-pointer ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
-              style={fontStyle}
-            >
+              style={fontStyle}>
               {loading ? "⏳ Processing..." : "Submit"}
             </button>
 
             {statusMessage && (
               <p
                 className={`text-center text-[0.55rem] ${statusColor}`}
-                style={fontStyle}
-              >
+                style={fontStyle}>
                 {statusMessage}
               </p>
             )}
@@ -184,8 +179,7 @@ export default function Registration() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] text-cyan-300 hover:underline"
-                style={fontStyle}
-              >
+                style={fontStyle}>
                 Last edition website
               </a>
             </div>
@@ -209,17 +203,14 @@ export default function Registration() {
             backgroundRepeat: "no-repeat",
             opacity: 0.15,
             zIndex: 0,
-          }}
-        ></div>
+          }}></div>
 
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-xs bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-4 shadow-lg space-y-4 relative z-10"
-        >
+          className="w-full max-w-xs bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-4 shadow-lg space-y-4 relative z-10">
           <h2
             className="font-bold text-white text-center"
-            style={{ ...fontStyle, fontSize: "0.9rem" }}
-          >
+            style={{ ...fontStyle, fontSize: "0.9rem" }}>
             Register
           </h2>
 
@@ -227,8 +218,7 @@ export default function Registration() {
             <div key={field} className="flex flex-col">
               <label
                 className="text-white mb-1 text-center"
-                style={{ ...fontStyle, fontSize: "0.7rem" }}
-              >
+                style={{ ...fontStyle, fontSize: "0.7rem" }}>
                 {field === "fullName"
                   ? "Full Name"
                   : field.charAt(0).toUpperCase() + field.slice(1)}
@@ -250,16 +240,14 @@ export default function Registration() {
             className={`w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl ${
               loading ? "opacity-50 cursor-not-allowed" : ""
             }`}
-            style={{ ...fontStyle, fontSize: "0.75rem" }}
-          >
+            style={{ ...fontStyle, fontSize: "0.75rem" }}>
             {loading ? "⏳ Processing..." : "Submit"}
           </button>
 
           {statusMessage && (
             <p
               className={`text-center text-[0.65rem] ${statusColor}`}
-              style={fontStyle}
-            >
+              style={fontStyle}>
               {statusMessage}
             </p>
           )}
@@ -270,8 +258,7 @@ export default function Registration() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-cyan-300 hover:underline"
-              style={fontStyle}
-            >
+              style={fontStyle}>
               Last edition
             </a>
           </div>
