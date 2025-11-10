@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BackgroundCanvas from './BackgroundCanvas';
 import Sections from './Sections';
 import TopCircularNavbar from './Navbar';
-import Loading from './Loading'; // your MP4 loader
+import Loading from './Loading'; 
 
 function Test() {
   const [currentSection, setCurrentSection] = useState(0);
