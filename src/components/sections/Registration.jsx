@@ -1,6 +1,7 @@
 import { useState } from "react";
 import logo from "/LogoForum.png";
-import { db, collection, addDoc } from "../../firebase"; // adjust path if needed
+import { db } from "../../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function Registration() {
   const [formData, setFormData] = useState({
@@ -9,14 +10,16 @@ export default function Registration() {
     email: "",
   });
 
-  const [statusMessage, setStatusMessage] = useState(""); // ✅ Status message
-  const [statusColor, setStatusColor] = useState("text-green-400"); // success or error color
+  const [statusMessage, setStatusMessage] = useState("");
+  const [statusColor, setStatusColor] = useState("text-green-400");
+
   const handleChange = (field, value) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,7 +33,7 @@ export default function Registration() {
     setStatusColor("text-white");
 
     try {
-      // Try saving to your Express backend first
+      // Try backend first
       const res = await fetch("https://forum-vybt.onrender.com/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -44,34 +47,29 @@ export default function Registration() {
         setStatusColor("text-green-400");
         setFormData({ fullName: "", university: "", email: "" });
       } else {
-        // Backend returned an error (e.g., duplicate email)
-        setStatusMessage(
-          `⚠️ ${data.message}. Saving to Firebase as fallback...`
-        );
-        setStatusColor("text-yellow-400");
-
-        // Save to Firebase Firestore
-        await addDoc(collection(db, "registrations"), formData);
-        setStatusMessage("✅ Saved to Firebase successfully!");
-        setStatusColor("text-green-400");
-        setFormData({ fullName: "", university: "", email: "" });
+        // Backend responded with an error → fallback to Firebase
+        console.warn("Backend error:", data.message);
+        await saveToFirestore(formData);
       }
     } catch (err) {
-      console.error(err);
+      console.error("Server unreachable, fallback to Firestore:", err);
+      await saveToFirestore(formData);
+    }
+  };
 
-      // Express server not reachable → save to Firebase
-      try {
-        await addDoc(collection(db, "registrations"), formData);
-        setStatusMessage("⚠️ Backend down. Saved to Firebase successfully!");
-        setStatusColor("text-green-400");
-        setFormData({ fullName: "", university: "", email: "" });
-      } catch (firebaseErr) {
-        console.error(firebaseErr);
-        setStatusMessage(
-          "❌ Something went wrong. Could not save registration."
-        );
-        setStatusColor("text-red-400");
-      }
+  const saveToFirestore = async (data) => {
+    try {
+      await addDoc(collection(db, "registrations"), {
+        ...data,
+        createdAt: serverTimestamp(),
+      });
+      setStatusMessage("✅ Saved to Firebase successfully!");
+      setStatusColor("text-green-400");
+      setFormData({ fullName: "", university: "", email: "" });
+    } catch (firebaseErr) {
+      console.error("Firestore error:", firebaseErr);
+      setStatusMessage("❌ Could not save to Firebase.");
+      setStatusColor("text-red-400");
     }
   };
 
@@ -89,9 +87,8 @@ export default function Registration() {
 
   return (
     <>
-      {/* 🌐 Desktop Triangle Design */}
+      {/* Desktop Design */}
       <div className="hidden md:flex relative mx-auto flex-col items-center justify-center scale-175">
-        {/* Logo background with opacity */}
         <div
           style={{
             position: "absolute",
@@ -105,7 +102,8 @@ export default function Registration() {
             backgroundRepeat: "no-repeat",
             opacity: 0.2,
             zIndex: 0,
-          }}></div>
+          }}
+        ></div>
 
         <div
           style={{
@@ -115,80 +113,62 @@ export default function Registration() {
             padding: "3rem 2rem",
             paddingTop: "100px",
             zIndex: 1,
-          }}>
+          }}
+        >
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center justify-start space-y-3">
+            className="flex flex-col items-center justify-start space-y-3"
+          >
             <h2
               className="text-sm font-bold text-white text-center mb-4"
-              style={fontStyle}>
+              style={fontStyle}
+            >
               Register
             </h2>
 
-            <div className="flex flex-col w-40">
-              <label
-                className="text-white mb-1 text-xs text-center"
-                style={fontStyle}>
-                Full Name
-              </label>
-              <input
-                type="text"
-                value={formData.fullName}
-                onKeyDown={(e) => e.stopPropagation()}
-                onChange={(e) => handleChange("fullName", e.target.value)}
-                placeholder="Enter your name"
-                className={inputClass(formData.fullName)}
-                style={fontStyle}
-              />
-            </div>
+            {["fullName", "university", "email"].map((field, i) => (
+              <div
+                key={field}
+                className={`flex flex-col ${
+                  field === "fullName"
+                    ? "w-40"
+                    : field === "university"
+                    ? "w-60"
+                    : "w-80"
+                }`}
+              >
+                <label
+                  className="text-white mb-1 text-xs text-center"
+                  style={fontStyle}
+                >
+                  {field === "fullName"
+                    ? "Full Name"
+                    : field.charAt(0).toUpperCase() + field.slice(1)}
+                </label>
+                <input
+                  type={field === "email" ? "email" : "text"}
+                  value={formData[field]}
+                  onChange={(e) => handleChange(field, e.target.value)}
+                  placeholder={`Enter your ${field.replace("fullName", "name")}`}
+                  className={inputClass(formData[field])}
+                  style={fontStyle}
+                />
+              </div>
+            ))}
 
-            <div className="flex flex-col w-60">
-              <label
-                className="text-white mb-1 text-xs text-center"
-                style={fontStyle}>
-                University
-              </label>
-              <input
-                type="text"
-                value={formData.university}
-                onKeyDown={(e) => e.stopPropagation()}
-                onChange={(e) => handleChange("university", e.target.value)}
-                placeholder="Enter your university"
-                className={inputClass(formData.university)}
-                style={fontStyle}
-              />
-            </div>
-
-            <div className="flex flex-col w-80">
-              <label
-                className="text-white mb-1 text-xs text-center"
-                style={fontStyle}>
-                Email
-              </label>
-              <input
-                type="email"
-                value={formData.email}
-                onKeyDown={(e) => e.stopPropagation()}
-                onChange={(e) => handleChange("email", e.target.value)}
-                placeholder="Enter your email"
-                className={inputClass(formData.email)}
-                style={fontStyle}
-              />
-            </div>
-
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-90 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs cursor-pointer"
-              style={fontStyle}>
+              style={fontStyle}
+            >
               Submit
             </button>
 
-            {/* ✅ Small Status Message */}
             {statusMessage && (
               <p
                 className={`text-center text-[0.55rem] ${statusColor}`}
-                style={fontStyle}>
+                style={fontStyle}
+              >
                 {statusMessage}
               </p>
             )}
@@ -199,7 +179,8 @@ export default function Registration() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] text-cyan-300 hover:underline"
-                style={fontStyle}>
+                style={fontStyle}
+              >
                 Last edition website
               </a>
             </div>
@@ -207,9 +188,8 @@ export default function Registration() {
         </div>
       </div>
 
-      {/* 📱 Mobile Card Design */}
+      {/* Mobile Design */}
       <div className="flex md:hidden items-center justify-center min-h-screen p-4 relative">
-        {/* Smaller, adaptive logo for mobile */}
         <div
           style={{
             position: "absolute",
@@ -224,81 +204,54 @@ export default function Registration() {
             backgroundRepeat: "no-repeat",
             opacity: 0.15,
             zIndex: 0,
-          }}></div>
+          }}
+        ></div>
 
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-xs bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-4 shadow-lg space-y-4 relative z-10">
+          className="w-full max-w-xs bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-4 shadow-lg space-y-4 relative z-10"
+        >
           <h2
             className="font-bold text-white text-center"
-            style={{ ...fontStyle, fontSize: "0.9rem" }}>
+            style={{ ...fontStyle, fontSize: "0.9rem" }}
+          >
             Register
           </h2>
 
-          <div className="flex flex-col">
-            <label
-              className="text-white mb-1 text-center"
-              style={{ ...fontStyle, fontSize: "0.7rem" }}>
-              Full Name
-            </label>
-            <input
-              type="text"
-              value={formData.fullName}
-              onKeyDown={(e) => e.stopPropagation()}
-              onChange={(e) => handleChange("fullName", e.target.value)}
-              placeholder="Enter your full name"
-              className="px-2.5 py-1 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
-              style={{ ...fontStyle, fontSize: "0.7rem" }}
-            />
-          </div>
+          {["fullName", "university", "email"].map((field) => (
+            <div key={field} className="flex flex-col">
+              <label
+                className="text-white mb-1 text-center"
+                style={{ ...fontStyle, fontSize: "0.7rem" }}
+              >
+                {field === "fullName"
+                  ? "Full Name"
+                  : field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              <input
+                type={field === "email" ? "email" : "text"}
+                value={formData[field]}
+                onChange={(e) => handleChange(field, e.target.value)}
+                placeholder={`Enter your ${field.replace("fullName", "name")}`}
+                className="px-2.5 py-1 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
+                style={{ ...fontStyle, fontSize: "0.7rem" }}
+              />
+            </div>
+          ))}
 
-          <div className="flex flex-col">
-            <label
-              className="text-white mb-1 text-center"
-              style={{ ...fontStyle, fontSize: "0.7rem" }}>
-              University
-            </label>
-            <input
-              type="text"
-              value={formData.university}
-              onKeyDown={(e) => e.stopPropagation()}
-              onChange={(e) => handleChange("university", e.target.value)}
-              placeholder="Enter your university"
-              className="px-2.5 py-1 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
-              style={{ ...fontStyle, fontSize: "0.7rem" }}
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label
-              className="text-white mb-1 text-center"
-              style={{ ...fontStyle, fontSize: "0.7rem" }}>
-              Email
-            </label>
-            <input
-              type="email"
-              value={formData.email}
-              onKeyDown={(e) => e.stopPropagation()}
-              onChange={(e) => handleChange("email", e.target.value)}
-              placeholder="Enter your email"
-              className="px-2.5 py-1 rounded-xl border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all"
-              style={{ ...fontStyle, fontSize: "0.7rem" }}
-            />
-          </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl "
-            style={{ ...fontStyle, fontSize: "0.75rem" }}>
+            className="w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl"
+            style={{ ...fontStyle, fontSize: "0.75rem" }}
+          >
             Submit
           </button>
 
-          {/* ✅ Small Status Message */}
           {statusMessage && (
             <p
               className={`text-center text-[0.65rem] ${statusColor}`}
-              style={fontStyle}>
+              style={fontStyle}
+            >
               {statusMessage}
             </p>
           )}
@@ -309,7 +262,8 @@ export default function Registration() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-cyan-300 hover:underline"
-              style={fontStyle}>
+              style={fontStyle}
+            >
               Last edition
             </a>
           </div>

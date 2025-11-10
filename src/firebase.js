@@ -1,9 +1,9 @@
 // Import the functions you need from the Firebase SDKs
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
+// ✅ Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAdWPUXm79xgG8wcB97Z8oKuwiq635e_dw",
   authDomain: "forum-8f4fc.firebaseapp.com",
@@ -13,10 +13,9 @@ const firebaseConfig = {
   appId: "1:895192239948:web:c206fc81e44e30a28c09e9",
 };
 
-// Initialize Firebase
+// ✅ Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Firebase services
-export const auth = getAuth(app);       // Authentication
-export const db = getFirestore(app);    // Firestore database
-export {  addDoc, collection };         // Export Firestore functions
+// ✅ Export Firebase services (no Firestore methods directly)
+export const auth = getAuth(app);
+export const db = getFirestore(app);
