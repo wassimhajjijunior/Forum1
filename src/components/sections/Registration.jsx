@@ -16,40 +16,41 @@ export default function Registration() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!formData.fullName || !formData.university || !formData.email) {
-    setStatusMessage("Please fill in all fields");
-    setStatusColor("text-red-400");
-    return;
-  }
+    e.preventDefault();
 
-  setStatusMessage("⏳ Processing...");
-  setStatusColor("text-white");
+    if (!formData.fullName || !formData.university || !formData.email) {
+      setStatusMessage("Please fill in all fields");
+      setStatusColor("text-red-400");
+      return;
+    }
 
-  try {
-    const res = await fetch("https://forum-vybt.onrender.com/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    setStatusMessage("⏳ Processing...");
+    setStatusColor("text-white");
 
-    const data = await res.json();
+    try {
+      const res = await fetch("https://forum-vybt.onrender.com/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    if (res.ok) {
-      setStatusMessage("✅ Registration successful!");
-      setStatusColor("text-green-400");
-      setFormData({ fullName: "", university: "", email: "" });
-    } else {
-      setStatusMessage("❌ Something went wrong.");
+      const data = await res.json();
+
+      if (res.ok) {
+        setStatusMessage("✅ Registration successful!");
+        setStatusColor("text-green-400");
+        setFormData({ fullName: "", university: "", email: "" });
+      } else {
+        // Show backend error message (e.g., duplicate email)
+        setStatusMessage(`❌ ${data.message}`);
+        setStatusColor("text-red-400");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatusMessage("⚠️ Server not reachable.");
       setStatusColor("text-red-400");
     }
-  } catch (err) {
-    console.error(err);
-    setStatusMessage("⚠️ Server not reachable.");
-    setStatusColor("text-red-400");
-  }
-};
-
+  };
 
   const inputClass = (value) =>
     `px-4 py-2 rounded-xl border border-white/30 ${
@@ -59,7 +60,8 @@ export default function Registration() {
     } focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all text-xs`;
 
   const fontStyle = {
-    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontFamily:
+      "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
   };
 
   return (
@@ -80,8 +82,7 @@ export default function Registration() {
             backgroundRepeat: "no-repeat",
             opacity: 0.2,
             zIndex: 0,
-          }}
-        ></div>
+          }}></div>
 
         <div
           style={{
@@ -91,18 +92,20 @@ export default function Registration() {
             padding: "3rem 2rem",
             paddingTop: "100px",
             zIndex: 1,
-          }}
-        >
+          }}>
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col items-center justify-start space-y-3"
-          >
-            <h2 className="text-sm font-bold text-white text-center mb-4" style={fontStyle}>
+            className="flex flex-col items-center justify-start space-y-3">
+            <h2
+              className="text-sm font-bold text-white text-center mb-4"
+              style={fontStyle}>
               Register
             </h2>
 
             <div className="flex flex-col w-40">
-              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>
+              <label
+                className="text-white mb-1 text-xs text-center"
+                style={fontStyle}>
                 Full Name
               </label>
               <input
@@ -117,7 +120,9 @@ export default function Registration() {
             </div>
 
             <div className="flex flex-col w-60">
-              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>
+              <label
+                className="text-white mb-1 text-xs text-center"
+                style={fontStyle}>
                 University
               </label>
               <input
@@ -132,7 +137,9 @@ export default function Registration() {
             </div>
 
             <div className="flex flex-col w-80">
-              <label className="text-white mb-1 text-xs text-center" style={fontStyle}>
+              <label
+                className="text-white mb-1 text-xs text-center"
+                style={fontStyle}>
                 Email
               </label>
               <input
@@ -150,14 +157,15 @@ export default function Registration() {
             <button
               type="submit"
               className="w-90 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs cursor-pointer"
-              style={fontStyle}
-            >
+              style={fontStyle}>
               Submit
             </button>
 
             {/* ✅ Small Status Message */}
             {statusMessage && (
-              <p className={`text-center text-[0.55rem] ${statusColor}`} style={fontStyle}>
+              <p
+                className={`text-center text-[0.55rem] ${statusColor}`}
+                style={fontStyle}>
                 {statusMessage}
               </p>
             )}
@@ -168,8 +176,7 @@ export default function Registration() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] text-cyan-300 hover:underline"
-                style={fontStyle}
-              >
+                style={fontStyle}>
                 Last edition website
               </a>
             </div>
@@ -194,19 +201,21 @@ export default function Registration() {
             backgroundRepeat: "no-repeat",
             opacity: 0.15,
             zIndex: 0,
-          }}
-        ></div>
+          }}></div>
 
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-xs bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-4 shadow-lg space-y-4 relative z-10"
-        >
-          <h2 className="font-bold text-white text-center" style={{ ...fontStyle, fontSize: "0.9rem" }}>
+          className="w-full max-w-xs bg-black/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-4 shadow-lg space-y-4 relative z-10">
+          <h2
+            className="font-bold text-white text-center"
+            style={{ ...fontStyle, fontSize: "0.9rem" }}>
             Register
           </h2>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>
+            <label
+              className="text-white mb-1 text-center"
+              style={{ ...fontStyle, fontSize: "0.7rem" }}>
               Full Name
             </label>
             <input
@@ -221,7 +230,9 @@ export default function Registration() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>
+            <label
+              className="text-white mb-1 text-center"
+              style={{ ...fontStyle, fontSize: "0.7rem" }}>
               University
             </label>
             <input
@@ -236,7 +247,9 @@ export default function Registration() {
           </div>
 
           <div className="flex flex-col">
-            <label className="text-white mb-1 text-center" style={{ ...fontStyle, fontSize: "0.7rem" }}>
+            <label
+              className="text-white mb-1 text-center"
+              style={{ ...fontStyle, fontSize: "0.7rem" }}>
               Email
             </label>
             <input
@@ -254,14 +267,15 @@ export default function Registration() {
           <button
             type="submit"
             className="w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl "
-            style={{ ...fontStyle, fontSize: "0.75rem" }}
-          >
+            style={{ ...fontStyle, fontSize: "0.75rem" }}>
             Submit
           </button>
 
           {/* ✅ Small Status Message */}
           {statusMessage && (
-            <p className={`text-center text-[0.65rem] ${statusColor}`} style={fontStyle}>
+            <p
+              className={`text-center text-[0.65rem] ${statusColor}`}
+              style={fontStyle}>
               {statusMessage}
             </p>
           )}
@@ -272,8 +286,7 @@ export default function Registration() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-cyan-300 hover:underline"
-              style={fontStyle}
-            >
+              style={fontStyle}>
               Last edition
             </a>
           </div>
@@ -282,4 +295,3 @@ export default function Registration() {
     </>
   );
 }
- 

@@ -137,7 +137,7 @@ const Workshops = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}>
-        Keynote
+        Workshops
       </motion.h2>
     </section>
   );
@@ -160,13 +160,13 @@ const SpeakerCard = ({
         className={`${
           isMobile ? "text-sm" : "text-base"
         } font-mistrully text-yellow-900 tracking-wide`}>
-        Keynote
+        Workshop
       </h3>
       <p
         className={`${
           isMobile ? "text-[8px]" : "text-[10px]"
         } text-gray-300 font-hazmat-regular w-56`}>
-        {speaker.keynote}
+        {speaker.workshop}
       </p>
     </motion.div>
 

@@ -14,7 +14,6 @@ const InfiniteBanner = ({
 
   useEffect(() => {
     if (containerRef.current) {
-      // get full width of one set of images (so animation is perfectly aligned)
       setBannerWidth(containerRef.current.scrollWidth / 2);
     }
   }, [images]);
@@ -25,10 +24,7 @@ const InfiniteBanner = ({
         ref={containerRef}
         className="flex gap-4"
         animate={{
-          x:
-            direction === "left"
-              ? [0, -bannerWidth]
-              : [-bannerWidth, 0],
+          x: direction === "left" ? [0, -bannerWidth] : [-bannerWidth, 0],
         }}
         transition={{
           repeat: Infinity,
@@ -37,15 +33,15 @@ const InfiniteBanner = ({
           duration: speed,
         }}
       >
-        {/* duplicate images once to create infinite loop */}
         {[...images, ...images].map((img, idx) => (
-          <motion.img
+          <motion.div
             key={idx}
-            src={img}
-            alt=""
-            layoutId={layoutIdPrefix ? `${layoutIdPrefix}-${idx}` : undefined}
-            className="w-50 h-40 sm:w-80 sm:h-50 object-cover rounded-lg border-2 border-white cursor-pointer  "
-            
+            className="
+              flex-shrink-0 
+              overflow-hidden 
+              rounded-lg border-2 border-white cursor-pointer
+              w-[200px] h-[150px] sm:w-[320px] sm:h-[200px]
+            "
             onClick={() =>
               onClick?.({
                 src: img,
@@ -54,7 +50,16 @@ const InfiniteBanner = ({
                   : undefined,
               })
             }
-          />
+          >
+            <motion.img
+              src={img}
+              alt=""
+              layoutId={
+                layoutIdPrefix ? `${layoutIdPrefix}-${idx}` : undefined
+              }
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
         ))}
       </motion.div>
     </div>
