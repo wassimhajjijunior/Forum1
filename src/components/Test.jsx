@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BackgroundCanvas from './BackgroundCanvas';
 import Sections from './Sections';
 import TopCircularNavbar from './Navbar';
-import Loading from './Loading'; 
-
+import Loading from './loading';
 function Test() {
   const [currentSection, setCurrentSection] = useState(0);
   const [targetSection, setTargetSection] = useState(null);
