@@ -93,7 +93,6 @@ const Photos = () => {
                   sm:w-[70%] md:w-[35%] lg:w-[35%] 
                   max-h-[90vh]`}
                   loading="lazy"
-                  decoding="async"
 
                 transition={{
                   layout: { duration: isMobile ? 0.6 : 0.5, ease: [0.25, 0.8, 0.25, 1] },
