@@ -14,7 +14,7 @@ const Teaser = () => {
     <div
       style={{
         width: isMobile ? "90vw" : "80vw", // bigger width
-        maxWidth: isMobile? "100%" : "855px", // max width for large screens
+        maxWidth: isMobile ? "100%" : "855px", // max width for large screens
         height: isMobile ? "22vh" : "65vh", // bigger height
         display: "flex",
         alignItems: "center",
@@ -25,16 +25,13 @@ const Teaser = () => {
         backgroundColor: "transparent",
       }}>
       <iframe
-        src="https://www.youtube.com/embed/ZQvU5OGcAh0?autoplay=1&mute=0&loop=1&playlist=ZQvU5OGcAh0&controls=0&modestbranding=1&playsinline=1"
-        title="Teaser Video"
-        style={{
-          width: "100%",
-          height: "100%",
-          border: "none",
-        }}
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowFullScreen
-      />
+        src="https://player.vimeo.com/video/1135507684?badge=0&autopause=0&autoplay=1&player_id=0&app_id=58479"
+        width="700"
+        height="500"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        title="TeaserDelta2025"></iframe>
     </div>
   );
 };
