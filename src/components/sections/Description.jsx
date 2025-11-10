@@ -41,11 +41,11 @@ const Description = () => {
       </div>
 
       {/* Centered text (independent of triangle) */}
-      <div className="relative max-w-sm md:max-w-lg text-center px-6 py-4 md:px-10 md:py-6 bg-white/10 backdrop-blur-sm rounded-xl">
+      <div className="relative max-w-sm md:max-w-lg text-center px-6 py-4 md:px-10 md:py-6 bg-gray-800/50   rounded-xl">
         <h2 className="text-xl sm:text-2xl md:text-4xl font-bold mb-2 md:mb-4">∆ELTA 6</h2>
         <p className="text-sm sm:text-base md:text-lg mb-2 md:mb-3">
           Through the portal, Beyond this ∆imension
-        </p>
+        </p>  
         <p className="text-xs sm:text-sm md:text-base text-white leading-relaxed">
           Placée sous le signe de l’Industrie 6.0 – la nouvelle frontière de
           l’innovation industrielle, la thématique met en lumière la convergence

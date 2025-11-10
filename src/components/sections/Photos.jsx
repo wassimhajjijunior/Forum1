@@ -2,28 +2,23 @@ import React, { useState, useEffect } from "react";
 import InfiniteBanner from "../Photos/InfiniteBanner";
 import { motion, AnimatePresence } from "framer-motion";
 
-import img1 from "/lastPhotos/img1_.jpg";
-import img2 from "/lastPhotos/img2_.jpg";
-import img3 from "/lastPhotos/img3_.jpg";
-import img4 from "/lastPhotos/img4_.jpg";
-import img5 from "/lastPhotos/img5_.jpg";
-import img6 from "/lastPhotos/img6_.jpg";
-import img8 from "/lastPhotos/img8_.jpg";
-import img9 from "/lastPhotos/img9_.jpg";
-import img11 from "/lastPhotos/img11_.jpg";
-import img12 from "/lastPhotos/img12_.jpg";
-import img13 from "/lastPhotos/img13_.jpg";
-import img14 from "/lastPhotos/img14_.jpg";
-import img16 from "/lastPhotos/img16_.jpg";
-import img17 from "/lastPhotos/img17_.jpg";
-import img18 from "/lastPhotos/img18_.jpg";
+import img1 from "/lastPhotos/img1_.webp";
+import img2 from "/lastPhotos/img2_.webp";
+import img3 from "/lastPhotos/img3_.webp";
+import img4 from "/lastPhotos/img4_.webp";
+import img5 from "/lastPhotos/img5_.webp";
+import img7 from "/lastPhotos/img7_.webp";
+import img9 from "/lastPhotos/img9_.webp";
+import img11 from "/lastPhotos/img11_.webp";
+import img12 from "/lastPhotos/img12_.webp";
+import img17 from "/lastPhotos/img17_.webp";
 
 
 
 // const bannerOneImages = [img1, img2, img3, img4, img5, img6 , img1, img2, img3, img4, img5, img6];
 // const bannerTwoImages = [img7, img8, img9, img10, img11, img12, img7, img8, img9, img10, img11, img12];
-const bannerOneImages = [ img1, img2, img3, img4, img5, img6 , img8,img11];
-const bannerTwoImages = [ img9 , img12 ,img13, img14,img16, img17, img18];
+const bannerOneImages = [ img1, img2, img3, img4, img5];
+const bannerTwoImages = [ img7, img9, img17,img11 ,img12];
 const Photos = () => {
   const [selected, setSelected] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
