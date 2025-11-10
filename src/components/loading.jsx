@@ -1,5 +1,4 @@
 import React from "react";
-import loadervideo from "/LoadingPage.mp4";
 
 const Loading = ({ style }) => {
   return (
@@ -9,7 +8,7 @@ const Loading = ({ style }) => {
         top: 0,
         left: 0,
         width: "100vw",
-        height: "100vh", // full viewport height
+        height: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -19,18 +18,30 @@ const Loading = ({ style }) => {
         ...style,
       }}
     >
-      <video
-        src={loadervideo}
-        autoPlay
-        loop
-        muted
+      <img 
+        src="/LogoForum.png" 
+        alt="Loading..." 
         style={{
-          maxHeight: "40vh", // responsive height
-          maxWidth: "40vw",  // responsive width
-          objectFit: "contain", // keeps aspect ratio
-          mixBlendMode: "screen",
+          maxWidth: "200px",
+          maxHeight: "200px",
+          animation: "pulse 1.5s ease-in-out infinite",
         }}
       />
+      
+      <style>
+        {`
+          @keyframes pulse {
+            0%, 100% {
+              transform: scale(0.6);
+              opacity: 1;
+            }
+            50% {
+              transform: scale(1);
+              opacity: 0.8;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
