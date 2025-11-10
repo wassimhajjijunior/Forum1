@@ -10,7 +10,7 @@ function Test() {
 
   useEffect(() => {
     // Simulate loading assets (or wait for actual resources)
-    const timer = setTimeout(() => setLoading(false), 3000); // 3s loading
+    const timer = setTimeout(() => setLoading(false), 5000); // 3s loading
     return () => clearTimeout(timer);
   }, []);
 
