@@ -32,9 +32,9 @@ const Navbar = ({ currentSection, onNavigate }) => {
     { id: 0, label: "Home" },
     { id: 1, label: "Description" },
     { id: 2, label: "Photos" },
-    { id: 3, label: "Speakers" }, // Covers section 3 & 5
-    { id: 6, label: "Sponsors" }, // Covers section 6 to 10
-    { id: 11, label: "Teaser" },
+    { id: 3, label: "Teaser" },
+    { id: 4, label: "Speakers" }, // Covers section 4 & 6
+    { id: 7, label: "Sponsors" }, // Covers section 7 to 11
     { id: 12, label: "Timeline" },
     { id: 13, label: "Venue" },
     { id: 14, label: "Registration" },
@@ -227,11 +227,11 @@ const Navbar = ({ currentSection, onNavigate }) => {
                     key={item.id}
                     style={itemStyle(
                       item.label === "Speakers"
-                        ? currentSection === 3 ||
-                            currentSection === 4 ||
-                            currentSection === 5
+                        ? currentSection === 4 ||
+                            currentSection === 5 ||
+                            currentSection === 6
                         : item.label === "Sponsors"
-                        ? [6, 7, 8, 9, 10].includes(currentSection)
+                        ? [7, 8, 9, 10,11].includes(currentSection)
                         : currentSection === item.id
                     )}
                     onClick={() => onNavigate(item.id)}
@@ -286,7 +286,9 @@ const Navbar = ({ currentSection, onNavigate }) => {
                 key={item.id}
                 style={itemStyle(
                   item.label === "Speakers"
-                    ? currentSection === 3 || currentSection === 4
+                    ? currentSection === 4 || currentSection === 5 || currentSection === 6
+                    : item.label === "Sponsors"
+                    ? [7, 8, 9, 10,11].includes(currentSection)
                     : currentSection === item.id
                 )}
                 onClick={() => {

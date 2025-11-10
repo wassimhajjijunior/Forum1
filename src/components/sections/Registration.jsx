@@ -16,37 +16,40 @@ export default function Registration() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
+  if (!formData.fullName || !formData.university || !formData.email) {
+    setStatusMessage("Please fill in all fields");
+    setStatusColor("text-red-400");
+    return;
+  }
 
-    if (!formData.fullName || !formData.university || !formData.email) {
-      setStatusMessage("Please fill in all fields");
-      setStatusColor("text-red-400");
-      return;
-    }
+  setStatusMessage("⏳ Processing...");
+  setStatusColor("text-white");
 
-    try {
-      const res = await fetch("https://forum-vybt.onrender.com/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+  try {
+    const res = await fetch("https://forum-vybt.onrender.com/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-      const data = await res.json();
+    const data = await res.json();
 
-      if (res.ok) {
-        setStatusMessage("✅ Registration successful!");
-        setStatusColor("text-green-400");
-        setFormData({ fullName: "", university: "", email: "" }); // clear form
-      } else {
-        setStatusMessage("❌ Something went wrong.");
-        setStatusColor("text-red-400");
-      }
-    } catch (err) {
-      console.error(err);
-      setStatusMessage("⚠️ Server not reachable.");
+    if (res.ok) {
+      setStatusMessage("✅ Registration successful!");
+      setStatusColor("text-green-400");
+      setFormData({ fullName: "", university: "", email: "" });
+    } else {
+      setStatusMessage("❌ Something went wrong.");
       setStatusColor("text-red-400");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setStatusMessage("⚠️ Server not reachable.");
+    setStatusColor("text-red-400");
+  }
+};
+
 
   const inputClass = (value) =>
     `px-4 py-2 rounded-xl border border-white/30 ${
