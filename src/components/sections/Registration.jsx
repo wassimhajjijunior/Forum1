@@ -12,6 +12,7 @@ export default function Registration() {
 
   const [statusMessage, setStatusMessage] = useState("");
   const [statusColor, setStatusColor] = useState("text-green-400");
+  const [loading, setLoading] = useState(false); // ✅ new loading state
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({
@@ -31,9 +32,9 @@ export default function Registration() {
 
     setStatusMessage("⏳ Processing...");
     setStatusColor("text-white");
+    setLoading(true); // disable button
 
     try {
-      // Try backend first
       const res = await fetch("https://forum-vybt.onrender.com/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -47,13 +48,14 @@ export default function Registration() {
         setStatusColor("text-green-400");
         setFormData({ fullName: "", university: "", email: "" });
       } else {
-        // Backend responded with an error → fallback to Firebase
         console.warn("Backend error:", data.message);
         await saveToFirestore(formData);
       }
     } catch (err) {
       console.error("Server unreachable, fallback to Firestore:", err);
       await saveToFirestore(formData);
+    } finally {
+      setLoading(false); // re-enable button
     }
   };
 
@@ -126,7 +128,7 @@ export default function Registration() {
               Register
             </h2>
 
-            {["fullName", "university", "email"].map((field, i) => (
+            {["fullName", "university", "email"].map((field) => (
               <div
                 key={field}
                 className={`flex flex-col ${
@@ -158,10 +160,13 @@ export default function Registration() {
 
             <button
               type="submit"
-              className="w-90 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs cursor-pointer"
+              disabled={loading}
+              className={`w-90 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs cursor-pointer ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               style={fontStyle}
             >
-              Submit
+              {loading ? "⏳ Processing..." : "Submit"}
             </button>
 
             {statusMessage && (
@@ -241,10 +246,13 @@ export default function Registration() {
 
           <button
             type="submit"
-            className="w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl"
+            disabled={loading}
+            className={`w-full py-1.5 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-xl ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
             style={{ ...fontStyle, fontSize: "0.75rem" }}
           >
-            Submit
+            {loading ? "⏳ Processing..." : "Submit"}
           </button>
 
           {statusMessage && (

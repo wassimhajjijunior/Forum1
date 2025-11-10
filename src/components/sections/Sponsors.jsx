@@ -72,7 +72,7 @@ const Sponsors = () => {
     <div style={containerStyle}>
       <motion.div
         style={backgroundStyle}
-        animate={{ opacity: [0.9, 1, 0.9] }}
+        animate={{ opacity: [1, 1, 1] }}
         transition={{
           duration: 8,
           repeat: Infinity,
