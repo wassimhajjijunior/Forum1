@@ -3,6 +3,7 @@ import triangleUp from "/TimeLine/TrianglesProgramUp.png";
 import triangleDown from "/TimeLine/TrianglesProgramdown.png";
 import logoF from "/LogoForum.png";
 import "../../index.css";
+
 const Schedule = () => {
   const schedule = [
     { time: "07:30", label: "check-in" },
@@ -19,7 +20,7 @@ const Schedule = () => {
 
   const scroll = (direction) => {
     if (containerRef.current) {
-      const amount = 150;
+      const amount = 200; // bigger scroll for bigger container
       containerRef.current.scrollBy({
         top: direction === "down" ? amount : -amount,
         behavior: "smooth",
@@ -30,10 +31,8 @@ const Schedule = () => {
   return (
     <div
       className="relative flex justify-center items-center bg-cover bg-center overflow-hidden"
-      style={{
-        minHeight: "100vh",
-        width: "100%",
-      }}>
+      style={{ minHeight: "100vh", width: "100%" }}
+    >
       {/* Fixed Background Logo */}
       <img
         src={logoF}
@@ -45,79 +44,55 @@ const Schedule = () => {
       {/* Timeline Container */}
       <div
         ref={containerRef}
-        className="relative z-10 w-[80%] md:w-[65%] h-[75vh] overflow-y-auto px-4 py-4 rounded-2xl bg-transparent no-scrollbar font-audiowide">
-        <style>{`
-          .no-scrollbar::-webkit-scrollbar { display: none; }
-        `}</style>
+        className="relative z-10 w-[80%] md:w-[60%] h-[75vh] md:h-[85vh] overflow-y-auto px-4 py-6 md:px-6 md:py-8 rounded-2xl bg-transparent no-scrollbar font-audiowide"
+      >
+        <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
 
         {/* Title */}
-        <h2 className="font-hazmat-regular text-center text-2xl md:text-2xl  text-white tracking-wider mb-8">
+        <h2 className="font-hazmat-regular text-center text-2xl md:text-3xl text-white tracking-wider  mb-12">
           PROGRAMME DU FORUM
         </h2>
 
-        <div className=" space-y-1 relative">
-          {schedule.map((item, i) => (
-            <div
-              key={i}
-              className="relative flex items-center justify-center min-h-[80px]">
-              {/* Alternate Time Position */}
-              {i % 2 === 0 ? (
-                // Time Left (triangleUp)
-                <div className="absolute left-0 md:left-[23%] flex items-center ">
-                  <div className="relative w-14 h-14">
-                    <img
-                      src={triangleUp}
-                      alt="triangle"
-                      className="w-full h-full object-contain opacity-90"
-                    />
-                    <span className="absolute top-[62%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-hazmat-regular text-[8px]">
-                      {item.time}
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                // Time Right (triangleDown)
-                <div className="absolute right-0 md:right-[23%] flex items-center ">
-                  <div className="relative w-14 h-14">
-                    <img
-                      src={triangleDown}
-                      alt="triangle"
-                      className="w-full h-full object-contain opacity-90"
-                    />
-                    <span className="absolute top-[40%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white font-hazmat-regular text-[8px]">
-                      {item.time}
-                    </span>
-                  </div>
-                </div>
-              )}
+        {/* Timeline Items */}
+        <div className="space-y-2 md:space-y-4 relative">
+          {schedule.map((item, i) => {
+            const isEven = i % 2 === 0;
+            const triangle = isEven ? triangleUp : triangleDown;
+            const topPosition = isEven ? "62%" : "40%";
+            const sideClass = isEven ? "left-0 md:left-[20%]" : "right-0 md:right-[20%]";
 
-              {/* Label */}
-              <div className="text-center">
-                <span className="text-white font-hazmat-regular text-[12px] tracking-widest">
-                  {item.label === "ceremonie d'ouverture" ? (
-                    // Each word on its own line
-                    item.label.split(" ").map((word, index) => (
-                      <span key={index}>
-                        {word}
-                        <br />
-                      </span>
-                    ))
-                  ) : item.label === "pause café & pause musicale" ? (
-                    // Break after "pause café & pause"
-                    <>
-                      <span>
-                        pause café &<br />
-                      </span>
-                      <span> pause musicale </span>
-                    </>
-                  ) : (
-                    // Normal label
-                    <span>{item.label}</span>
-                  )}
-                </span>
+            return (
+              <div key={i} className="relative flex items-center justify-center min-h-[80px] md:min-h-[100px]">
+                {/* Time Triangle */}
+                <div className={`absolute ${sideClass} flex items-center`}>
+                  <div className="relative w-14 h-14 md:w-20 md:h-20">
+                    <img src={triangle} alt="triangle" className="w-full h-full object-contain opacity-90" />
+                    <span
+                      className="absolute transform -translate-x-1/2 -translate-y-1/2 text-white font-hazmat-regular text-[8px] md:text-[12px]"
+                      style={{ top: topPosition, left: "50%" }}
+                    >
+                      {item.time}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Label */}
+                <div className="text-center">
+                  <span className="text-white font-hazmat-regular text-[12px] md:text-[18px] tracking-widest">
+                    {item.label === "ceremonie d'ouverture"
+                      ? item.label.split(" ").map((word, idx) => <span key={idx}>{word}<br /></span>)
+                      : item.label === "pause café & pause musicale"
+                      ? <>
+                          <span>pause café &<br /></span>
+                          <span>pause musicale</span>
+                        </>
+                      : item.label
+                    }
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -125,12 +100,14 @@ const Schedule = () => {
       <div className="absolute right-[2%] top-1/2 -translate-y-1/2 flex flex-col gap-3 z-20">
         <button
           onClick={() => scroll("up")}
-          className="bg-[#b18460]/80 text-white rounded-full p-2.5 shadow-md hover:bg-[#b18460] transition text-base">
+          className="bg-[#b18460]/80 text-white rounded-full p-3 md:p-4 shadow-md hover:bg-[#b18460] transition text-base md:text-lg"
+        >
           ↑
         </button>
         <button
           onClick={() => scroll("down")}
-          className="bg-[#b18460]/80 text-white rounded-full p-2.5 shadow-md hover:bg-[#b18460] transition text-base">
+          className="bg-[#b18460]/80 text-white rounded-full p-3 md:p-4 shadow-md hover:bg-[#b18460] transition text-base md:text-lg"
+        >
           ↓
         </button>
       </div>

@@ -62,7 +62,7 @@ export default function Registration() {
   return (
     <>
       {/* 🌐 Desktop Triangle Design */}
-      <div className="hidden md:flex relative mx-auto flex-col items-center justify-center">
+      <div className="hidden md:flex relative mx-auto flex-col items-center justify-center scale-175">
         {/* Logo background with opacity */}
         <div
           style={{
@@ -279,3 +279,4 @@ export default function Registration() {
     </>
   );
 }
+ 

@@ -23,7 +23,7 @@ const Sponsors4 = () => {
   ];
 
   const containerStyle = {
-    height: isMobile ? "420px" : "500px",
+    height: isMobile ? "420px" : "100vh",
     width: "100%",
     position: "relative",
     display: "flex",
@@ -47,7 +47,7 @@ const Sponsors4 = () => {
   };
 
   const podiumStyle = (color) => ({
-    width: isMobile ? "80px" : "110px",
+    width: isMobile ? "80px" : "150px",
     height: isMobile ? "30px" : "60px",
     background: `linear-gradient(to top, ${color}, #fff0)`,
     borderRadius: "10px 10px 0 0",
@@ -61,7 +61,7 @@ const Sponsors4 = () => {
   });
 
   const logoStyle = {
-    width: isMobile ? "70px" : "90px",
+    width: isMobile ? "70px" : "130px",
     height: "auto",
     marginBottom: isMobile ? "15px" : "20px",
     cursor: "pointer", // ✅ Cursor for clickable logo
@@ -106,8 +106,8 @@ const Sponsors4 = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "70px",
-            transform: "translateY(50px)",
+            gap: "100px",
+            transform: "translateY(80px)",
           }}
         >
           {/* Top row */}

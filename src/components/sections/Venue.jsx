@@ -48,8 +48,8 @@ const Venue = () => {
   };
 
   // Adjust animation distances for mobile
-  const middleX = isMobile ? progress * 100 : progress * 150;
-  const rightX = isMobile ? progress * 190 : progress * 250;
+  const middleX = isMobile ? progress * 130 : progress * 200;
+  const rightX = isMobile ? progress * 230 : progress * 350;
 
   return (
     <div className="w-screen min-h-screen flex items-center justify-center bg-transparent p-4">
@@ -57,7 +57,7 @@ const Venue = () => {
         className={`flex flex-col md:flex-row items-center justify-between w-full max-w-[1000px] gap-6 md:gap-10`}
       >
         {/* Map Animation */}
-        <div className="relative w-full md:w-[350px] h-[200px]">
+        <div className="relative w-full md:w-[450px] h-[300px]">
           {/* Full Map */}
           <div
             style={{
@@ -86,9 +86,10 @@ const Venue = () => {
                 style={{
                   position: "absolute",
                   top: 0,
-                  width: "100px",
+                  width: "150px",
                   height: "100%",
                   overflow: "hidden",
+                  borderRadius: "10px",
                   zIndex: 30,
                 }}
               >
@@ -104,7 +105,7 @@ const Venue = () => {
                     textAlign: "center",
                     color: "white",
                     fontWeight: "600",
-                    fontSize: "12px",
+                    fontSize: "16px",
                     cursor: "pointer",
                     background: "rgba(0,0,0,0.45)",
                     backdropFilter: "blur(3px)",
@@ -148,9 +149,10 @@ const Venue = () => {
                   position: "absolute",
                   top: 0,
                   transform: `translateX(${middleX}px)`,
-                  width: "100px",
+                  width: "150px",
                   height: "100%",
                   overflow: "hidden",
+                  borderRadius: "10px",
                   zIndex: 20,
                 }}
               >
@@ -175,9 +177,9 @@ const Venue = () => {
                   position: "absolute",
                   top: 0,
                   transform: `translateX(${rightX}px)`,
-                  width: "100px",
+                  width: "150px",
                   height: "100%",
-                  borderRadius: "0 10px 10px 0",
+                  borderRadius: "10px",
                   overflow: "hidden",
                   zIndex: 15,
                 }}
@@ -202,7 +204,7 @@ const Venue = () => {
 
         {/* Card Section */}
         <div
-          className="relative w-full md:w-[350px] h-[200px] rounded-xl overflow-hidden text-white flex flex-col justify-center p-4"
+          className="relative w-full md:w-[450px] h-[300px] rounded-xl overflow-hidden text-white flex flex-col justify-center p-4"
           style={{
             backgroundImage: `url(${bg})`,
             backgroundSize: "cover",
@@ -214,13 +216,14 @@ const Venue = () => {
             style={{
               background:
                 "linear-gradient(to right, rgba(0,0,0,0.6) 30%, rgba(0,0,0,0.2) 80%)",
+
             }}
           />
           <div className="relative z-10 text-center md:text-left">
-            <h3 className="text-[8px] sm:text-[10px] md:text-[10px] text-sky-400 font-semibold mb-2">
+            <h3 className="text-[8px] sm:text-[10px] md:text-[12px] font-hazmat-regular text-sky-400 font-semibold mb-5">
               HIGHER SCHOOL OF COMMUNICATION OF TUNIS, Ariana
             </h3>
-            <p className="text-[8px] sm:text-[10px] md:text-[9px] text-white/80 leading-relaxed">
+            <p className="text-[8px] sm:text-[10px] md:text-[9px] font-hazmat-regular text-white/80 leading-relaxed">
               Sup'Com is a leading college for telecommunications engineers in Tunisia.
               Affiliated to the University of Carthage, the Higher School of Communications
               of Tunis (Sup'Com) is among the top-ranked schools in Tunisia in the national
