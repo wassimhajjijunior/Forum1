@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "/LogoForum.png";
+import { db, collection, addDoc } from "../../firebase"; // adjust path if needed
 
 export default function Registration() {
   const [formData, setFormData] = useState({
@@ -10,10 +11,6 @@ export default function Registration() {
 
   const [statusMessage, setStatusMessage] = useState(""); // ✅ Status message
   const [statusColor, setStatusColor] = useState("text-green-400"); // success or error color
-
-  const handleChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +25,7 @@ export default function Registration() {
     setStatusColor("text-white");
 
     try {
+      // Try saving to your Express backend first
       const res = await fetch("https://forum-vybt.onrender.com/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -41,14 +39,34 @@ export default function Registration() {
         setStatusColor("text-green-400");
         setFormData({ fullName: "", university: "", email: "" });
       } else {
-        // Show backend error message (e.g., duplicate email)
-        setStatusMessage(`❌ ${data.message}`);
-        setStatusColor("text-red-400");
+        // Backend returned an error (e.g., duplicate email)
+        setStatusMessage(
+          `⚠️ ${data.message}. Saving to Firebase as fallback...`
+        );
+        setStatusColor("text-yellow-400");
+
+        // Save to Firebase Firestore
+        await addDoc(collection(db, "registrations"), formData);
+        setStatusMessage("✅ Saved to Firebase successfully!");
+        setStatusColor("text-green-400");
+        setFormData({ fullName: "", university: "", email: "" });
       }
     } catch (err) {
       console.error(err);
-      setStatusMessage("⚠️ Server not reachable.");
-      setStatusColor("text-red-400");
+
+      // Express server not reachable → save to Firebase
+      try {
+        await addDoc(collection(db, "registrations"), formData);
+        setStatusMessage("⚠️ Backend down. Saved to Firebase successfully!");
+        setStatusColor("text-green-400");
+        setFormData({ fullName: "", university: "", email: "" });
+      } catch (firebaseErr) {
+        console.error(firebaseErr);
+        setStatusMessage(
+          "❌ Something went wrong. Could not save registration."
+        );
+        setStatusColor("text-red-400");
+      }
     }
   };
 
