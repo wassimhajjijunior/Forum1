@@ -89,6 +89,16 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
     const handleKeyDown = (event) => {
       if (isAnimatingRef.current) return;
 
+      // Ignore keyboard navigation when user is typing in input fields
+      const activeElement = document.activeElement;
+      const isInputFocused =
+        activeElement &&
+        (activeElement.tagName === "INPUT" ||
+          activeElement.tagName === "TEXTAREA" ||
+          activeElement.isContentEditable);
+
+      if (isInputFocused) return;
+
       let newIndex = sectionIndex;
       switch (event.code) {
         case "ArrowDown":
