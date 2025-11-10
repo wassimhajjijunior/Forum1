@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import WhorkshopImage1 from "/speakers/workshop/amel sellami.png";
+import WhorkshopImage1 from "/speakers/workshop/amel sellami.webp";
 import WhorkshopImage2 from "/speakers/workshop/Mohamed.jpg";
 
 const speakers = [
