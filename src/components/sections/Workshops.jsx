@@ -191,7 +191,7 @@ const SpeakerCard = ({
       <h3
         className={`${
           isMobile ? "text-sm" : "text-lg"
-        } font-hazmat-regular text-white mb-1`}>
+        } font-hazmat-regular text-white mb-1 w-70 text-center`}>
         {speaker.name}
       </h3>
       <p
