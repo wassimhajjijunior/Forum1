@@ -9,17 +9,6 @@ function Test() {
   const [currentSection, setCurrentSection] = useState(0);
   const [targetSection, setTargetSection] = useState(null);
 
- useEffect(() => {
-  console.log("Viewport details:");
-  console.log("innerHeight:", window.innerHeight);
-  console.log("innerWidth:", window.innerWidth);
-  console.log("outerHeight:", window.outerHeight);
-  console.log("outerWidth:", window.outerWidth);
-  console.log("devicePixelRatio:", window.devicePixelRatio);
-  console.log("clientWidth:", document.documentElement.clientWidth);
-  console.log("clientHeight:", document.documentElement.clientHeight);
-  console.log("User agent:", navigator.userAgent);
-}, []);
 
   return (
     <div className="h-[100dvh]">

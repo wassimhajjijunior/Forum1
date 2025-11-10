@@ -15,8 +15,9 @@ import img10 from "/lastPhotos/img10_.jpg";
 import img11 from "/lastPhotos/img11_.jpg";
 import img12 from "/lastPhotos/img12_.jpg";
 
-const bannerOneImages = [img1, img2, img3, img4, img5, img6];
-const bannerTwoImages = [img7, img8, img9, img10, img11, img12];
+
+const bannerOneImages = [img1, img2, img3, img4, img5, img6 , img1, img2, img3, img4, img5, img6];
+const bannerTwoImages = [img7, img8, img9, img10, img11, img12, img7, img8, img9, img10, img11, img12];
 
 const Photos = () => {
   const [selected, setSelected] = useState(null);

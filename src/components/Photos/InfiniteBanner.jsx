@@ -44,7 +44,8 @@ const InfiniteBanner = ({
             src={img}
             alt=""
             layoutId={layoutIdPrefix ? `${layoutIdPrefix}-${idx}` : undefined}
-            className="w-65 h-45 object-cover rounded-lg border-2 border-white cursor-pointer"
+            className="w-50 h-40 sm:w-80 sm:h-50 object-cover rounded-lg border-2 border-white cursor-pointer  "
+            
             onClick={() =>
               onClick?.({
                 src: img,
