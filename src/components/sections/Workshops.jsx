@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import WhorkshopImage1 from "/speakers/workshop/amel sellami.webp";
+import WhorkshopImage1 from "/speakers/workshop/amel sellami.png";
 import WhorkshopImage2 from "/speakers/workshop/Mohamed.jpg";
 
 const speakers = [
@@ -84,7 +84,7 @@ const SpeakerCard = ({ speaker, isMobile, index }) => {
       >
         <h3
           className={`${
-            isMobile ? "text-sm" : "text-base"
+            isMobile ? "text-sm" : "text-lg"
           } font-mistrully text-yellow-900 tracking-wide`}
         >
           Workshop

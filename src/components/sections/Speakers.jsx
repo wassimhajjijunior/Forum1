@@ -143,7 +143,7 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd, isMobile })
       animate={{ opacity: isHovered ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
-      <h3 className={`${isMobile ? "text-sm" : "text-base"} font-mistrully text-yellow-900 tracking-wide`}>
+      <h3 className={`${isMobile ? "text-sm" : "text-lg"} font-mistrully text-yellow-900 tracking-wide`}>
         Keynote
       </h3>
       <p className={`${isMobile ? "text-[8px]" : "text-[10px]"} text-gray-300 font-hazmat-regular w-56`}>

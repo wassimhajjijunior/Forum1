@@ -22,11 +22,12 @@ function Test() {
   return (
     <div className="h-[100dvh]">
       {/* 3D Background */}
-      <BackgroundCanvas 
+      <BackgroundCanvas
         currentSection={currentSection}
         setCurrentSection={setCurrentSection}
         targetSection={targetSection}
         clearGoToSection={() => setTargetSection(null)}
+        onNavigate={setTargetSection}
       />
 
       {/* Navbar */}

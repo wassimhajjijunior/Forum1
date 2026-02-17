@@ -5,39 +5,14 @@ const Navbar = ({ currentSection, onNavigate }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Timer state
-  const [timeLeft, setTimeLeft] = useState({});
-  const registrationDate = new Date("2025-11-12T07:30:00");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const diff = registrationDate - now;
-      if (diff <= 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-      } else {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((diff / 1000 / 60) % 60),
-          seconds: Math.floor((diff / 1000) % 60),
-        });
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   const items = [
     { id: 0, label: "Home" },
     { id: 1, label: "Description" },
     { id: 2, label: "Gallery" },
     { id: 3, label: "Teaser" },
-    { id: 4, label: "Speakers" }, // Covers section 4 & 6
-    { id: 6, label: "Sponsors" }, // Covers section 7 to 11
-    { id: 11, label: "Program" },
-    { id: 12, label: "Venue" },
-    { id: 13, label: "Registration" },
+    { id: 4, label: "Speakers" },
+    { id: 6, label: "Sponsors" },
+    { id: 11, label: "Highlights" },
   ];
 
   useEffect(() => {
@@ -92,31 +67,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
       : "0 2px 8px rgba(255,255,255,0.2), 0 2px 6px rgba(255,255,255,0.1)",
   });
 
-  const registerButtonStyle = {
-    padding: "7px 20px 10px",
-    borderRadius: "10px",
-    border: "none",
-    background: "linear-gradient(135deg, #00ffff, #00aaff)",
-    color: "#000",
-    fontWeight: "bold",
-    fontSize: "15px",
-    cursor: "pointer",
-    transition: "all 0.3s ease",
-    boxShadow:
-      "0 0 8px rgba(0,255,255,0.5), 0 0 15px rgba(0,255,255,0.3), 0 2px 8px rgba(255,255,255,0.3)",
-    fontFamily:
-      "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-  };
 
-  const timerStyle = {
-    fontSize: "12px",
-    color: "#ffffffcc",
-    marginTop: "6px",
-    animation: "pulse 1s infinite",
-    textAlign: "center",
-    fontFamily:
-      "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-  };
 
   const sidebarStyle = {
     position: "fixed",
@@ -172,35 +123,7 @@ const Navbar = ({ currentSection, onNavigate }) => {
               onClick={() => onNavigate(0)}
             />
 
-            {/* Register button + timer container */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}>
-              <button
-                style={registerButtonStyle}
-                onClick={() => {
-                  onNavigate(13);
-                  setSidebarOpen(false);
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }>
-                Registration
-              </button>
-
-              {currentSection !== 0 && (
-                <div style={timerStyle}>
-                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
-                  {timeLeft.seconds}s
-                </div>
-              )}
-            </div>
+            <div style={{ width: "40px" }} />
 
             {/* Hamburger */}
             <div
@@ -220,57 +143,31 @@ const Navbar = ({ currentSection, onNavigate }) => {
             />
 
             <div style={itemsContainerStyle}>
-              {items
-                .filter((item) => item.label !== "Registration")
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    style={itemStyle(
-                      item.label === "Speakers"
-                        ? currentSection === 4 ||
-                            currentSection === 5 
-                        : item.label === "Sponsors"
-                        ? [6,7, 8, 9, 10].includes(currentSection)
-                        : currentSection === item.id
-                    )}
-                    onClick={() => onNavigate(item.id)}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.transform = "scale(1.05)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.transform = "scale(1)")
-                    }>
-                    {item.label}
-                  </div>
-                ))}
-            </div>
-
-            {/* Register button + timer */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}>
-              <button
-                style={registerButtonStyle}
-                onClick={() => onNavigate(13)}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }>
-                Registration
-              </button>
-
-              {currentSection !== 0 && (
-                <div style={timerStyle}>
-                  {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
-                  {timeLeft.seconds}s
+              {items.map((item) => (
+                <div
+                  key={item.id}
+                  style={itemStyle(
+                    item.label === "Speakers"
+                      ? currentSection === 4 || currentSection === 5
+                      : item.label === "Sponsors"
+                      ? [6, 7, 8, 9, 10].includes(currentSection)
+                      : item.label === "Highlights"
+                      ? currentSection === 11
+                      : currentSection === item.id
+                  )}
+                  onClick={() => onNavigate(item.id)}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.05)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  }>
+                  {item.label}
                 </div>
-              )}
+              ))}
             </div>
+
+            <div style={{ width: "100px" }} />
           </>
         )}
       </nav>
@@ -278,31 +175,31 @@ const Navbar = ({ currentSection, onNavigate }) => {
       {/* Mobile Sidebar */}
       {isMobile && (
         <div style={sidebarStyle}>
-          {items
-            .filter((item) => item.label !== "Registration")
-            .map((item) => (
-              <div
-                key={item.id}
-                style={itemStyle(
-                  item.label === "Speakers"
-                    ? currentSection === 4 || currentSection === 5
-                    : item.label === "Sponsors"
-                    ? [6,7, 8, 9, 10].includes(currentSection)
-                    : currentSection === item.id
-                )}
-                onClick={() => {
-                  onNavigate(item.id);
-                  setSidebarOpen(false);
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.transform = "scale(1.05)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.transform = "scale(1)")
-                }>
-                {item.label}
-              </div>
-            ))}
+          {items.map((item) => (
+            <div
+              key={item.id}
+              style={itemStyle(
+                item.label === "Speakers"
+                  ? currentSection === 4 || currentSection === 5
+                  : item.label === "Sponsors"
+                  ? [6, 7, 8, 9, 10].includes(currentSection)
+                  : item.label === "Highlights"
+                  ? currentSection === 11
+                  : currentSection === item.id
+              )}
+              onClick={() => {
+                onNavigate(item.id);
+                setSidebarOpen(false);
+              }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.transform = "scale(1.05)")
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.transform = "scale(1)")
+              }>
+              {item.label}
+            </div>
+          ))}
         </div>
       )}
     </>

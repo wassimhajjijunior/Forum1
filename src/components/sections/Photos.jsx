@@ -2,21 +2,24 @@ import React, { useState, useEffect } from "react";
 import InfiniteBanner from "../Photos/InfiniteBanner";
 import { motion, AnimatePresence } from "framer-motion";
 
-import img1 from "/lastPhotos/img1_.webp";
+import img1 from "/lastPhotos/img1_.jpg";
 import img3 from "/lastPhotos/img3_.webp";
-import img4 from "/lastPhotos/img1_.jpg";
-import img7 from "/lastPhotos/img5_.jpg";
-import img9 from "/lastPhotos/img9_.webp";
+import img4 from "/lastPhotos/img5_.jpg";
+import img5 from "/lastPhotos/img5_.webp";
+import img6 from "/lastPhotos/img6_.jpg";
+import img7 from "/lastPhotos/img7_.webp";
+import img9 from "/lastPhotos/img9_.jpg";
+import img9b from "/lastPhotos/img9_.webp";
 import img11 from "/lastPhotos/img11_.jpg";
+import img11b from "/lastPhotos/img11_.webp";
 import img12 from "/lastPhotos/img12_.jpg";
-import img17 from "/lastPhotos/img9_.jpg";
+import img12b from "/lastPhotos/img12_.webp";
+import img17 from "/lastPhotos/img17_.webp";
+import img22 from "/lastPhotos/img22_.jpg";
+import img31 from "/lastPhotos/img31_.jpg";
 
-
-
-// const bannerOneImages = [img1, img2, img3, img4, img5, img6 , img1, img2, img3, img4, img5, img6];
-// const bannerTwoImages = [img7, img8, img9, img10, img11, img12, img7, img8, img9, img10, img11, img12];
-const bannerOneImages = [ img1,  img9, img3, img4];
-const bannerTwoImages = [ img7, img17,img11 ,img12];
+const bannerOneImages = [img1, img6, img9, img11, img17, img31];
+const bannerTwoImages = [img3, img4, img7, img12, img22, img5];
 const Photos = () => {
   const [selected, setSelected] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -51,8 +54,12 @@ const Photos = () => {
           />
         </div>
 
+        <div className="h-6 sm:h-8 md:h-10" />
+
+        
+
         {/* Spacing */}
-        <div className="h-12 sm:h-16 md:h-20 lg:h-24" />
+        <div className="h-6 sm:h-8 md:h-10" />
 
         {/* Bottom Banner */}
         <div className="w-full">

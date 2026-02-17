@@ -7,10 +7,8 @@ import Speakers from "./sections/Speakers";
 import Workshops from "./sections/Workshops";
 import Sponsors from "./sections/Sponsors";
 import Teaser from "./sections/Teaser";
-import Timeline from "./sections/Timeline";
-import Venue from "./sections/Venue";
-import Registration from "./sections/Registration";
 import TableRond from "./sections/TableRond";
+import EventHighlights from "./sections/EventHighlights";
 
 import Sponsors1 from "./sections/Sponsor1";
 import Sponsors2 from "./sections/Sponsor2";
@@ -33,11 +31,7 @@ const Sections = ({ currentSection }) => {
     { id: 8, name: "Sponsors2", component: Sponsors2 },
     { id: 9, name: "Sponsors3", component: Sponsors3 },
     { id: 10, name: "Sponsors4", component: Sponsors4 },
-
-
-    { id: 11, name: "Timeline", component: Timeline },
-    { id: 12, name: "Venue", component: Venue },
-    { id: 13, name: "Registration", component: Registration },
+    { id: 11, name: "Highlights", component: EventHighlights },
   ];
 
   const CurrentComponent = sections[currentSection]?.component || Home;
@@ -149,7 +143,7 @@ const Sections = ({ currentSection }) => {
       padding: "2rem",
       boxSizing: "border-box",
       zIndex,
-      pointerEvents: index === currentSection ? "auto" : "none",
+      pointerEvents: index === currentSection && index !== 0 ? "auto" : "none",
       clipPath,
       transform,
       opacity: index === currentSection ? 1 : 0,

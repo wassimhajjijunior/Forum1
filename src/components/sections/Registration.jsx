@@ -132,7 +132,7 @@ export default function Registration() {
             onSubmit={handleSubmit}
             className="flex flex-col items-center justify-start space-y-3">
             <h2
-              className="text-sm font-bold text-white text-center mb-4"
+              className="text-sm font-bold text-white text-center mb-6"
               style={fontStyle}>
               Register
             </h2>
@@ -171,7 +171,7 @@ export default function Registration() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-90 py-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs cursor-pointer ${
+              className={`w-95 py-2 mt-2 bg-cyan-500/80 hover:bg-cyan-500 text-white font-semibold rounded-xl transition-all shadow-lg hover:shadow-xl text-xs cursor-pointer ${
                 loading ? "opacity-50 cursor-not-allowed" : ""
               }`}
               style={fontStyle}>
@@ -186,16 +186,7 @@ export default function Registration() {
               </p>
             )}
 
-            <div className="text-center">
-              <a
-                href="https://forum.supcom.tn/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[10px] text-cyan-300 hover:underline"
-                style={fontStyle}>
-                Last edition website
-              </a>
-            </div>
+            
           </form>
         </div>
       </div>
@@ -265,16 +256,7 @@ export default function Registration() {
             </p>
           )}
 
-          <div className="mt-1 text-center">
-            <a
-              href="https://forum.supcom.tn/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-cyan-300 hover:underline"
-              style={fontStyle}>
-              Last edition
-            </a>
-          </div>
+          
         </form>
       </div>
     </>

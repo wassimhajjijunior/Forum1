@@ -12,6 +12,7 @@ const BackgroundCanvas = ({
   setCurrentSection,
   targetSection,
   clearGoToSection,
+  onNavigate,
 }) => {
   const [showScene, setShowScene] = useState(false); // renamed from showTunnel
 
@@ -53,7 +54,7 @@ const BackgroundCanvas = ({
         />
 
         {/* Landing page content */}
-        <HomeMesh  />
+        <HomeMesh onNavigate={onNavigate} />
 
         {/* Triangles + Tunnel show together after delay */}
         <Triangles visible={showScene} />
