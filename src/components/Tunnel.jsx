@@ -12,7 +12,7 @@ const TriangleTunnel = ({ segments = 50, width = 3, height = 3, depth = 4 , visi
     const z = -i * depth; // no scaling, so they touch each other
     const texture = i % 3 === 0 ? texture1 : i % 3 === 1 ? texture2 : texture3;
     const floorTexture = i % 2 === 0 ? texture1 : texture4;
-    const rightTexture = i % 2 === 0 ? texture1 : texture4;
+    const rightTexture = i % 2 === 0 ? texture : texture4;
     // const texture = texture1;
 
     walls.push(

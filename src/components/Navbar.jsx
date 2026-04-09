@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import brand from "/LOGO_SUPCOM.png";
+import {
+  GALLERY_SECTION_ID,
+  HIGHLIGHTS_SECTION_ID,
+  HOME_SECTION_ID,
+  SPEAKERS_SECTION_ID,
+  SPONSOR_SECTION_IDS,
+  TEASER_SECTION_ID,
+  WORKSHOPS_SECTION_ID,
+} from "./sections/sectionConfig";
 
 const Navbar = ({ currentSection, onNavigate }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const items = [
-    { id: 0, label: "Home" },
-    { id: 1, label: "Description" },
-    { id: 2, label: "Gallery" },
-    { id: 3, label: "Teaser" },
-    { id: 4, label: "Speakers" },
-    { id: 6, label: "Sponsors" },
-    { id: 11, label: "Highlights" },
+    { id: HOME_SECTION_ID, label: "Home" },
+    { id: HIGHLIGHTS_SECTION_ID, label: "Highlights" },
+    { id: GALLERY_SECTION_ID, label: "Gallery" },
+    { id: TEASER_SECTION_ID, label: "Teaser" },
+    { id: SPEAKERS_SECTION_ID, label: "Speakers" },
+    { id: WORKSHOPS_SECTION_ID, label: "Workshops" },
+    { id: SPONSOR_SECTION_IDS[0], label: "Sponsors" },
   ];
 
   useEffect(() => {
@@ -21,6 +30,14 @@ const Navbar = ({ currentSection, onNavigate }) => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const isItemActive = (item) => {
+    if (item.label === "Speakers") return currentSection === SPEAKERS_SECTION_ID;
+    if (item.label === "Workshops") return currentSection === WORKSHOPS_SECTION_ID;
+    if (item.label === "Sponsors") return SPONSOR_SECTION_IDS.includes(currentSection);
+    if (item.label === "Highlights") return currentSection === HIGHLIGHTS_SECTION_ID;
+    return currentSection === item.id;
+  };
 
   const navbarStyle = {
     position: "fixed",
@@ -59,15 +76,13 @@ const Navbar = ({ currentSection, onNavigate }) => {
     background: active ? "rgba(0,255,255,0.15)" : "rgba(255,255,255,0.03)",
     transition: "all 0.3s ease",
     transform: "none",
-    fontFamily:
-      "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    fontFamily: "Hazmat Regular, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
     lineHeight: "20px",
     boxShadow: active
       ? "0 2px 6px rgba(0,255,255,0.4), 0 8px 20px rgba(0,255,255,0.2)"
       : "0 2px 8px rgba(255,255,255,0.2), 0 2px 6px rgba(255,255,255,0.1)",
+    border: "none",
   });
-
-
 
   const sidebarStyle = {
     position: "fixed",
@@ -94,12 +109,17 @@ const Navbar = ({ currentSection, onNavigate }) => {
     color: "#00ffff",
     transform: sidebarOpen ? "rotate(90deg)" : "rotate(0deg)",
     transition: "transform 0.3s ease",
+    border: "none",
+    background: "transparent",
   };
 
   const logoStyle = {
     height: isMobile ? "22px" : "48px",
     width: "auto",
     cursor: "pointer",
+    border: "none",
+    background: "transparent",
+    padding: 0,
   };
 
   return (
@@ -114,56 +134,55 @@ const Navbar = ({ currentSection, onNavigate }) => {
               width: "100%",
               height: "75px",
               position: "relative",
-            }}>
-            {/* Brand logo */}
-            <img
-              src={brand}
-              alt="Brand Logo"
+            }}
+          >
+            <button
+              type="button"
+              aria-label="Go to Home"
               style={{ ...logoStyle, position: "absolute", left: 0 }}
               onClick={() => onNavigate(0)}
-            />
+            >
+              <img src={brand} alt="Brand Logo" style={{ ...logoStyle, height: logoStyle.height }} />
+            </button>
 
             <div style={{ width: "40px" }} />
 
-            {/* Hamburger */}
-            <div
+            <button
+              type="button"
+              aria-label="Toggle navigation"
               style={hamburgerStyle}
-              onClick={() => setSidebarOpen(!sidebarOpen)}>
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
               ☰
-            </div>
+            </button>
           </div>
         ) : (
           <>
-            {/* Desktop Logo */}
-            <img
-              src={brand}
-              alt="Brand Logo"
+            <button
+              type="button"
+              aria-label="Go to Home"
               style={logoStyle}
               onClick={() => onNavigate(0)}
-            />
+            >
+              <img src={brand} alt="Brand Logo" style={{ height: logoStyle.height, width: "auto" }} />
+            </button>
 
             <div style={itemsContainerStyle}>
               {items.map((item) => (
-                <div
+                <button
                   key={item.id}
-                  style={itemStyle(
-                    item.label === "Speakers"
-                      ? currentSection === 4 || currentSection === 5
-                      : item.label === "Sponsors"
-                      ? [6, 7, 8, 9, 10].includes(currentSection)
-                      : item.label === "Highlights"
-                      ? currentSection === 11
-                      : currentSection === item.id
-                  )}
+                  type="button"
+                  style={itemStyle(isItemActive(item))}
                   onClick={() => onNavigate(item.id)}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.transform = "scale(1.05)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.transform = "scale(1)")
-                  }>
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.05)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                  }}
+                >
                   {item.label}
-                </div>
+                </button>
               ))}
             </div>
 
@@ -172,33 +191,26 @@ const Navbar = ({ currentSection, onNavigate }) => {
         )}
       </nav>
 
-      {/* Mobile Sidebar */}
       {isMobile && (
         <div style={sidebarStyle}>
           {items.map((item) => (
-            <div
+            <button
               key={item.id}
-              style={itemStyle(
-                item.label === "Speakers"
-                  ? currentSection === 4 || currentSection === 5
-                  : item.label === "Sponsors"
-                  ? [6, 7, 8, 9, 10].includes(currentSection)
-                  : item.label === "Highlights"
-                  ? currentSection === 11
-                  : currentSection === item.id
-              )}
+              type="button"
+              style={itemStyle(isItemActive(item))}
               onClick={() => {
                 onNavigate(item.id);
                 setSidebarOpen(false);
               }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.transform = "scale(1.05)")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.transform = "scale(1)")
-              }>
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+              }}
+            >
               {item.label}
-            </div>
+            </button>
           ))}
         </div>
       )}

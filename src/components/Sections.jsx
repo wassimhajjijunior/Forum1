@@ -1,50 +1,80 @@
-// src/components/Sections/Sections.jsx
 import React, { useEffect, useState } from "react";
+import EventHighlights from "./sections/EventHighlights";
 import Home from "./sections/Home";
-import Description from "./sections/Description";
 import Photos from "./sections/Photos";
 import Speakers from "./sections/Speakers";
 import Workshops from "./sections/Workshops";
-import Sponsors from "./sections/Sponsors";
+import Sponsor01 from "./sections/Sponsor01";
+import Sponsor02 from "./sections/Sponsor02";
+import Sponsor03 from "./sections/Sponsor03";
+import Sponsor04 from "./sections/Sponsor04";
+import Sponsor05 from "./sections/Sponsor05";
+import Sponsor06 from "./sections/Sponsor06";
+import Sponsor07 from "./sections/Sponsor07";
+import Sponsor08 from "./sections/Sponsor08";
+import Sponsor09 from "./sections/Sponsor09";
+import Sponsor10 from "./sections/Sponsor10";
+import Sponsor11 from "./sections/Sponsor11";
+import Sponsor12 from "./sections/Sponsor12";
+import Sponsor13 from "./sections/Sponsor13";
+import Sponsor14 from "./sections/Sponsor14";
+import Sponsor15 from "./sections/Sponsor15";
+import Sponsor16 from "./sections/Sponsor16";
 import Teaser from "./sections/Teaser";
-import TableRond from "./sections/TableRond";
-import EventHighlights from "./sections/EventHighlights";
+import {
+  GALLERY_SECTION_ID,
+  HIGHLIGHTS_SECTION_ID,
+  HOME_SECTION_ID,
+  SPEAKERS_SECTION_ID,
+  SPONSOR_SECTION_START,
+  TEASER_SECTION_ID,
+  WORKSHOPS_SECTION_ID,
+} from "./sections/sectionConfig";
 
-import Sponsors1 from "./sections/Sponsor1";
-import Sponsors2 from "./sections/Sponsor2";
-import Sponsors3 from "./sections/Sponsor3";
-import Sponsors4 from "./sections/Sponsor4";
+const sponsorComponents = [
+  Sponsor01,
+  Sponsor02,
+  Sponsor03,
+  Sponsor04,
+  Sponsor05,
+  Sponsor06,
+  Sponsor07,
+  Sponsor08,
+  Sponsor09,
+  Sponsor10,
+  Sponsor11,
+  Sponsor12,
+  Sponsor13,
+  Sponsor14,
+  Sponsor15,
+  Sponsor16,
+];
 
 const Sections = ({ currentSection }) => {
   const sections = [
-    { id: 0, name: "Home", component: Home },
-    { id: 1, name: "Description", component: Description },
-    { id: 2, name: "Photos", component: Photos },
-    { id: 3, name: "Teaser", component: Teaser },
-
-    { id: 4, name: "Speakers", component: Speakers },
-    { id: 5, name: "Workshops", component: Workshops },
-    // { id: 6, name: "TableRond", component: TableRond },
-
-    { id: 6, name: "Sponsors", component: Sponsors },
-    { id: 7, name: "Sponsors1", component: Sponsors1 },
-    { id: 8, name: "Sponsors2", component: Sponsors2 },
-    { id: 9, name: "Sponsors3", component: Sponsors3 },
-    { id: 10, name: "Sponsors4", component: Sponsors4 },
-    { id: 11, name: "Highlights", component: EventHighlights },
+    { id: HOME_SECTION_ID, name: "Home", component: Home },
+    { id: HIGHLIGHTS_SECTION_ID, name: "Highlights", component: EventHighlights },
+    { id: GALLERY_SECTION_ID, name: "Photos", component: Photos },
+    { id: TEASER_SECTION_ID, name: "Teaser", component: Teaser },
+    { id: SPEAKERS_SECTION_ID, name: "Speakers", component: Speakers },
+    { id: WORKSHOPS_SECTION_ID, name: "Workshops", component: Workshops },
+    ...sponsorComponents.map((component, index) => ({
+      id: SPONSOR_SECTION_START + index,
+      name: `Sponsor${String(index + 1).padStart(2, "0")}`,
+      component,
+    })),
   ];
 
   const CurrentComponent = sections[currentSection]?.component || Home;
 
-  const [animationStep, setAnimationStep] = useState(0); // for all sections except Home
-  const [homeAnimationStep, setHomeAnimationStep] = useState(0); // special animation for Home
+  const [animationStep, setAnimationStep] = useState(0);
+  const [homeAnimationStep, setHomeAnimationStep] = useState(0);
   const [previousSection, setPreviousSection] = useState(currentSection);
 
   useEffect(() => {
     setPreviousSection(currentSection);
 
     if (currentSection === 0) {
-      // Special Home animation
       setHomeAnimationStep(0);
       const homeTimer1 = setTimeout(() => setHomeAnimationStep(1), 200);
       const homeTimer2 = setTimeout(() => setHomeAnimationStep(2), 1000);
@@ -53,17 +83,16 @@ const Sections = ({ currentSection }) => {
         clearTimeout(homeTimer1);
         clearTimeout(homeTimer2);
       };
-    } else {
-      // Other sections animation
-      setAnimationStep(0);
-      const timer1 = setTimeout(() => setAnimationStep(1), 150);
-      const timer2 = setTimeout(() => setAnimationStep(2), 800);
-
-      return () => {
-        clearTimeout(timer1);
-        clearTimeout(timer2);
-      };
     }
+
+    setAnimationStep(0);
+    const timer1 = setTimeout(() => setAnimationStep(1), 150);
+    const timer2 = setTimeout(() => setAnimationStep(2), 800);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+    };
   }, [currentSection]);
 
   const sectionStyle = (index) => {
@@ -71,7 +100,6 @@ const Sections = ({ currentSection }) => {
     let transform;
     let zIndex = 100;
 
-    // Home section
     if (index === 0) {
       if (index !== currentSection) {
         clipPath = "circle(0% at 50% 50%)";
@@ -97,9 +125,7 @@ const Sections = ({ currentSection }) => {
             transform = "scale(1) translateZ(0px)";
         }
       }
-    }
-    // Other sections
-    else {
+    } else {
       if (index !== currentSection) {
         clipPath = "polygon(50% 50%, 50% 50%, 50% 50%)";
         if (index === previousSection) {
@@ -160,7 +186,7 @@ const Sections = ({ currentSection }) => {
   return (
     <>
       {sections.map((section, index) => (
-        <div key={index} style={sectionStyle(index)}>
+        <div key={section.id} style={sectionStyle(index)}>
           {index === currentSection && <CurrentComponent />}
         </div>
       ))}

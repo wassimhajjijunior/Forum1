@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import InfiniteBanner from "../Photos/InfiniteBanner";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 
 import img1 from "/lastPhotos/img1_.jpg";
 import img3 from "/lastPhotos/img3_.webp";
@@ -9,11 +9,8 @@ import img5 from "/lastPhotos/img5_.webp";
 import img6 from "/lastPhotos/img6_.jpg";
 import img7 from "/lastPhotos/img7_.webp";
 import img9 from "/lastPhotos/img9_.jpg";
-import img9b from "/lastPhotos/img9_.webp";
 import img11 from "/lastPhotos/img11_.jpg";
-import img11b from "/lastPhotos/img11_.webp";
 import img12 from "/lastPhotos/img12_.jpg";
-import img12b from "/lastPhotos/img12_.webp";
 import img17 from "/lastPhotos/img17_.webp";
 import img22 from "/lastPhotos/img22_.jpg";
 import img31 from "/lastPhotos/img31_.jpg";
@@ -32,15 +29,14 @@ const Photos = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-screen flex justify-center items-center overflow-hidden bg-transparent ">
+    <div className="relative w-full h-[100dvh] flex justify-center items-center overflow-hidden bg-transparent px-2 sm:px-4 md:px-6 py-20">
       {/* 🟪 Transparent Trapezoid Container */}
       <div
-        className="relative flex flex-col justify-center items-center text-white overflow-hidden"
+        className="relative w-full max-w-6xl flex flex-col justify-center items-center text-white overflow-hidden rounded-2xl"
         style={{
-          width: "100%",
           height: "100%",
-          clipPath: isMobile ? "":"polygon(33% -5%, 67% -4%, 96% 96%, 5% 93%)",
-          background: "transparent", // fully transparent
+          clipPath: isMobile ? "" : "polygon(28% -3%, 72% -2%, 97% 98%, 3% 95%)",
+          background: "transparent",
         }}
       >
         {/* Top Banner */}
@@ -77,7 +73,7 @@ const Photos = () => {
       <AnimatePresence>
         {selected && (
           <>
-            <motion.div
+            <Motion.div
               className="fixed inset-0 bg-transparent/70 z-40"
               onClick={() => setSelected(null)}
               initial={{ opacity: 0 }}
@@ -85,18 +81,18 @@ const Photos = () => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
             />
-            <motion.div
+            <Motion.div
               className="fixed inset-0 flex justify-center items-center z-50"
               onClick={() => setSelected(null)}
             >
-              <motion.img
+              <Motion.img
                 src={selected.src}
                 alt=""
                 layoutId={selected.layoutId}
-                className={`rounded-xl shadow-2xl object-contain 
-                  ${isMobile ? "w-[90%]" : "w-[35%]"} 
-                  sm:w-[70%] md:w-[35%] lg:w-[35%] 
-                  max-h-[90vh]`}
+                className={`rounded-xl shadow-2xl object-contain
+                  ${isMobile ? "w-[92%]" : "w-[38%]"}
+                  sm:w-[78%] md:w-[48%] lg:w-[38%]
+                  max-h-[88dvh]`}
                   loading="lazy"
 
                 transition={{
@@ -104,7 +100,7 @@ const Photos = () => {
                   duration: isMobile ? 0.5 : 0.4,
                 }}
               />
-            </motion.div>
+            </Motion.div>
           </>
         )}
       </AnimatePresence>

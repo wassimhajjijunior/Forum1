@@ -1,5 +1,29 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
+import { MAX_SECTIONS } from "./sections/sectionConfig";
+
+const isInteractiveElement = (element) => {
+  if (!element || typeof element.closest !== "function") return false;
+  return Boolean(
+    element.closest(
+      "input, textarea, select, button, a, iframe, video, [contenteditable='true'], [data-allow-touch-scroll='true']",
+    ),
+  );
+};
+
+const isInsideScrollableContainer = (element) => {
+  let current = element;
+  while (current && current !== document.body) {
+    const style = window.getComputedStyle(current);
+    const canScrollY =
+      (style.overflowY === "auto" || style.overflowY === "scroll") &&
+      current.scrollHeight > current.clientHeight;
+
+    if (canScrollY) return true;
+    current = current.parentElement;
+  }
+  return false;
+};
 
 const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) => {
   const { camera } = useThree();
@@ -11,12 +35,12 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
   const isAnimatingRef = useRef(false);
 
   const depth = 5;
-  const maxSections = 12;
 
   const firstScrollSpeed = 8;
   const normalSpeed = 5;
   const speedRef = useRef(normalSpeed);
   const prevSection = useRef(0);
+  const canHandleTouchNavigation = useRef(true);
 
   // Sync animating state
   useEffect(() => {
@@ -51,7 +75,7 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
       goToSection !== null &&
       goToSection !== undefined &&
       goToSection >= 0 &&
-      goToSection < maxSections &&
+      goToSection < MAX_SECTIONS &&
       goToSection !== sectionIndex
     ) {
       setSectionIndex(goToSection);
@@ -60,7 +84,7 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
 
       if (clearGoToSection) clearGoToSection();
     }
-  }, [goToSection, sectionIndex, maxSections, clearGoToSection]);
+  }, [goToSection, sectionIndex, clearGoToSection]);
 
   // Scroll, keyboard, and touch
   useEffect(() => {
@@ -75,7 +99,7 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
       setSectionIndex((prev) => {
         const newIndex =
           event.deltaY > 0
-            ? Math.min(prev + 1, maxSections - 1)
+            ? Math.min(prev + 1, MAX_SECTIONS - 1)
             : Math.max(prev - 1, 0);
 
         if (newIndex !== prev) {
@@ -104,7 +128,7 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
         case "ArrowDown":
         case "PageDown":
         case "Space":
-          newIndex = Math.min(sectionIndex + 1, maxSections - 1);
+          newIndex = Math.min(sectionIndex + 1, MAX_SECTIONS - 1);
           break;
         case "ArrowUp":
         case "PageUp":
@@ -114,7 +138,7 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
           newIndex = 0;
           break;
         case "End":
-          newIndex = maxSections - 1;
+          newIndex = MAX_SECTIONS - 1;
           break;
         default:
           return;
@@ -130,15 +154,20 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
 
     const handleTouchStart = (e) => {
       touchStartY = e.touches[0].clientY;
+      const target = e.target;
+
+      canHandleTouchNavigation.current =
+        !isInteractiveElement(target) && !isInsideScrollableContainer(target);
     };
 
     const handleTouchMove = (e) => {
-      // Prevent mobile pull-to-refresh / scroll
-      e.preventDefault();
+      if (canHandleTouchNavigation.current) {
+        e.preventDefault();
+      }
     };
 
     const handleTouchEnd = (e) => {
-      if (isAnimatingRef.current) return;
+      if (isAnimatingRef.current || !canHandleTouchNavigation.current) return;
 
       const touchEndY = e.changedTouches[0].clientY;
       const deltaY = touchStartY - touchEndY;
@@ -148,7 +177,7 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
       setSectionIndex((prev) => {
         const newIndex =
           deltaY > 0
-            ? Math.min(prev + 1, maxSections - 1)
+            ? Math.min(prev + 1, MAX_SECTIONS - 1)
             : Math.max(prev - 1, 0);
 
         if (newIndex !== prev) {
@@ -172,7 +201,7 @@ const CameraController = ({ onSectionChange, goToSection, clearGoToSection }) =>
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [sectionIndex, maxSections]);
+  }, [sectionIndex]);
 
   // Animate camera
   useFrame((state, delta) => {

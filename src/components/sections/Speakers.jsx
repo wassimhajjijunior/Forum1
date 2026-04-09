@@ -1,178 +1,79 @@
-import React, { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import WhorkshopImage1 from "/speakers/keynote/Sami.jpg";
-import WhorkshopImage2 from "/speakers/keynote/M.Aymen.jpg";
-import WhorkshopImage3 from "/speakers/keynote/ghaithSouissi.jpg";
+import React, { useState } from "react";
+import { motion as Motion } from "framer-motion";
+import keynoteImage1 from "/speakers/keynote/Sami.jpg";
+import keynoteImage2 from "/speakers/keynote/M.Aymen.jpg";
+import keynoteImage3 from "/speakers/keynote/ghaithSouissi.jpg";
 
 const speakers = [
   {
     id: 1,
     name: "M.Sami Haboubi",
     role: "Senior Manager at Deloitte | Risk Advisory & Consulting | Cyber Risk",
-    image: WhorkshopImage1,
-    keynote: "Cybersecurity meets AI and Gen AI",
+    image: keynoteImage1,
   },
   {
     id: 2,
     name: "M.Aymen Ghadghadi",
     role: "CEO Navinspire IA",
-    image: WhorkshopImage2,
-    keynote: "IA Agentique & Générale : comprendre, implémenter, transformer",
+    image: keynoteImage2,
   },
   {
     id: 3,
     name: "Ghaith Souissi",
-    role: "Cybersecurity Enginner | ANCS - tunCERT",
-    image: WhorkshopImage3,
-    keynote: "Cybersécurité en Tunisie : état des lieux et perspectives industrielles",
+    role: "Cybersecurity Engineer | ANCS - tunCERT",
+    image: keynoteImage3,
   },
 ];
 
-const Speakers = () => {
-  const [time, setTime] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [hoveredId, setHoveredId] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const requestRef = useRef();
-
-  // Responsive radius & container
-  const [radius, setRadius] = useState(150);
-  const [containerSize, setContainerSize] = useState({ width: 500, height: 450 });
-
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 640;
-      setIsMobile(mobile);
-      setRadius(mobile ? 80 : 150);
-      setContainerSize(mobile ? { width: 250, height: 220 } : { width: 500, height: 450 });
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Triangle vertices and path
-  const triangleVertices = [
-    { x: 0, y: -radius },
-    { x: -radius, y: radius },
-    { x: radius, y: radius },
-  ];
-
-  const cardPaths = [triangleVertices, triangleVertices, triangleVertices];
-
-  const getPositionOnPath = (path, t) => {
-    const totalSegments = path.length;
-    const segmentIndex = Math.floor(t % totalSegments);
-    const nextIndex = (segmentIndex + 1) % totalSegments;
-    const localT = t % 1;
-    const p1 = path[segmentIndex];
-    const p2 = path[nextIndex];
-    return {
-      x: p1.x + (p2.x - p1.x) * localT,
-      y: p1.y + (p2.y - p1.y) * localT,
-    };
-  };
-
-  const speed = 0.004; // smooth speed
-
-  const animate = () => {
-    if (!paused) setTime((prev) => prev + speed);
-    requestRef.current = requestAnimationFrame(animate);
-  };
-
-  useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(requestRef.current);
-  }, [paused]);
-
-  const handleHoverStart = (id) => {
-    setPaused(true);
-    setHoveredId(id);
-  };
-  const handleHoverEnd = () => {
-    setPaused(false);
-    setHoveredId(null);
-  };
+const SpeakerCard = ({ speaker }) => {
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <section className="relative w-full h-screen flex flex-col items-center justify-center">
-      <div
-        className="relative flex items-center justify-center"
-        style={{ width: containerSize.width, height: containerSize.height, marginTop: "50px" }}
-      >
-        {speakers.map((speaker, idx) => {
-          const t = time + (idx / speakers.length) * cardPaths[idx].length;
-          const pos = getPositionOnPath(cardPaths[idx], t);
-
-          return (
-            <motion.div
-              key={speaker.id}
-              className="absolute flex flex-col items-center"
-              style={{ x: pos.x, y: pos.y }}
-            >
-              <SpeakerCard
-                speaker={speaker}
-                isHovered={hoveredId === speaker.id}
-                onHoverStart={() => handleHoverStart(speaker.id)}
-                onHoverEnd={handleHoverEnd}
-                isMobile={isMobile}
-              />
-            </motion.div>
-          );
-        })}
+    <Motion.article
+      className="group relative w-full max-w-[250px] sm:max-w-[270px] rounded-3xl border border-cyan-300/25 bg-slate-950/45 backdrop-blur-md p-3 sm:p-4 md:p-5 shadow-[0_0_22px_rgba(34,211,238,0.12)]"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      whileHover={{ y: -4 }}
+    >
+      <div className="w-full aspect-square rounded-2xl overflow-hidden border border-cyan-200/30 bg-black/25">
+        <img
+          src={speaker.image}
+          alt={speaker.name}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
 
-      <motion.h2
-        className={`mt-10 ${isMobile ? "text-2xl" : "text-4xl"} font-hazmat-regular text-white`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Keynote
-      </motion.h2>
-    </section>
+      <div className="mt-4 text-center">
+        <h3 className="font-hazmat-regular text-white text-base sm:text-lg md:text-xl">
+          {speaker.name}
+        </h3>
+        <p className="mt-1 font-mistrully text-slate-300 text-xs sm:text-sm leading-relaxed">
+          {speaker.role}
+        </p>
+
+        
+      </div>
+    </Motion.article>
   );
 };
 
-const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd, isMobile }) => (
-  <div className="flex flex-col items-center">
-    <motion.div
-      className="text-center mb-3"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isHovered ? 1 : 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <h3 className={`${isMobile ? "text-sm" : "text-lg"} font-mistrully text-yellow-900 tracking-wide`}>
-        Keynote
-      </h3>
-      <p className={`${isMobile ? "text-[8px]" : "text-[10px]"} text-gray-300 font-hazmat-regular w-56`}>
-        {speaker.keynote}
-      </p>
-    </motion.div>
+const Speakers = () => {
+  return (
+    <section className="w-full min-h-[72dvh] md:h-[72dvh] px-4 sm:px-6 py-16 md:py-0 flex items-center justify-center">
+      <div className="w-full max-w-5xl mx-auto flex flex-col items-center justify-center">
+        <h2 className="font-hazmat-regular text-cyan-100 text-2xl sm:text-3xl md:text-4xl tracking-wide text-center mb-5 sm:mb-6 md:mb-8">
+          Keynote Speakers
+        </h2>
 
-    <div
-      className={`${isMobile ? "w-20 h-20" : "w-28 h-28"} sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-sky-900 shadow-2xl transition-transform hover:scale-105`}
-      onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
-    >
-      <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
-    </div>
-
-    <motion.div
-      className="text-center mt-3"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: isHovered ? 1 : 0 }}
-      transition={{ duration: 0.3 }}
-    >
-      <h3 className={`${isMobile ? "text-sm" : "text-lg"} font-hazmat-regular text-white mb-1`}>
-        {speaker.name}
-      </h3>
-      <p className={`${isMobile ? "text-[7px]" : "text-[11px]"} sm:text-[12px] text-gray-300 font-mistrully w-60 text-center`}>
-        {speaker.role}
-      </p>
-    </motion.div>
-  </div>
-);
+        <div className="w-full max-w-4xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5 items-stretch justify-items-center">
+          {speakers.map((speaker) => (
+            <SpeakerCard key={speaker.id} speaker={speaker} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Speakers;

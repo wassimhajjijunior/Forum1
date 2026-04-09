@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import aiLogo from "/icons/AI icon@2x.png";
 import securityLogo from "/icons/sec icon@2x.png";
 import iotLogo from "/icons/IOT.svg";
@@ -20,19 +20,19 @@ const Description = () => {
         <div className="absolute inset-0 backdrop-blur-md clip-triangle"></div>
 
         {/* Icons at triangle corners */}
-        <motion.img
+        <Motion.img
           src={aiLogo}
           alt="AI"
           className="absolute w-8 h-8 md:w-12 md:h-12 top-2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           animate={floatAnimation.animate}
         />
-        <motion.img
+        <Motion.img
           src={iotLogo}
           alt="IoT"
           className="absolute w-8 h-8 md:w-12 md:h-12 bottom-0 left-0 -translate-x-1/2 translate-y-1/2"
           animate={floatAnimation.animate}
         />
-        <motion.img
+        <Motion.img
           src={securityLogo}
           alt="Security"
           className="absolute w-8 h-8 md:w-12 md:h-12 bottom-0 right-0 translate-x-1/2 translate-y-1/2"

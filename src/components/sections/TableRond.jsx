@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 
 const speakers = [
   {
@@ -31,7 +31,7 @@ const speakers = [
 const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd, isMobile }) => (
   <div className="flex flex-col items-center">
     {/* Top text */}
-    <motion.div
+    <Motion.div
       className="text-center mb-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: isHovered ? 1 : 0 }}
@@ -43,19 +43,23 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd, isMobile })
       <p className={`${isMobile ? "text-[6px]" : "text-[9px]"} text-gray-300 font-hazmat-regular`}>
         catch up with train of technology
       </p>
-    </motion.div>
+    </Motion.div>
 
     {/* Circle Image */}
-    <div
+    <button
+      type="button"
       className={`${isMobile ? "w-20 h-20" : "w-32 h-32"} rounded-full overflow-hidden border-3 border-sky-900 shadow-2xl transition-transform hover:scale-105`}
       onMouseEnter={onHoverStart}
       onMouseLeave={onHoverEnd}
+      onFocus={onHoverStart}
+      onBlur={onHoverEnd}
+      style={{ padding: 0, background: "transparent", borderWidth: 0 }}
     >
       <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
-    </div>
+    </button>
 
     {/* Bottom text */}
-    <motion.div
+    <Motion.div
       className="text-center mt-2"
       initial={{ opacity: 0 }}
       animate={{ opacity: isHovered ? 1 : 0 }}
@@ -67,7 +71,7 @@ const SpeakerCard = ({ speaker, isHovered, onHoverStart, onHoverEnd, isMobile })
       <p className={`${isMobile ? "text-[7px]" : "text-[12px]"} text-gray-300 font-mistrully`}>
         {speaker.role}
       </p>
-    </motion.div>
+    </Motion.div>
   </div>
 );
 
@@ -96,17 +100,17 @@ const TableSquare = () => {
         style={{ marginTop: "50px" }}
       >
         {/* Center title */}
-        <motion.h2
+        <Motion.h2
           className="absolute inset-0 flex items-center justify-center text-2xl font-hazmat-regular text-white pointer-events-none"
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1 }}
         >
           Round Table
-        </motion.h2>
+        </Motion.h2>
 
         {speakers.map((speaker, idx) => (
-          <motion.div
+          <Motion.div
             key={speaker.id}
             animate={{
               y: baseFloat.y,
@@ -126,7 +130,7 @@ const TableSquare = () => {
               onHoverEnd={() => setHoveredId(null)}
               isMobile={isMobile}
             />
-          </motion.div>
+          </Motion.div>
         ))}
       </div>
     </section>

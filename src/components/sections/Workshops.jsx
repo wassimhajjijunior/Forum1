@@ -1,127 +1,71 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import WhorkshopImage1 from "/speakers/workshop/amel sellami.png";
-import WhorkshopImage2 from "/speakers/workshop/Mohamed.jpg";
+import React, { useState } from "react";
+import { motion as Motion } from "framer-motion";
+import workshopImage1 from "/speakers/workshop/amel sellami.png";
+import workshopImage2 from "/speakers/workshop/Mohamed.jpg";
 
-const speakers = [
+const workshopSpeakers = [
   {
     id: 1,
     name: "Amel Sellami",
-    role: "Google Developer Expert in Machine Learning - ML Research Engineer & Team Lead at InstaDeep",
-    image: WhorkshopImage1,
-    workshop: "How to Build a Multi-Agent App with ADK and Gemini",
+    role: "Google Developer Expert in Machine Learning | ML Research Engineer & Team Lead at InstaDeep",
+    image: workshopImage1,
   },
   {
     id: 2,
     name: "Mohamed Ould-ElHassen Aoueileyine",
     role: "Dr. Eng. | IoT, AI & Industry 4.0 Expert",
-    image: WhorkshopImage2,
-    workshop:
-      "Predictive Maintenance for Industry 4.0: From Data Collection to Deployment",
+    image: workshopImage2,
   },
 ];
 
-const Workshops = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 640);
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+const WorkshopSpeakerCard = ({ speaker }) => {
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-4">
-      {/* Speakers Container with smaller gap */}
-      <div className="flex w-full max-w-4xl justify-center items-center gap-16">
-        {speakers.map((speaker, idx) => (
-          <SpeakerCard key={speaker.id} speaker={speaker} isMobile={isMobile} index={idx} />
-        ))}
+    <Motion.article
+      className="group relative w-full max-w-[250px] sm:max-w-[270px] rounded-3xl border border-cyan-300/25 bg-slate-950/45 backdrop-blur-md p-3 sm:p-4 md:p-5 shadow-[0_0_22px_rgba(34,211,238,0.12)]"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      whileHover={{ y: -4 }}
+    >
+      <div className="w-full aspect-square rounded-2xl overflow-hidden border border-cyan-200/30 bg-black/25">
+        <img
+          src={speaker.image}
+          alt={speaker.name}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
 
-      <motion.h2
-        className={`mt-10 ${isMobile ? "text-2xl" : "text-4xl"} font-hazmat-regular text-white`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Workshops
-      </motion.h2>
-    </section>
+      <div className="mt-4 text-center">
+        <h3 className="font-hazmat-regular text-white text-base sm:text-lg md:text-xl">
+          {speaker.name}
+        </h3>
+        <p className="mt-1 font-mistrully text-slate-300 text-xs sm:text-sm leading-relaxed">
+          {speaker.role}
+        </p>
+
+        
+      </div>
+    </Motion.article>
   );
 };
 
-const SpeakerCard = ({ speaker, isMobile, index }) => {
-  const [hovered, setHovered] = useState(false);
-
-  // Float animation
-  const floatVariants = {
-    float: {
-      y: ["0%", "5%", "0%"],
-      transition: {
-        duration: 3 + index,
-        repeat: Infinity,
-        ease: "easeInOut",
-      },
-    },
-  };
-
+const Workshops = () => {
   return (
-    <motion.div
-      className="flex flex-col items-center"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      variants={floatVariants}
-      animate="float"
-    >
-      {/* Workshop text */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="text-center mb-2 max-w-[250px]"
-      >
-        <h3
-          className={`${
-            isMobile ? "text-sm" : "text-lg"
-          } font-mistrully text-yellow-900 tracking-wide`}
-        >
-          Workshop
-        </h3>
-        <p
-          className={`${
-            isMobile ? "text-[8px]" : "text-[12px]"
-          } text-gray-300 font-hazmat-regular`}
-        >
-          {speaker.workshop}
-        </p>
-      </motion.div>
+    <section className="w-full min-h-[72dvh] md:h-[72dvh] px-4 sm:px-6 py-16 md:py-0 flex items-center justify-center">
+      <div className="w-full max-w-5xl mx-auto flex flex-col items-center justify-center">
+        <h2 className="font-hazmat-regular text-cyan-100 text-2xl sm:text-3xl md:text-4xl tracking-wide text-center mb-5 sm:mb-6 md:mb-8">
+          Workshop Speakers
+        </h2>
 
-      {/* Speaker Image - bigger size */}
-      <div
-        className={`${
-          isMobile ? "w-24 h-24" : "w-36 h-36"
-        } rounded-full overflow-hidden border-4 border-sky-900 shadow-2xl transition-transform hover:scale-105`}
-      >
-        <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
+        <div className="w-full max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-5 items-stretch justify-items-center">
+          {workshopSpeakers.map((speaker) => (
+            <WorkshopSpeakerCard key={speaker.id} speaker={speaker} />
+          ))}
+        </div>
       </div>
-
-      {/* Name & Role */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-        className="text-center mt-3 max-w-[250px]"
-      >
-        <h3 className={`${isMobile ? "text-sm" : "text-lg"} font-hazmat-regular text-white`}>
-          {speaker.name}
-        </h3>
-        <p className={`${isMobile ? "text-[7px]" : "text-[12px]"} text-gray-300 font-mistrully`}>
-          {speaker.role}
-        </p>
-      </motion.div>
-    </motion.div>
+    </section>
   );
 };
 
