@@ -18,8 +18,6 @@ import Sponsor11 from "./sections/Sponsor11";
 import Sponsor12 from "./sections/Sponsor12";
 import Sponsor13 from "./sections/Sponsor13";
 import Sponsor14 from "./sections/Sponsor14";
-import Sponsor15 from "./sections/Sponsor15";
-import Sponsor16 from "./sections/Sponsor16";
 import Teaser from "./sections/Teaser";
 import {
   GALLERY_SECTION_ID,
@@ -45,9 +43,7 @@ const sponsorComponents = [
   Sponsor11,
   Sponsor12,
   Sponsor13,
-  Sponsor14,
-  Sponsor15,
-  Sponsor16,
+  Sponsor14
 ];
 
 const Sections = ({ currentSection }) => {
