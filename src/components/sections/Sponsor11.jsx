@@ -8,11 +8,11 @@ const Sponsor11 = () => {
       logoSrc="/sponsor/sponsors/Sofrecom.png"
       sponsorUrl="https://example.com"
       middleImages={[
-        "/lastPhotos/img1_.jpg",
-        "/lastPhotos/img6_.jpg",
-        "/lastPhotos/img17_.webp",
+        "/sponsorGal/sofrecom/img1.jpg",
+        "/sponsorGal/sofrecom/img2.jpg",
+
       ]}
-    />
+    />  
   );
 };
 

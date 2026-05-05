@@ -8,9 +8,9 @@ const Sponsor01 = () => {
       logoSrc="/sponsor/sponsors/SAGEMCOM.png"
       sponsorUrl="https://example.com"
       middleImages={[
-        "/sponsorGal/sagemcom/_DSC9951_resultat.jpg",
-        "/sponsorGal/sagemcom/_DSC9951_resultat.jpg",
-        "/sponsorGal/sagemcom/_DSC9951_resultat.jpg"
+        "/sponsorGal/sagemcom/img1.jpg",
+        "/sponsorGal/sagemcom/img2.jpg",
+        "/sponsorGal/sagemcom/img3.jpg"
       ]}
     />
   );

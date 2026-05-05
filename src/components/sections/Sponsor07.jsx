@@ -8,9 +8,8 @@ const Sponsor07 = () => {
       logoSrc="/sponsor/sponsors/SIEMENS.png"
       sponsorUrl="https://example.com"
       middleImages={[
-        "/lastPhotos/img6_.jpg",
-        "/lastPhotos/img12_.jpg",
-        "/lastPhotos/img31_.jpg",
+        "/sponsorGal/siemens/img1.jpg",
+        "/sponsorGal/siemens/img2.jpg",
       ]}
     />
   );

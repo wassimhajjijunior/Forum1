@@ -8,9 +8,9 @@ const Sponsor04 = () => {
       logoSrc="/sponsor/sponsors/Orange.png"
       sponsorUrl="https://example.com"
       middleImages={[
-        "/lastPhotos/img31_.jpg",
-        "/lastPhotos/img12_.jpg",
-        "/lastPhotos/img5_.jpg",
+        "/sponsorGal/orange/img1.jpg",
+        "/sponsorGal/orange/img2.jpg",
+        "/sponsorGal/orange/img3.jpg"
       ]}
     />
   );
