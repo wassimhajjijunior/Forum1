@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion as Motion } from "framer-motion";
-import workshopImage1 from "/speakers/workshop/amel sellami.png";
+import workshopImage1 from "/speakers/workshop/amel sellami.jpg";
 import workshopImage2 from "/speakers/workshop/Mohamed.jpg";
 
 const workshopSpeakers = [

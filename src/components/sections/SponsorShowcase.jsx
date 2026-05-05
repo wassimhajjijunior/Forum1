@@ -33,12 +33,12 @@ const SponsorShowcase = ({
           </Motion.a>
 
           <div className={`w-full ${gridClasses} gap-4 md:gap-6`}>
-            {middleImages.map((imageSrc) => (
+            {middleImages.map((imageSrc, index) => (
               <Motion.div
                 key={`${sponsorName}-${imageSrc}`}
-                className={`relative overflow-hidden rounded-2xl border border-cyan-200/30 bg-slate-900/60 aspect-[4/3] w-full ${
+                className={`flex items-center justify-center rounded-2xl border border-cyan-200/30 bg-slate-900/60 p-4 ${
                   isSparseLayout ? "md:w-[360px]" : ""
-                }`}
+                } ${index >= 2 ? "hidden md:flex" : ""}`}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.35 }}
@@ -47,10 +47,9 @@ const SponsorShowcase = ({
                 <img
                   src={imageSrc}
                   alt={`${sponsorName} highlight`}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="w-full h-48 object-contain rounded-2xl"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-transparent" />
               </Motion.div>
             ))}
           </div>
