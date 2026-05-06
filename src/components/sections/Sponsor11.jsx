@@ -10,6 +10,7 @@ const Sponsor11 = () => {
       middleImages={[
         "/sponsorGal/sofrecom/img1.jpg",
         "/sponsorGal/sofrecom/img2.jpg",
+        "/sponsorGal/sofrecom/img3.jpg"
 
       ]}
     />  

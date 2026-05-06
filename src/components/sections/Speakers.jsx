@@ -29,8 +29,8 @@ const SpeakerCard = ({ speaker }) => {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <Motion.article
-      className="group relative w-full max-w-[250px] sm:max-w-[270px] rounded-3xl border border-cyan-300/25 bg-slate-950/45 backdrop-blur-md p-3 sm:p-4 md:p-5 shadow-[0_0_22px_rgba(34,211,238,0.12)]"
+      <Motion.article
+        className="group relative w-full max-w-[210px] sm:max-w-[270px] rounded-3xl border border-cyan-300/25 bg-slate-950/45 backdrop-blur-md p-2 sm:p-4 md:p-5 shadow-[0_0_22px_rgba(34,211,238,0.12)]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       whileHover={{ y: -4 }}
@@ -44,11 +44,11 @@ const SpeakerCard = ({ speaker }) => {
         />
       </div>
 
-      <div className="mt-4 text-center">
-        <h3 className="font-hazmat-regular text-white text-base sm:text-lg md:text-xl">
+      <div className="mt-3 sm:mt-4 text-center">
+        <h3 className="font-hazmat-regular text-white text-sm sm:text-lg md:text-xl">
           {speaker.name}
         </h3>
-        <p className="mt-1 font-mistrully text-slate-300 text-xs sm:text-sm leading-relaxed">
+        <p className="mt-1 font-mistrully text-slate-300 text-[11px] sm:text-sm leading-relaxed">
           {speaker.role}
         </p>
 
@@ -60,7 +60,7 @@ const SpeakerCard = ({ speaker }) => {
 
 const Speakers = () => {
   return (
-    <section className="w-full min-h-[72dvh] md:h-[72dvh] px-4 sm:px-6 py-16 md:py-0 flex items-center justify-center">
+    <section className="w-full min-h-[64dvh] md:min-h-[72dvh] md:h-[72dvh] px-4 sm:px-6 py-12 md:py-0 flex items-center justify-center scroll-mt-[90px]">
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center justify-center">
         <h2 className="font-hazmat-regular text-cyan-100 text-2xl sm:text-3xl md:text-4xl tracking-wide text-center mb-5 sm:mb-6 md:mb-8">
           Keynote Speakers

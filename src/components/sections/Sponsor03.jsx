@@ -10,7 +10,7 @@ const Sponsor03 = () => {
       middleImages={[
         "/sponsorGal/telecom/img1.jpg",
         "/sponsorGal/telecom/img2.jpg",
-        "/sponsorGal/telecom/img3.JPG"
+        "/sponsorGal/telecom/img3.jpg"
       ]}
     />
   );
